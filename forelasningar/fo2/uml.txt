@@ -1,0 +1,23 @@
+[Visibility]
++ - public
+- - private
+# - protected
+
+[Ralationer]
+---> - Arv
+--<> - Aggregation
+-<*> - komposition
+---- - Association
+
+[Multiplicitet]
+0
+----
+
+0..5
+----
+
+0..*
+----
+
+\..*
+----
