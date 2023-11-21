@@ -10,5 +10,5 @@ all: $(EXECUTABLES)
 clean:
 	rm -f $(EXECUTABLES)
 
-$(EXECUTABLES): %: %.cc
+$(EXECUTABLES): %: %.cc 
 	g++ $(CXXFLAGS) -o $@ $< $(LDFLAGS)
