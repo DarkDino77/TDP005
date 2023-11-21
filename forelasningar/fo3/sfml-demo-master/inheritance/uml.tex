@@ -1,0 +1,97 @@
+\documentclass[a4paper]{article}
+\usepackage{fontspec}
+\usepackage{tikz}
+\usepackage{tikz-uml}
+\usetikzlibrary{shapes,arrows}
+
+\usepackage{geometry}
+\geometry{a4paper,left=20mm,right=20mm,top=20mm,bottom=30mm}
+
+\begin{document}
+\center
+
+\begin{tikzpicture}
+  \umlinterface[x=0,y=0]{State}{
+  }{
+    + on\_key\_press(Key) : void \\
+    + on\_key\_release(Key) : void \\
+    + tick(Time) : void \\
+    + render(RenderWindow) : void \\
+    + \umlstatic{run(State) : void}
+  }
+
+  \umlclass[x=-6,y=-3.5]{ExitState}{
+  }{
+    + tick(Time) : void \\
+    + render(RenderWindow) : void
+  }
+  \umlreal{ExitState}{State}
+
+  \umlclass[x=6,y=-3.5]{MenuState}{
+  }{
+    + on\_key\_press(Key) : void \\
+    + on\_key\_release(Key) : void \\
+    + tick(Time) : void \\
+    + render(RenderWindow) : void
+  }
+  \umlreal{MenuState}{State}
+  \umlaggreg[geometry=|-,anchor1=90,anchor2=0,arg1=--background,mult1=1,mult2=0..1]{MenuState}{State}
+
+  \umlclass[x=0,y=-3.5]{GameState}{
+  }{
+    + tick(Time) : void \\
+    + render(RenderWindow) : void \\
+  }
+  \umlreal{GameState}{State}
+
+
+  \umlclass[x=0,y=-7]{World}{
+  }{
+    + tick(Time) : void \\
+    + render(RenderWindow) : void
+  }
+  \umlcompo[arg1=--world,mult1=1,mult2=1]{GameState}{World}
+
+  \umlinterface[x=0,y=-11]{GameObject}{
+    + center : Vector2f \\
+    + radius : float
+  }{
+    + tick(Time, World) : bool \\
+    + render(RenderWindow) : void
+  }
+  \umlcompo[arg1=--objects,mult1=1,mult2=0..*]{World}{GameObject}
+
+  \umlclass[x=0,y=-15]{TextureObject}{
+    -- shape : RectangleShape
+  }{
+    + render(RenderWindow) : void
+  }
+  \umlreal{TextureObject}{GameObject}
+
+  \umlclass[x=-3,y=-17]{Enemy}{
+  }{
+  }
+  \umlinherit{Enemy}{TextureObject}
+
+  \umlclass[x=-6,y=-20]{Spawner}{
+  }{
+    + tick(Time, World) : bool
+  }
+  \umlinherit{Spawner}{Enemy}
+
+  \umlclass[x=0,y=-20]{Bullet}{
+  }{
+    + tick(Time, World) : bool
+  }
+  \umlinherit{Bullet}{Enemy}
+
+  \umlclass[x=6,y=-20]{Player}{
+  }{
+    + tick(Time, World) : bool \\
+    + render(RenderWindow) : void
+  }
+  \umlinherit{Player}{TextureObject}
+
+\end{tikzpicture}
+
+\end{document}

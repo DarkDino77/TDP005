@@ -1,0 +1,129 @@
+\documentclass[a4paper]{article}
+\usepackage{fontspec}
+\usepackage{tikz}
+\usepackage{tikz-uml}
+\usetikzlibrary{shapes,arrows}
+
+\usepackage{geometry}
+\geometry{a4paper,left=20mm,right=20mm,top=20mm,bottom=30mm}
+
+\begin{document}
+\center
+
+\begin{tikzpicture}
+  \umlinterface[x=0,y=0]{State}{
+  }{
+    + on\_key\_press(Key) : void \\
+    + on\_key\_release(Key) : void \\
+    + tick(Time) : void \\
+    + render(RenderWindow) : void \\
+    + \umlstatic{run(State) : void}
+  }
+
+  \umlclass[x=-6,y=-3.5]{ExitState}{
+  }{
+    + tick(Time) : void \\
+    + render(RenderWindow) : void
+  }
+  \umlreal{ExitState}{State}
+
+  \umlclass[x=6,y=-3.5]{MenuState}{
+  }{
+    + on\_key\_press(Key) : void \\
+    + on\_key\_release(Key) : void \\
+    + tick(Time) : void \\
+    + render(RenderWindow) : void
+  }
+  \umlreal{MenuState}{State}
+  \umlaggreg[geometry=|-,anchor1=90,anchor2=0,arg1=--background,mult1=1,mult2=0..1]{MenuState}{State}
+
+  \umlclass[x=0,y=-3.5]{GameState}{
+  }{
+    + tick(Time) : void \\
+    + render(RenderWindow) : void \\
+  }
+  \umlreal{GameState}{State}
+
+
+  \umlclass[x=0,y=-7]{World}{
+  }{
+    + tick(Time) : void \\
+    + render(RenderWindow) : void
+  }
+  \umlcompo[arg1=--world,mult1=1,mult2=1]{GameState}{World}
+
+  \umlclass[x=0,y=-11]{Entity}{
+    + center : Vector2f \\
+    + radius : float \\
+    + type : Tag
+  }{
+    + tick(Time, World) : bool \\
+    + render(RenderWindow) : void
+  }
+  \umlcompo[arg1=--objects,mult1=1,mult2=0..*]{World}{Entity}
+
+  \umlinterface[x=0,y=-15]{Component}{
+  }{
+    + tick(Time, Entity, World) : bool \\
+    + render(RenderWindow, Entity) : void
+  }
+  \umlcompo[arg1=--components,mult1=1,mult2=0..*]{Entity}{Component}
+
+  \umlclass[x=-6,y=-12.5]{Textured}{
+  }{
+    + render(...) : void
+  }
+  \umlinherit{Textured}{Component}
+
+  \umlclass[x=-6,y=-15]{Shield}{
+  }{
+    + render(...) : void
+  }
+  \umlinherit{Shield}{Component}
+
+  \umlclass[x=-6,y=-17.5]{Particles}{
+  }{
+    + tick(...) : bool \\
+    + render(...) : void
+  }
+  \umlinherit{Particles}{Component}
+
+  \umlclass[x=-5,y=-20]{PlayerControl}{
+  }{
+    + tick(...) : bool
+  }
+  \umlinherit{PlayerControl}{Component}
+
+  \umlclass[x=6,y=-12.5]{RemoveOutside}{
+  }{
+    + tick(...) : bool
+  }
+  \umlinherit{RemoveOutside}{Component}
+
+  \umlclass[x=6,y=-15]{Spawn}{
+  }{
+    + tick(...) : bool
+  }
+  \umlinherit{Spawn}{Component}
+
+  \umlclass[x=6,y=-17.5]{SineMovement}{
+  }{
+    + tick(...) : bool
+  }
+  \umlinherit{SineMovement}{Component}
+
+  \umlclass[x=5,y=-20]{DownMovement}{
+  }{
+    + tick(...) : bool
+  }
+  \umlinherit{DownMovement}{Component}
+
+  \umlclass[x=0,y=-20]{DownCenterMovement}{
+  }{
+    + tick(...) : bool
+  }
+  \umlinherit{DownCenterMovement}{Component}
+
+\end{tikzpicture}
+
+\end{document}

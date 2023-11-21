@@ -1,0 +1,4 @@
+[]
+library+=sfml-graphics
+library+=sfml-window
+library+=sfml-system

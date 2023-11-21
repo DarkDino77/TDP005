@@ -1,0 +1,18 @@
+stages:
+  - auto
+
+pdf:
+  image: "texlive/texlive:latest"
+  stage: auto
+  artifacts:
+    paths:
+      - ./*.pdf
+  script:
+    - cd $CI_PROJECT_DIR/
+    - mkdir out
+    - shopt -s globstar nullglob
+    - for i in **/*.tex; do
+    -  cd "$CI_PROJECT_DIR/$(dirname "$i")"
+    -  latexmk -xelatex -pvc- "$(basename "$i")"
+    -  cp "$(basename "$i" .tex).pdf" "$CI_PROJECT_DIR"/"$(dirname "$i").pdf"
+    - done

@@ -1,0 +1,16 @@
+*
+!*.*
+!*/
+!Makefile
+
+bin/
+build/
+*.o
+*.d
+
+*.aux
+*.fdb_latexmk
+*.pdf
+*.fls
+*.log
+*.xdv
