@@ -3,8 +3,8 @@
 #include "standard.h"
 #include <cmath>
 
-const size_t width = 1024;
-const size_t height = 768;
+const size_t width = 1920;
+const size_t height = 1024;
 
 sf::Vector2f find_direction() {
     sf::Vector2f direction;
@@ -21,10 +21,18 @@ sf::Vector2f find_direction() {
 }
 
 int main() {
-    sf::RenderWindow window{sf::VideoMode{width, height}, "Demo"};
+    sf::RenderWindow window{sf::VideoMode{width, height}, "The Grand Arena"};
     window.setMouseCursorVisible(false);
     window.setKeyRepeatEnabled(false);
     window.setVerticalSyncEnabled(true);
+
+    // ==============================[ Background ]==============================
+    sf::Texture background_texture;
+    background_texture.loadFromFile("sprites/background.png");
+
+    sf::Vector2f background_texture_size{background_texture.getSize()};
+    sf::Sprite background_sprite;
+    background_sprite.setTexture(background_texture);
 
     // ==============================[ Cursor ]==============================
     sf::Texture mouse_cursor_texture;
@@ -47,8 +55,11 @@ int main() {
     player.setScale(4.0f,4.0f);
     sf::Vector2f location{300, 300};
 
+    double player_speed{2.5f};
+
     sf::Clock clock;
 
+    // ==============================[ Game Loop ]==============================
     bool quit = false;
     while (!quit) {
         sf::Event event;
@@ -77,13 +88,14 @@ int main() {
 
         auto delta = clock.restart();
         {
-            float distance = 250.0f * delta.asSeconds();
+            float distance = 250.0f * delta.asSeconds() * player_speed;
             location += direction * distance;
         }
 
         mouse_cursor.setPosition(mouse_pos);
 
         window.clear();
+        window.draw(background_sprite);
         player.setPosition(location);
         window.draw(player);
         window.draw(mouse_cursor);

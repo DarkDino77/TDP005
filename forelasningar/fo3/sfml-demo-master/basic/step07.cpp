@@ -70,7 +70,6 @@ private:
 
 int main() {
     sf::RenderWindow window{sf::VideoMode{width, height}, "Demo"};
-    sf::Window::ShowMouseCursor(false);
     window.setKeyRepeatEnabled(false);
     window.setVerticalSyncEnabled(true);
 
