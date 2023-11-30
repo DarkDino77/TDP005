@@ -11,9 +11,13 @@ public:
     Game_Object(sf::Vector2f position, sf::Texture const& sprite, bool detect_collision);
     virtual void update(sf::Clock delta_time, World world);
     virtual void render(sf::RenderWindow &window);
+
     sf::RectangleShape shape;
-private:
+    virtual sf::Shape& get_collision_shape();
+
+
     sf::Vector2f position;
+private:
     sf::Texture sprite;
     bool detect_collision;
 };

@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "point.h"
 #include "standard.h"
-#include "Player.h"
 #include "World.h"
 #include <cmath>
 
@@ -34,40 +33,52 @@ void World::add_texture(std::string name, std::string filename)
     sprites[name] = texture;
 }
 
-void World::add_wall(sf::Vector2f position)
+void World::add_game_object(std::string const& name,  sf::Vector2f position)
 {
     float pos_x{8.0f*sprite_scale + position.x*16.0f*sprite_scale};
     float pos_y{8.0f*sprite_scale + position.y*16.0f*sprite_scale};
-    std::shared_ptr<Game_Object> wall = std::shared_ptr<Game_Object>(new Game_Object({pos_x,pos_y}, *sprites["wall"], false));
+    std::shared_ptr<Game_Object> game_obj = std::shared_ptr<Game_Object>(new Game_Object({pos_x,pos_y}, *sprites[name], false));
 
-    game_objects.push_back(wall);
-}
 
-void World::add_crate(sf::Vector2f position)
-{
-    float pos_x{8.0f*sprite_scale + position.x*16.0f*sprite_scale};
-    float pos_y{8.0f*sprite_scale + position.y*16.0f*sprite_scale};
-    std::shared_ptr<Game_Object> crate = std::shared_ptr<Game_Object>(new Game_Object({pos_x,pos_y}, *sprites["crate"], false));
-
-    game_objects.push_back(crate);
-}
-
-void World::add_barrel(sf::Vector2f position)
-{
-    float pos_x{8.0f*sprite_scale + position.x*16.0f*sprite_scale};
-    float pos_y{8.0f*sprite_scale + position.y*16.0f*sprite_scale};
-    std::shared_ptr<Game_Object> barrel = std::shared_ptr<Game_Object>(new Game_Object({pos_x,pos_y}, *sprites["barrel"], false));
-
-    game_objects.push_back(barrel);
+    game_objects.push_back(game_obj);
 }
 
 void World::add_player(sf::Vector2f position)
 {
     float pos_x{8.0f*sprite_scale + position.x*16.0f*sprite_scale};
     float pos_y{8.0f*sprite_scale + position.y*16.0f*sprite_scale};
-    std::shared_ptr<Game_Object> player = std::shared_ptr<Game_Object>(new Player({pos_x,pos_y}, *sprites["barrel"], false));
+    std::shared_ptr<Game_Object> player_obj = std::shared_ptr<Game_Object>(new Player({pos_x,pos_y}, *sprites["player"], false));
 
-    game_objects.push_back(player);
+    game_objects.push_back(player_obj);
+
+    player = std::dynamic_pointer_cast<Player>(player_obj);
+}
+
+std::shared_ptr<Player> World::get_player()
+{
+    return player;
+};
+bool contains(const sf::CircleShape &c, const sf::Vector2f &p){
+    sf::Vector2f center = c.getPosition();
+    float a = (p.x - center.x);
+    float b = (p.y - center.y);
+    a *= a;
+    b *= b;
+    float r = c.getRadius() * c.getRadius();
+
+    return (( a + b ) < r);
+}
+bool tri_rect_intersects(const sf::CircleShape &c, const sf::RectangleShape &r){
+    sf::FloatRect fr = r.getGlobalBounds();
+    sf::Vector2f topLeft(fr.left, fr.top);
+    sf::Vector2f topRight(fr.left + fr.width, fr.top);
+    sf::Vector2f botLeft(fr.left, fr.top + fr.height);
+    sf::Vector2f botRight(fr.left + fr.width, fr.top + fr.height);
+
+    return contains(c, topLeft) ||
+           contains(c, topRight) ||
+           contains(c, botLeft) ||
+           contains(c, botRight);
 }
 
 int main() {
@@ -97,15 +108,15 @@ int main() {
     mouse_cursor.setScale(sprite_scale,sprite_scale);
 
     // ==============================[ Player ]==============================
-    sf::Texture texture;
+    /*sf::Texture texture;
     texture.loadFromFile("textures/player.png");
 
     sf::Vector2f textureSize{texture.getSize()};
     sf::RectangleShape player{textureSize};
     player.setTexture(&texture);
     player.setOrigin(textureSize / 2.0f);
-    player.setScale(sprite_scale,sprite_scale);
-    sf::Vector2f location{300, 300};
+    player.setScale(sprite_scale,sprite_scale);*/
+
 
     // ==============================[ TEST ]==============================
     World world{};
@@ -113,33 +124,36 @@ int main() {
     world.add_texture("wall", "textures/wall.png");
     world.add_texture("crate", "textures/crate.png");
     world.add_texture("barrel", "textures/barrel.png");
+    world.add_texture("player", "textures/player.png");
 
-    world.add_wall({1,1});
-    world.add_wall({4,1});
-    world.add_wall({7,1});
-    world.add_wall({10,1});
-    world.add_wall({2,4});
-    world.add_wall({5,4});
-    world.add_wall({8,4});
-    world.add_wall({11,4});
-    world.add_wall({28,14});
-    world.add_wall({25,14});
-    world.add_wall({22,14});
-    world.add_wall({19,14});
-    world.add_crate({10,3});
-    world.add_crate({9,14});
-    world.add_crate({28,12});
-    world.add_barrel({14, 7});
-    world.add_wall({15,7});
+    world.add_game_object("wall",{1,1});
+    world.add_game_object("wall",{4,1});
+    world.add_game_object("wall",{7,1});
+    world.add_game_object("wall",{10,1});
+    world.add_game_object("wall",{2,4});
+    world.add_game_object("wall",{5,4});
+    world.add_game_object("wall",{8,4});
+    world.add_game_object("wall",{11,4});
+    world.add_game_object("wall",{28,14});
+    world.add_game_object("wall",{25,14});
+    world.add_game_object("wall",{22,14});
+    world.add_game_object("wall",{19,14});
+    world.add_game_object("crate", {10,3});
+    world.add_game_object("crate",{9,14});
+    world.add_game_object("crate",{28,12});
+    world.add_game_object("barrel", {14, 7});
+    world.add_game_object("wall",{15,7});
 
-    world.add_wall({27,1});
-    world.add_wall({28,1});
-    world.add_wall({28,2});
+    world.add_game_object("wall",{27,1});
+    world.add_game_object("wall",{28,1});
+    world.add_game_object("wall",{28,2});
 
-    world.add_wall({1,13});
-    world.add_wall({1,14});
-    world.add_wall({2,14});
-    world.add_player({40,20});
+    world.add_game_object("wall",{1,13});
+    world.add_game_object("wall",{1,14});
+    world.add_game_object("wall",{2,14});
+
+    world.add_player({20,20});
+    sf::Vector2f location{world.get_player()->shape.getPosition()};
 
     // ==============================[ END TEST ]==============================
     double player_speed{1.0f};
@@ -165,13 +179,14 @@ int main() {
 
         float rotate_degrees = std::atan2(rotate_direction.y, rotate_direction.x);
 
-        player.setRotation((rotate_degrees*180/3.1415f) - 90.f);
+        world.get_player()->shape.setRotation((rotate_degrees*180/3.1415f) - 90.f);
 
 
         if (quit)
             break;
 
         sf::Vector2f direction = find_direction();
+        world.get_player()->direction = direction;
 
         auto delta = clock.restart();
         {
@@ -183,26 +198,60 @@ int main() {
 
         window.clear();
         window.draw(background_sprite);
-        player.setPosition(location);
-        window.draw(player);
+        world.get_player()->shape.setPosition(location);
+        world.get_player()->collision_shape.setPosition(location);
+
+        // Collision handling
+        for(std::shared_ptr<Game_Object> obj : world.game_objects)
+        {
+            std::shared_ptr<Movable> current_obj{std::dynamic_pointer_cast<Movable>(obj)};
+            if(current_obj != nullptr)
+            {
+                for(std::shared_ptr<Game_Object> collide_obj : world.game_objects) {
+                    const bool collides = (obj != collide_obj && (current_obj->collision_shape).getGlobalBounds().intersects((collide_obj->shape).getGlobalBounds()) );
+                    //const bool collides = (obj != collide_obj && tri_rect_intersects(current_obj->collision_shape, collide_obj->shape));
+
+                    if(collides)
+                    {
+                       sf::Vector2f push_direction{};
+                       bool collision_x{
+                               (world.get_player()->direction.y == 0)
+                           &&
+                           (std::abs(collide_obj->shape.getPosition().x - world.get_player()->collision_shape.getPosition().x) < (collide_obj->shape.getSize().x/2.0f))
+                       };
+                       std::cout << "X-difference: " << std::abs(collide_obj->shape.getPosition().x - world.get_player()->collision_shape.getPosition().x) << std::endl;
+                        std::cout << "X-size / 2: " << collide_obj->shape.getSize().x/2.0f << std::endl;
+                       bool collision_y{
+                               (world.get_player()->direction.x == 0)
+                               &&
+                               (std::abs(collide_obj->shape.getPosition().y - world.get_player()->collision_shape.getPosition().y) <= (collide_obj->shape.getSize().y/2.0f))
+                       };
+
+                       if(collision_x || collision_y)
+                       {
+                           std::cout << "Collision passed" << std::endl;
+                           push_direction = (-direction);
+                       }
+                       else
+                       {
+                           // 1. beräkna riktningsvektor från vägg till spelare.
+                           push_direction = normalize(obj->get_collision_shape().getPosition() - collide_obj->get_collision_shape().getPosition());
+                       }
+
+                        float temp_increment{0.0075f};
+                        // 2. Tryck spelaren, i inkrement i samma riktning tills collision är falskt.
+                        while ((obj->get_collision_shape()).getGlobalBounds().intersects((collide_obj->get_collision_shape()).getGlobalBounds()) ) {
+                            obj->get_collision_shape().setPosition(obj->get_collision_shape().getPosition() + push_direction * temp_increment);
+                            location += push_direction * temp_increment;
+                        }
+                    }
+                }
+            }
+        }
+
         for(std::shared_ptr<Game_Object> obj : world.game_objects)
         {
             obj -> render(window);
-        }
-        for(std::shared_ptr<Game_Object> obj : world.game_objects)
-        {
-
-            if(std::dynamic_pointer_cast<Player>(obj) != nullptr)
-            {
-                for(std::shared_ptr<Game_Object> collide_obj : world.game_objects)
-                {
-                    if(collide_obj != obj && obj->shape.getGlobalBounds().intersects(collide_obj->shape.getGlobalBounds()))
-                    {
-                        std::cout << "COLLISION" << std::endl;
-                    }
-                }
-                // Detect collision.
-            }
         }
         window.draw(mouse_cursor);
         window.display();

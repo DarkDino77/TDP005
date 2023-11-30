@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game_Object.h"
+#include "World.h"
 
 Game_Object::Game_Object(sf::Vector2f position, sf::Texture const& sprite, bool detect_collision)
 : position{position}, sprite{sprite}, detect_collision{detect_collision}
@@ -21,4 +22,9 @@ void Game_Object::update(sf::Clock delta_time, World world)
 void Game_Object::render(sf::RenderWindow &window)
 {
     window.draw(shape);
+}
+
+sf::Shape& Game_Object::get_collision_shape()
+{
+    return shape;
 }
