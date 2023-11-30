@@ -3,7 +3,7 @@
 Movable::Movable(sf::Vector2f position, sf::Texture const& sprite, bool detect_collision)
 : Game_Object(position, sprite, detect_collision)
 {
-    collision_shape.setRadius(shape.getSize().x);
+    collision_shape.setRadius(shape.getSize().x*0.95f);
     collision_shape.setOrigin(shape.getSize());
     collision_shape.setPosition(position);
 };

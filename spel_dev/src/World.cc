@@ -213,20 +213,23 @@ int main() {
 
                     if(collides)
                     {
+                       std::cout << "Player direction: x" << world.get_player()->direction.x << ", y" << world.get_player()->direction.x << std::endl;
                        sf::Vector2f push_direction{};
                        bool collision_x{
-                               (world.get_player()->direction.y == 0)
+                           (world.get_player()->direction.y == 0)
                            &&
-                           (std::abs(collide_obj->shape.getPosition().x - world.get_player()->collision_shape.getPosition().x) < (collide_obj->shape.getSize().x/2.0f))
+                           (std::abs(collide_obj->shape.getPosition().y - world.get_player()->collision_shape.getPosition().y) <= (collide_obj->shape.getSize().y/2.0f))
                        };
                        std::cout << "X-difference: " << std::abs(collide_obj->shape.getPosition().x - world.get_player()->collision_shape.getPosition().x) << std::endl;
-                        std::cout << "X-size / 2: " << collide_obj->shape.getSize().x/2.0f << std::endl;
-                       bool collision_y{
-                               (world.get_player()->direction.x == 0)
-                               &&
-                               (std::abs(collide_obj->shape.getPosition().y - world.get_player()->collision_shape.getPosition().y) <= (collide_obj->shape.getSize().y/2.0f))
-                       };
+                       std::cout << "X-size / 2: " << collide_obj->shape.getSize().x/2.0f << std::endl;
 
+                       bool collision_y{
+                           (world.get_player()->direction.x == 0)
+                           &&
+                           (std::abs(collide_obj->shape.getPosition().x - world.get_player()->collision_shape.getPosition().x) < (collide_obj->shape.getSize().x/2.0f))
+
+                       };
+                        std::cout << collision_y << std::endl;
                        if(collision_x || collision_y)
                        {
                            std::cout << "Collision passed" << std::endl;
@@ -238,7 +241,7 @@ int main() {
                            push_direction = normalize(obj->get_collision_shape().getPosition() - collide_obj->get_collision_shape().getPosition());
                        }
 
-                        float temp_increment{0.0075f};
+                        float temp_increment{0.005f};
                         // 2. Tryck spelaren, i inkrement i samma riktning tills collision är falskt.
                         while ((obj->get_collision_shape()).getGlobalBounds().intersects((collide_obj->get_collision_shape()).getGlobalBounds()) ) {
                             obj->get_collision_shape().setPosition(obj->get_collision_shape().getPosition() + push_direction * temp_increment);
