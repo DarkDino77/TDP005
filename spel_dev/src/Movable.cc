@@ -1,7 +1,7 @@
 #include "Movable.h"
 
-Movable::Movable(sf::Vector2f position, sf::Texture const& sprite)
-: Game_Object(position, sprite)
+Movable::Movable(sf::Vector2f position, sf::Texture const& sprite, float speed)
+: Game_Object(position, sprite), speed{speed}
 {
     collision_shape.setRadius(shape.getSize().x*0.95f);
     collision_shape.setOrigin(shape.getSize());

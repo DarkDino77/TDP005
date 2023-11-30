@@ -5,7 +5,9 @@
 
 class Melee : public Enemy
 {
-    Melee(sf::Vector2f position, sf::Texture const& sprite);
+public:
+    Melee(sf::Vector2f position, sf::Texture const& sprite, float speed);
+    void update(sf::Time const& delta_time, World &world, sf::Window &window, std::shared_ptr<Game_Object> obj) override;
 };
 
 

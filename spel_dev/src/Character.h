@@ -5,7 +5,7 @@
 class Character : public Movable
 {
 public:
-    Character(sf::Vector2f position, sf::Texture const& sprite);
+    Character(sf::Vector2f position, sf::Texture const& sprite, float speed);
 private:
     int health{};
 };

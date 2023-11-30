@@ -7,7 +7,7 @@
 class Enemy : public Character
 {
 public:
-    Enemy(sf::Vector2f position, sf::Texture const& sprite);
+    Enemy(sf::Vector2f position, sf::Texture const& sprite, float speed);
 };
 
 

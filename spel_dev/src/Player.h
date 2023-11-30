@@ -8,7 +8,7 @@ class Player : public Character
 private:
     sf::Vector2f find_direction();
 public:
-    Player(sf::Vector2f position, sf::Texture const& sprite);
+    Player(sf::Vector2f position, sf::Texture const& sprite, float speed);
     void update(sf::Time const& delta_time, World &world, sf::Window &window, std::shared_ptr<Game_Object> obj) override;
     //void handle_collision(World const& world) override;
 private:

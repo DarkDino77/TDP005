@@ -15,8 +15,8 @@ sf::Vector2f Player::find_direction() {
     return normalize(direction);
 }
 
-Player::Player(sf::Vector2f position, sf::Texture const& sprite)
-        : Character(position, sprite)
+Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed)
+        : Character(position, sprite, speed)
 {}
 // TODO: determine if window is const&
 void Player::update(sf::Time const& delta_time, World &world, sf::Window &window, std::shared_ptr<Game_Object> obj)
@@ -71,6 +71,8 @@ void Player::update(sf::Time const& delta_time, World &world, sf::Window &window
             while ((get_collision_shape()).getGlobalBounds().intersects((collide_obj->get_collision_shape()).getGlobalBounds()) ) {
                 get_collision_shape().setPosition(get_collision_shape().getPosition() + push_direction * temp_increment);
                 position += push_direction * temp_increment;
+                shape.setPosition(position);
+                collision_shape.setPosition(position);
             }
         }
     }
