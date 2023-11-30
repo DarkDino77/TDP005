@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named sfml
+# Target rules for targets named game
 
 # Build rule for target.
-sfml: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sfml
-.PHONY : sfml
+game: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 game
+.PHONY : game
 
 # fast build rule for target.
-sfml/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfml.dir/build.make CMakeFiles/sfml.dir/build
-.PHONY : sfml/fast
+game/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/build
+.PHONY : game/fast
 
 game.o: game.cc.o
 .PHONY : game.o
 
 # target to build an object file
 game.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfml.dir/build.make CMakeFiles/sfml.dir/game.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/game.cc.o
 .PHONY : game.cc.o
 
 game.i: game.cc.i
@@ -142,7 +142,7 @@ game.i: game.cc.i
 
 # target to preprocess a source file
 game.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfml.dir/build.make CMakeFiles/sfml.dir/game.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/game.cc.i
 .PHONY : game.cc.i
 
 game.s: game.cc.s
@@ -150,7 +150,7 @@ game.s: game.cc.s
 
 # target to generate assembly for a file
 game.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfml.dir/build.make CMakeFiles/sfml.dir/game.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/game.cc.s
 .PHONY : game.cc.s
 
 # Help Target
@@ -161,7 +161,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... sfml"
+	@echo "... game"
 	@echo "... game.o"
 	@echo "... game.i"
 	@echo "... game.s"

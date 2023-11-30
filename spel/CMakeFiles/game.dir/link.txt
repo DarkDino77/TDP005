@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/game.dir/game.cc.o -o game  -lsfml-network -lsfml-graphics -lsfml-window -lsfml-system 

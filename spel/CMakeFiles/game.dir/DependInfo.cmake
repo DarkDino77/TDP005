@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/henrik/Documents/liu/tdp005/spel/game.cc" "CMakeFiles/sfml.dir/game.cc.o" "gcc" "CMakeFiles/sfml.dir/game.cc.o.d"
+  "/home/henrik/Documents/liu/tdp005/spel/game.cc" "CMakeFiles/game.dir/game.cc.o" "gcc" "CMakeFiles/game.dir/game.cc.o.d"
   )
 
 # Targets to which this target links.
