@@ -5,7 +5,6 @@
 #include <memory>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "Player.h"
 
 class Game_Object;
 
@@ -19,11 +18,11 @@ public:
     void add_game_object(std::string const& name, sf::Vector2f position);
     void add_player(sf::Vector2f position);
 
-    std::shared_ptr<Player> get_player();
+    //std::shared_ptr<Player> get_player();
 
 
 private:
     float sprite_scale{2.0f};
-    std::shared_ptr<Player> player{nullptr};
+    //std::shared_ptr<Player> player{nullptr};
 };
 #endif

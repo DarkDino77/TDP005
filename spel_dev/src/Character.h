@@ -5,7 +5,7 @@
 class Character : public Movable
 {
 public:
-    Character(sf::Vector2f position, sf::Texture const& sprite, bool detect_collision);
+    Character(sf::Vector2f position, sf::Texture const& sprite);
 private:
     int health{};
 };
