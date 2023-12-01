@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "point.h"
+#include <iostream>
 
 sf::Vector2f Player::find_direction() {
     sf::Vector2f direction;
@@ -27,9 +28,7 @@ void Player::update(sf::Time const& delta_time, World &world, sf::Window &window
     float rotate_degrees = std::atan2(rotate_direction.y, rotate_direction.x);
 
     shape.setRotation((rotate_degrees*180/3.1415f) - 90.f);
-
     direction = find_direction();
-    //world.get_player()->direction = direction;
 
     float distance = 250.0f * delta_time.asSeconds() * player_speed;
     position += direction * distance;
@@ -37,42 +36,60 @@ void Player::update(sf::Time const& delta_time, World &world, sf::Window &window
     shape.setPosition(position);
     collision_shape.setPosition(position);
 
-
-    // Handle collision
-
     for(std::shared_ptr<Game_Object> collide_obj : world.game_objects) {
+        std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(collide_obj)};
+        bool collides{};
+        if(movable_target != nullptr)
+        {
+            collides = (collide_obj != obj && (collision_shape).getGlobalBounds().intersects((movable_target->collision_shape).getGlobalBounds()));
+        }
+        else
+        {
+            collides = ( collide_obj != obj && (collision_shape).getGlobalBounds().intersects((collide_obj->shape).getGlobalBounds()) );
+        }
 
-        const bool collides = ( collide_obj != obj && (collision_shape).getGlobalBounds().intersects((collide_obj->shape).getGlobalBounds()) );
 
         if(collides)
         {
             sf::Vector2f push_direction{};
             bool collision_x{
-                    (direction.y == 0)
+                    (direction.y == 0 && direction.x != 0)
                     &&
                     (std::abs(collide_obj->shape.getPosition().y - collision_shape.getPosition().y) <= (collide_obj->shape.getSize().y/2.0f))
             };
 
             bool collision_y{
-                    (direction.x == 0)
+                    (direction.x == 0 && direction.y != 0) // Added this check
                     &&
-                    (std::abs(collide_obj->shape.getPosition().x - collision_shape.getPosition().x) < (collide_obj->shape.getSize().x/2.0f))
+                    (std::abs(collide_obj->shape.getPosition().x - collision_shape.getPosition().x) <= (collide_obj->shape.getSize().x/2.0f))
             };
-            if(collision_x || collision_y)
+            if( (not (collision_x && collision_y)) && (collision_x  || collision_y))
             {
                 push_direction = (-direction);
             }
             else
             {
-                push_direction = normalize(get_collision_shape().getPosition() - collide_obj->get_collision_shape().getPosition());
+                push_direction = normalize(position - collide_obj->position);
             }
 
             float temp_increment{0.005f};
-            while ((get_collision_shape()).getGlobalBounds().intersects((collide_obj->get_collision_shape()).getGlobalBounds()) ) {
-                get_collision_shape().setPosition(get_collision_shape().getPosition() + push_direction * temp_increment);
-                position += push_direction * temp_increment;
-                shape.setPosition(position);
-                collision_shape.setPosition(position);
+            if(movable_target != nullptr)
+            {
+                while (collision_shape.getGlobalBounds().intersects((movable_target->collision_shape).getGlobalBounds())) {
+                    get_collision_shape().setPosition(get_collision_shape().getPosition() + push_direction * temp_increment);
+                    position += push_direction * temp_increment;
+                    shape.setPosition(position);
+                    collision_shape.setPosition(position);
+                }
+            }
+            else
+            {
+                while (collision_shape.getGlobalBounds().intersects((collide_obj->shape).getGlobalBounds()) ) {
+                    get_collision_shape().setPosition(get_collision_shape().getPosition() + push_direction * temp_increment);
+                    position += push_direction * temp_increment;
+                    shape.setPosition(position);
+                    collision_shape.setPosition(position);
+                }
             }
         }
     }
