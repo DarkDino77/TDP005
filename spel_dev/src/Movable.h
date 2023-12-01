@@ -12,7 +12,6 @@ public:
     sf::Vector2f direction{};
 
 protected:
-
     double speed{};
 };
 

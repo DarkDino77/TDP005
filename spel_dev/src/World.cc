@@ -14,31 +14,30 @@
 const size_t width = 1920;
 const size_t height = 1024;
 
+
+
 void World::add_texture(std::string name, std::string filename)
 {
-    std::shared_ptr<sf::Texture> texture = std::shared_ptr<sf::Texture>(new sf::Texture());
-
-    texture -> loadFromFile(filename);
+    auto texture = std::make_shared<sf::Texture>();
+    texture->loadFromFile(filename);
     sprites[name] = texture;
 }
 
-void World::add_game_object(std::string const& name,  sf::Vector2f position)
+void World::add_game_object(std::string const& name, sf::Vector2f position)
 {
-    float pos_x{8.0f*sprite_scale + position.x*16.0f*sprite_scale};
-    float pos_y{8.0f*sprite_scale + position.y*16.0f*sprite_scale};
-    // TODO: cheack what  std::make_shared is
-    std::shared_ptr<Game_Object> game_obj = std::shared_ptr<Game_Object>(new Game_Object({pos_x,pos_y}, *sprites[name]));
+    float pos_x = 8.0f * sprite_scale + position.x * 16.0f * sprite_scale;
+    float pos_y = 8.0f * sprite_scale + position.y * 16.0f * sprite_scale;
 
-
+    auto game_obj = std::make_shared<Game_Object>(sf::Vector2f(pos_x, pos_y), *sprites[name]);
     game_objects.push_back(game_obj);
 }
 
 void World::add_player(sf::Vector2f position)
 {
-    float pos_x{8.0f*sprite_scale + position.x*16.0f*sprite_scale};
-    float pos_y{8.0f*sprite_scale + position.y*16.0f*sprite_scale};
-    std::shared_ptr<Game_Object> player_obj = std::shared_ptr<Game_Object>(new Player({pos_x,pos_y}, *sprites["player"], 1.0f));
+    float pos_x = 8.0f * sprite_scale + position.x * 16.0f * sprite_scale;
+    float pos_y = 8.0f * sprite_scale + position.y * 16.0f * sprite_scale;
 
+    auto player_obj = std::make_shared<Player>(sf::Vector2f(pos_x, pos_y), *sprites["player"], 1.0f);
     game_objects.push_back(player_obj);
 
     player = std::dynamic_pointer_cast<Player>(player_obj);
@@ -46,12 +45,13 @@ void World::add_player(sf::Vector2f position)
 
 void World::add_melee_enemy(std::string const& name, sf::Vector2f position)
 {
-    float pos_x{8.0f*sprite_scale + position.x*16.0f*sprite_scale};
-    float pos_y{8.0f*sprite_scale + position.y*16.0f*sprite_scale};
-    std::shared_ptr<Game_Object> enemy = std::shared_ptr<Game_Object>(new Melee({pos_x,pos_y}, *sprites[name], 1.5f));
+    float pos_x = 8.0f * sprite_scale + position.x * 16.0f * sprite_scale;
+    float pos_y = 8.0f * sprite_scale + position.y * 16.0f * sprite_scale;
 
+    auto enemy = std::make_shared<Melee>(sf::Vector2f(pos_x, pos_y), *sprites[name], 1.5f);
     game_objects.push_back(enemy);
 }
+
 
 std::shared_ptr<Player> World::get_player()
 {
@@ -70,7 +70,7 @@ void World::spawn_monsters()
     std::uniform_int_distribution<int> for_y_uniform(1,31);
     while(spawn_positions.size() < 5)
     {
-        int pos_x{(for_x_uniform(for_x)-1)*58};
+        int pos_x{(for_x_uniform(for_x)-1)*59};
         int pos_y{(for_y_uniform(for_y)-1)};
 
         sf::Vector2f pos{float(pos_x), float(pos_y)};
@@ -127,7 +127,7 @@ int main() {
     world.add_texture("melee3", "textures/zombie3.png");
     world.add_texture("melee4", "textures/zombie4.png");
 
-    for(int y{-1}; y <= 32; y++)
+    /*for(int y{-1}; y <= 32; y++)
     {
         for(int x{-1}; x <= 60; x++)
         {
@@ -140,10 +140,11 @@ int main() {
                 world.add_game_object("wall",{float(x),float(y)});
             }
         }
-    }
+    }*/
 
     world.add_player({20,20});
 
+    /*
     world.add_game_object("wall", {1,1});
     world.add_game_object("wall", {2,1});
     world.add_game_object("wall", {1,2});
@@ -336,7 +337,7 @@ int main() {
     world.add_game_object("crate", {6,24});
     world.add_game_object("crate", {53,7});
     world.add_game_object("crate", {50,15});
-    world.add_game_object("crate", {53,24});
+    world.add_game_object("crate", {53,24});*/
 
 
     // ==============================[ END TEST ]==============================
@@ -344,7 +345,8 @@ int main() {
 
     sf::Clock clock;
     sf::Clock spawn_clock;
-    world.spawn_monsters();
+    //world.spawn_monsters();
+    //world.add_melee_enemy("melee1", {0,0});
 
     // ==============================[ Game Loop ]==============================
     bool quit = false;
@@ -362,6 +364,10 @@ int main() {
 
         if (quit)
         {
+            for(std::shared_ptr<Game_Object> ptr : world.game_objects)
+            {
+                ptr = nullptr;
+            }
             break;
         }
         if(spawn_clock.getElapsedTime().asSeconds() > 30)
@@ -387,6 +393,11 @@ int main() {
         // 2. Draw
         for(std::shared_ptr<Game_Object> obj : world.game_objects)
         {
+           /* std::shared_ptr<Movable> target_obj{std::dynamic_pointer_cast<Movable>(obj)};
+            if(target_obj != nullptr)
+            {
+                window.draw(target_obj->collision_shape);
+            }*/
             obj -> render(window);
         }
         window.draw(mouse_cursor);

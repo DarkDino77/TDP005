@@ -13,6 +13,7 @@ class Player;
 class World
 {
 public:
+
     std::map<std::string, std::shared_ptr<sf::Texture>> sprites; //TODO: Determine if public
     std::vector<std::shared_ptr<Game_Object>> game_objects{}; //TODO: Determine if public
     void add_texture(std::string name, std::string filename);

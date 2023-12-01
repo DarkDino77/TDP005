@@ -1,3 +1,3 @@
-/home/henrik/Documents/liu/tdp005/spel/CMakeFiles/game.dir
+/home/henrik/Documents/liu/tdp005/spel/CMakeFiles/sfml.dir
 /home/henrik/Documents/liu/tdp005/spel/CMakeFiles/edit_cache.dir
 /home/henrik/Documents/liu/tdp005/spel/CMakeFiles/rebuild_cache.dir
