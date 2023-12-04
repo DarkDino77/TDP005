@@ -25,8 +25,14 @@ sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate)
 void World::add_texture(std::string const& name, std::string const& filename)
 {
     auto texture = std::make_shared<sf::Texture>();
-    texture->loadFromFile(filename);
-    sprites[name] = texture;
+    if(!texture->loadFromFile(filename))
+    {
+        std::cerr << "Could not find image with name '" << filename << "'." << std::endl;
+    }
+    else
+    {
+        sprites[name] = texture;
+    }
 }
 
 void World::add_game_object(std::string const& name, sf::Vector2f const& position)
