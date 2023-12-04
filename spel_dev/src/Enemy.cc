@@ -51,7 +51,6 @@ void Enemy::handle_collision(sf::Time const& delta_time, World & world, std::sha
         std::shared_ptr<Player> player_target{std::dynamic_pointer_cast<Player>(other_obj)};
         if( player_target != nullptr && life_time > melee_timer + 1)
         {
-            std::cout << "Knocked player" << std::endl;
             melee_timer = life_time;
             player_target->take_damage(melee_damage);
             player_target->knock_back(direction);

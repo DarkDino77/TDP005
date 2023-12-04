@@ -4,6 +4,9 @@
 #include "Player.h"
 #include "Melee.h"
 #include "Ranged.h"
+#include "Crate.h"
+#include "Explosion.h"
+#include "Explosive_Barrel.h"
 #include <vector>
 #include <memory>
 #include <random>
@@ -63,6 +66,13 @@ void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& positi
     auto enemy = std::make_shared<Ranged>(grid_to_coord(position),
                                          *sprites[name], 0.3f, 20, 10);
     game_objects.push_back(enemy);
+}
+
+void World::add_explosion(std::string const& name, sf::Vector2f const& position)
+{
+    auto explosion = std::make_shared<Explosion>(grid_to_coord(position),
+                                          *sprites[name], 1000, 100);
+    game_objects.push_back(explosion);
 }
 
 std::shared_ptr<Player> World::get_player()
@@ -200,6 +210,9 @@ int main() {
     world.load_level_file("level1.txt", window);
     world.spawn_monsters();
 
+    auto crate = std::make_shared<Explosive_Barrel>(grid_to_coord({10,10}), *world.sprites["barrel"], 20);
+    world.game_objects.push_back(crate);
+
     sf::Clock clock;
     float time_since_spawn{0};
     float elapsed_time{0};
@@ -261,7 +274,7 @@ int main() {
             for(std::shared_ptr<Game_Object> const& other_obj : world.game_objects)
             {
                 sf::FloatRect other_bounds = (other_obj->shape).getGlobalBounds();
-                std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(current_obj)};
+                std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
                 if(other_movable_target != nullptr)
                 {
                     other_bounds = other_movable_target->collision_shape.getGlobalBounds();
@@ -302,12 +315,12 @@ int main() {
         // 3. Delete any game objects in the kill queue.
         while (!world.kill_queue.empty())
         {
-            /* // Turns off the game when player is dead.
+            // Turns off the game when player is dead.
             if (world.kill_queue.at(0) == world.get_player())
             {
                 quit = true;
                 break;
-            }*/
+            }
             auto delete_it{std::remove(world.game_objects.begin(), world.game_objects.end(),
                                        world.kill_queue.at(0))};
             world.game_objects.erase(delete_it);
