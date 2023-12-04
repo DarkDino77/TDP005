@@ -45,7 +45,7 @@ void World::add_game_object(std::string const& name, sf::Vector2f const& positio
 void World::add_player(sf::Vector2f const& position, sf::Window const& window)
 {
     auto player_obj = std::make_shared<Player>(grid_to_coord(position),
-                                               *sprites["player"], 1.0f, window);
+                                               *sprites["player"], 1.0f, 100, window);
     game_objects.push_back(player_obj);
     player = std::dynamic_pointer_cast<Player>(player_obj);
 }
@@ -53,7 +53,7 @@ void World::add_player(sf::Vector2f const& position, sf::Window const& window)
 void World::add_melee_enemy(std::string const& name, sf::Vector2f const& position)
 {
     auto enemy = std::make_shared<Melee>(grid_to_coord(position),
-                                         *sprites[name], 0.3f);
+                                         *sprites[name], 0.3f, 20, 10);
     game_objects.push_back(enemy);
 }
 
@@ -111,6 +111,7 @@ void World::load_level_file(std::string const& filename, sf::Window const& windo
                 case '#':
                     add_game_object("wall",{float(x-1),float(y-1)});
                     break;
+                    
                 case '@':
                     add_player({float(x-1),float(y-1)}, window);
                     break;
@@ -259,6 +260,12 @@ int main() {
         // 3. Delete any game objects in the kill queue.
         while (!world.kill_queue.empty())
         {
+            /* // Turns off the game when player is dead.
+            if (world.kill_queue.at(0) == world.get_player())
+            {
+                quit = true;
+                break;
+            }*/
             auto delete_it{std::remove(world.game_objects.begin(), world.game_objects.end(),
                                        world.kill_queue.at(0))};
             world.game_objects.erase(delete_it);

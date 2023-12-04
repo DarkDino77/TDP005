@@ -16,8 +16,8 @@ sf::Vector2f find_direction() {
     return normalize(direction);
 }
 
-Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, sf::Window const& window)
-        : Character(position, sprite, speed), window{window}
+Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, int health, sf::Window const& window)
+        : Character(position, sprite, speed, health), window{window}
 {
     available_weapons.push_back(std::make_shared<Weapon>("glock", 5, "glock", -1, 2.0f, 2));
     current_weapon = available_weapons.at(0);
@@ -25,6 +25,12 @@ Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, sf
 
 void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> current_obj)
 {
+    if(health <= 0)
+    {
+        world.kill_queue.push_back(current_obj);
+        return;
+    }
+
     // Rotate the player towards the mouse cursor.
     sf::Vector2f mouse_pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
     sf::Vector2f rotate_direction = normalize(position - mouse_pos);

@@ -11,11 +11,11 @@ public:
     std::vector<std::shared_ptr<Weapon>> available_weapons{};
     std::shared_ptr<Weapon> current_weapon{};
 
-    Character(sf::Vector2f position, sf::Texture const& sprite, float speed);
+    Character(sf::Vector2f position, sf::Texture const& sprite, float speed, int health);
     void take_damage(int damage);
 
 protected:
-    int health{50};
+    int health{};
 };
 
 #endif

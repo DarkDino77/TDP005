@@ -3,15 +3,17 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
-Melee::Melee(sf::Vector2f position, sf::Texture const& sprite, float speed)
-        : Enemy(position, sprite, speed)
+Melee::Melee(sf::Vector2f position, sf::Texture const& sprite, float speed,int health, int melee_damage)
+        : Enemy(position, sprite, speed, health, melee_damage)
 {}
 
 void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> current_obj)
 {
+    life_time += delta_time.asSeconds();
     if(health <= 0)
     {
         world.kill_queue.push_back(current_obj);
+        return;
     }
     std::shared_ptr<Player> player{world.get_player()};
 
@@ -47,6 +49,16 @@ void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
             if(not enemy_bounds.intersects(other_bounds))
             {
                 continue;
+            }
+            else
+            {
+                std::shared_ptr<Player> player_target{std::dynamic_pointer_cast<Player>(collide_obj)};
+                if( player_target != nullptr && life_time > melee_timer + 1)
+                {
+                    melee_timer = life_time;
+                    player_target->take_damage(melee_damage);
+                }
+
             }
         }
         else

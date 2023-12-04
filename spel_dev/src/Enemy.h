@@ -7,7 +7,8 @@
 class Enemy : public Character
 {
 public:
-    Enemy(sf::Vector2f position, sf::Texture const& sprite, float speed);
+    Enemy(sf::Vector2f position, sf::Texture const& sprite, float speed, int health ,int melee_damage);
+    int melee_damage{};
 };
 
 
