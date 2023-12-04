@@ -111,7 +111,7 @@ void World::load_level_file(std::string const& filename, sf::Window const& windo
                 case '#':
                     add_game_object("wall",{float(x-1),float(y-1)});
                     break;
-                    
+
                 case '@':
                     add_player({float(x-1),float(y-1)}, window);
                     break;
