@@ -16,9 +16,9 @@ public:
     int ammo_capacity;
     double bullet_speed;
     double fire_rate;
-    void shoot(sf::Vector2f direction, World & world, sf::Vector2f position);
+    void shoot(sf::Vector2f direction, World & world, sf::Vector2f position, std::shared_ptr<Game_Object> source);
 private:
-    sf::Clock time_since_shot;
+    sf::Clock time_since_shot{};
 };
 
 

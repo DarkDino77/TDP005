@@ -6,17 +6,14 @@
 
 class Player : public Character
 {
-private:
-    sf::Vector2f find_direction();
 public:
-    Player(sf::Vector2f position, sf::Texture const& sprite, float speed);
-    void update(sf::Time const& delta_time, World & world, sf::Window & window, std::shared_ptr<Game_Object> obj) override;
+    Player(sf::Vector2f position, sf::Texture const& sprite, float speed, sf::Window const& window);
+    void update(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> current_obj) override;
     //void handle_collision(World const& world) override;
+    sf::Window const& window;
 private:
-    float player_speed{1.0f};
     int level{0};
     int level_progress{0};
-
 };
 
 #endif
