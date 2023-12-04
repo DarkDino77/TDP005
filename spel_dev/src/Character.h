@@ -13,6 +13,7 @@ public:
 
     Character(sf::Vector2f position, sf::Texture const& sprite, float speed, int health);
     void take_damage(int damage);
+    void knock_back(sf::Vector2f const& direction);
 
 protected:
     int health{};

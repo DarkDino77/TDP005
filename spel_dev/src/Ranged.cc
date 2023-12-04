@@ -6,7 +6,7 @@
 Ranged::Ranged(sf::Vector2f position, sf::Texture const& sprite, float speed,int health, int melee_damage)
         : Enemy(position, sprite, speed, health, melee_damage)
 {
-    available_weapons.push_back(std::make_shared<Weapon>("spitter", 5, "spitter_ammo", -1, 2.0f, 2));
+    available_weapons.push_back(std::make_shared<Weapon>("spitter", 5, "spitter_ammo", -1, 1.0f, 0.5));
     current_weapon = available_weapons.at(0);
 }
 
@@ -71,6 +71,7 @@ void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     shape.setPosition(position);
     collision_shape.setPosition(position);
 
+    /*
     // Loop through all game objects in world, handle collision.
     for(std::shared_ptr<Game_Object> const& collide_obj : world.game_objects) {
         sf::FloatRect enemy_bounds = collision_shape.getGlobalBounds();
@@ -138,5 +139,5 @@ void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
             collision_shape.setPosition(position);
             enemy_bounds = collision_shape.getGlobalBounds();
         }
-    }
+    }*/
 }

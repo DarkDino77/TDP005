@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Player.h"
 #include "point.h"
+#include "Enemy.h"
 
 sf::Vector2f find_direction() {
     sf::Vector2f direction;
@@ -48,86 +49,54 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     {
         current_weapon->shoot(rotate_direction, world, position, current_obj);
     }
+}
 
-    // Loop through all game objects in world, handle collision.
-    for(std::shared_ptr<Game_Object> const& collide_obj : world.game_objects)
+void Player::handle_collision(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> current_obj, std::shared_ptr<Game_Object> other_obj)
+{
+    if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr || std::dynamic_pointer_cast<Enemy>(other_obj) != nullptr)
     {
-        sf::FloatRect player_bounds = collision_shape.getGlobalBounds();
-        sf::FloatRect other_bounds = (collide_obj->shape).getGlobalBounds();
+        return;
+    }
 
-        // If other object is same as this object, no collision is detected, or the other object is a bullet,
-        // skip to the next object.
-        if(collide_obj == current_obj || not player_bounds.intersects(other_bounds) || std::dynamic_pointer_cast<Bullet>(collide_obj) != nullptr)
+    if(length(position - other_obj->position)
+       > std::sqrt(std::pow(collision_shape.getRadius()*2,2)
+       + std::pow(length(other_obj->shape.getSize()),2)))
+    {
+        return;
+    }
+
+    sf::Vector2f push_direction{};
+    push_direction = normalize(position - other_obj->position);
+    float temp_increment{0.005f};
+
+    // TODO:Cheack if movable target should be sent in to this function or not.
+    std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
+    // If other object is not a movable object, make the push-direction perpendicular to the collided surface.
+    if (movable_target == nullptr) {
+        if (std::abs(push_direction.x) >= std::abs(push_direction.y))
         {
-            continue;
-        }
-
-        std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(collide_obj)};
-
-        if(movable_target != nullptr)
-        {
-            other_bounds = (movable_target->collision_shape).getGlobalBounds();
-            if(not player_bounds.intersects(other_bounds))
-            {
-                continue;
-            }
+            push_direction.y = 0.0f;
+            push_direction.x = (push_direction.x > 0) ? 1.0f : -1.0f;
         }
         else
         {
-            if(length(position - collide_obj->position)
-               > std::sqrt(std::pow(collision_shape.getRadius()*2,2)
-               + std::pow(length(collide_obj->shape.getSize()),2)))
-            {
-                continue;
-            }
+            push_direction.x = 0.0f;
+            push_direction.y = (push_direction.y > 0) ? 1.0f : -1.0f;
         }
+    }
 
-        sf::Vector2f push_direction{};
-        push_direction = normalize(position - collide_obj->position);
-        float temp_increment{0.005f};
+    sf::FloatRect other_bounds = (other_obj->shape).getGlobalBounds();
+    std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
+    if(other_movable_target != nullptr)
+    {
+        other_bounds = other_movable_target->collision_shape.getGlobalBounds();
+    }
 
-        // If other object is not a movable object, make the push-direction perpendicular to the collided surface.
-        if (movable_target == nullptr) {
-            if (std::abs(push_direction.x) >= std::abs(push_direction.y))
-            {
-                push_direction.y = 0.0f;
-                push_direction.x = (push_direction.x > 0) ? 1.0f : -1.0f;
-            }
-            else
-            {
-                push_direction.x = 0.0f;
-                push_direction.y = (push_direction.y > 0) ? 1.0f : -1.0f;
-            }
-        }
-
-        /*sf::Vector2f push_direction{};
-        bool collision_x{
-                (direction.y == 0 && direction.x != 0)
-                &&
-                (std::abs(collide_obj->shape.getPosition().y - collision_shape.getPosition().y) <= (collide_obj->shape.getSize().y/2.0f))
-        };
-
-        bool collision_y{
-                (direction.x == 0 && direction.y != 0) // Added this check
-                &&
-                (std::abs(collide_obj->shape.getPosition().x - collision_shape.getPosition().x) <= (collide_obj->shape.getSize().x/2.0f))
-        };
-        if( (not (collision_x && collision_y)) && (collision_x  || collision_y))
-        {
-            push_direction = (-direction);
-        }
-        else
-        {
-            push_direction = normalize(position - collide_obj->position);
-        }*/
-
-        // Push the player in the push-direction until it no longer collides with the other object
-        while (player_bounds.intersects(other_bounds)) {
-            position += push_direction * temp_increment;
-            shape.setPosition(position);
-            collision_shape.setPosition(position);
-            player_bounds = collision_shape.getGlobalBounds();
-        }
+    // Push the player in the push-direction until it no longer collides with the other object
+    while (collision_shape.getGlobalBounds().intersects(other_bounds)) {
+        position += push_direction * temp_increment;
+        shape.setPosition(position);
+        collision_shape.setPosition(position);
     }
 }
 

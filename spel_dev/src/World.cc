@@ -140,19 +140,6 @@ void World::load_level_file(std::string const& filename, sf::Window const& windo
     }
 }
 
-std::vector<std::shared_ptr<Game_Object>> World::check_collision(std::shared_ptr<Game_Object> const& current_object)
-{
-    std::vector<std::shared_ptr<Game_Object>> collided{};
-
-    if()
-        for(std::shared_ptr<Game_Object> const& collide_obj : game_objects)
-    {
-        sf::FloatRect current_bounds = current_object->shape.getGlobalBounds();
-        sf::FloatRect other_bounds = (collide_obj->shape).getGlobalBounds();
-        if()
-    }
-}
-
 int main() {
     sf::RenderWindow window{sf::VideoMode{window_width, window_height}, "The Grand Arena"};
 
@@ -259,10 +246,32 @@ int main() {
         sf::Vector2f mouse_pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
         mouse_cursor.setPosition(mouse_pos);
 
-        // 1. Update all game objects.
-        for(const std::shared_ptr<Game_Object>& obj : world.game_objects)
+        // 1. Update all game objects and handle collisions.
+        for(const std::shared_ptr<Game_Object>& current_obj : world.game_objects)
         {
-            obj->update(delta_time, world, obj);
+            current_obj->update(delta_time, world, current_obj);
+
+            sf::FloatRect current_bounds = current_obj->shape.getGlobalBounds();
+            std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(current_obj)};
+            if(movable_target != nullptr)
+            {
+                current_bounds = movable_target->collision_shape.getGlobalBounds();
+            }
+
+            for(std::shared_ptr<Game_Object> const& other_obj : world.game_objects)
+            {
+                sf::FloatRect other_bounds = (other_obj->shape).getGlobalBounds();
+                std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(current_obj)};
+                if(other_movable_target != nullptr)
+                {
+                    other_bounds = other_movable_target->collision_shape.getGlobalBounds();
+                }
+
+                if(current_obj != other_obj && current_bounds.intersects(other_bounds))
+                {
+                    current_obj->handle_collision( delta_time, world, current_obj, other_obj);
+                }
+            }
         }
 
         // 2. Draw each game object.
@@ -282,6 +291,13 @@ int main() {
             }
             obj -> render(window);
         }
+
+        while (!world.add_queue.empty())
+        {
+            world.game_objects.push_back(world.add_queue.at(0));
+            world.add_queue.erase(world.add_queue.begin());
+        }
+
 
         // 3. Delete any game objects in the kill queue.
         while (!world.kill_queue.empty())

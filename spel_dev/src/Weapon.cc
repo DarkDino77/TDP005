@@ -14,9 +14,9 @@ void Weapon::shoot(sf::Vector2f direction, World & world, sf::Vector2f position,
 {
     if(can_shoot())
     {
-        time_since_shot.restart();
         sf::Vector2f bullet_spawn{position -= direction*32.0f};
         std::shared_ptr<Bullet> bullet{std::make_shared<Bullet>(damage, direction, bullet_speed, *world.sprites[ammo_type], bullet_spawn, source)};
-        world.game_objects.push_back(bullet);
+        world.add_queue.push_back(bullet);
+        time_since_shot.restart();
     }
 }

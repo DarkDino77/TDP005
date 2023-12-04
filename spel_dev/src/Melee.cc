@@ -29,7 +29,7 @@ void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
     shape.setPosition(position);
     collision_shape.setPosition(position);
 
-    // Loop through all game objects in world, handle collision.
+    /*// Loop through all game objects in world, handle collision.
     for(std::shared_ptr<Game_Object> const& collide_obj : world.game_objects) {
         sf::FloatRect enemy_bounds = collision_shape.getGlobalBounds();
         sf::FloatRect other_bounds = (collide_obj->shape).getGlobalBounds();
@@ -96,7 +96,7 @@ void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
             collision_shape.setPosition(position);
             enemy_bounds = collision_shape.getGlobalBounds();
         }
-    }
+    }*/
 }
 
 

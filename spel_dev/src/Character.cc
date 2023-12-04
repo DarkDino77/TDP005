@@ -7,3 +7,10 @@ void Character::take_damage(int damage)
 {
     health -= damage;
 }
+
+void Character::knock_back(sf::Vector2f const& direction)
+{
+    position -= direction * 10.0f;
+    shape.setPosition(position);
+    collision_shape.setPosition(position);
+}

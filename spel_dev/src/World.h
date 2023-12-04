@@ -16,6 +16,7 @@ public:
     std::map<std::string, std::shared_ptr<sf::Texture>> sprites{}; //TODO: Determine if public
     std::vector<std::shared_ptr<Game_Object>> game_objects{}; //TODO: Determine if public
     std::vector<std::shared_ptr<Game_Object>> kill_queue{};
+    std::vector<std::shared_ptr<Game_Object>> add_queue{};
     std::shared_ptr<Player> get_player();
     bool debug_mode{false};
 
@@ -27,7 +28,6 @@ public:
     void spawn_monsters();
     void load_level_file(std::string const& filename, sf::Window const& window);
 
-    std::vector<std::shared_ptr<Game_Object>> check_collision(std::shared_ptr<Game_Object> const& current_object);
 
 private:
     std::shared_ptr<Player> player{nullptr};
