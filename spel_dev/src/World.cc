@@ -138,7 +138,19 @@ void World::load_level_file(std::string const& filename, sf::Window const& windo
             }
         }
     }
+}
 
+std::vector<std::shared_ptr<Game_Object>> World::check_collision(std::shared_ptr<Game_Object> const& current_object)
+{
+    std::vector<std::shared_ptr<Game_Object>> collided{};
+
+    if()
+        for(std::shared_ptr<Game_Object> const& collide_obj : game_objects)
+    {
+        sf::FloatRect current_bounds = current_object->shape.getGlobalBounds();
+        sf::FloatRect other_bounds = (collide_obj->shape).getGlobalBounds();
+        if()
+    }
 }
 
 int main() {

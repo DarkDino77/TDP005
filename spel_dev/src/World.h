@@ -19,7 +19,6 @@ public:
     std::shared_ptr<Player> get_player();
     bool debug_mode{false};
 
-
     void add_texture(const std::string& name, const std::string& filename);
     void add_game_object(std::string const& name, sf::Vector2f const& position);
     void add_player(sf::Vector2f const& position, sf::Window const& window);
@@ -27,6 +26,8 @@ public:
     void add_ranged_enemy(std::string const& name, sf::Vector2f const& position);
     void spawn_monsters();
     void load_level_file(std::string const& filename, sf::Window const& window);
+
+    std::vector<std::shared_ptr<Game_Object>> check_collision(std::shared_ptr<Game_Object> const& current_object);
 
 private:
     std::shared_ptr<Player> player{nullptr};
