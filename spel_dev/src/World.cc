@@ -3,6 +3,7 @@
 #include "World.h"
 #include "Player.h"
 #include "Melee.h"
+#include "Ranged.h"
 #include <vector>
 #include <memory>
 #include <random>
@@ -57,6 +58,13 @@ void World::add_melee_enemy(std::string const& name, sf::Vector2f const& positio
     game_objects.push_back(enemy);
 }
 
+void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& position)
+{
+    auto enemy = std::make_shared<Ranged>(grid_to_coord(position),
+                                         *sprites[name], 0.3f, 20, 10);
+    game_objects.push_back(enemy);
+}
+
 std::shared_ptr<Player> World::get_player()
 {
     return player;
@@ -73,7 +81,7 @@ void World::spawn_monsters()
     std::uniform_int_distribution<int> for_x_uniform(1,2);
     std::uniform_int_distribution<int> for_y_uniform(1,31);
     std::uniform_int_distribution<int> sprite_randomizer(1,int(enemy_sprites.size()));
-    while(spawn_positions.size() < 5)
+    while(spawn_positions.size() < 4)
     {
         int pos_x{(for_x_uniform(rd)-1)*59};
         int pos_y{(for_y_uniform(rd)-1)};
@@ -90,6 +98,7 @@ void World::spawn_monsters()
     {
         add_melee_enemy(enemy_sprites.at(sprite_randomizer(rd)-1), pos);
     }
+    add_ranged_enemy("spitter1", {0,0});
 }
 
 void World::load_level_file(std::string const& filename, sf::Window const& window)
@@ -134,6 +143,7 @@ void World::load_level_file(std::string const& filename, sf::Window const& windo
 
 int main() {
     sf::RenderWindow window{sf::VideoMode{window_width, window_height}, "The Grand Arena"};
+
     window.setMouseCursorVisible(false);
     window.setKeyRepeatEnabled(false);
     window.setVerticalSyncEnabled(true);
@@ -172,6 +182,7 @@ int main() {
     // ==============================[ Create World ]==============================
     World world{};
 
+
     world.add_texture("wall", "textures/wall.png");
     world.add_texture("crate", "textures/crate.png");
     world.add_texture("barrel", "textures/barrel.png");
@@ -183,7 +194,9 @@ int main() {
     world.add_texture("melee5", "textures/zombie5.png");
     world.add_texture("melee6", "textures/zombie6.png");
     world.add_texture("melee7", "textures/zombie7.png");
-    world.add_texture("bullet", "textures/bullet.png");
+    world.add_texture("glock_ammo", "textures/glock_ammo.png");
+    world.add_texture("spitter_ammo", "textures/spitter_ammo.png");
+    world.add_texture("spitter1", "textures/spitter1.png");
 
     world.load_level_file("level1.txt", window);
     world.spawn_monsters();
@@ -243,6 +256,7 @@ int main() {
         // 2. Draw each game object.
         window.clear();
         window.draw(background_sprite);
+
         for(const std::shared_ptr<Game_Object>& obj : world.game_objects)
         {
             if(world.debug_mode)

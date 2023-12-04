@@ -1,14 +1,56 @@
-#include "Melee.h"
+#include "Ranged.h"
 #include "point.h"
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
-Melee::Melee(sf::Vector2f position, sf::Texture const& sprite, float speed,int health, int melee_damage)
+Ranged::Ranged(sf::Vector2f position, sf::Texture const& sprite, float speed,int health, int melee_damage)
         : Enemy(position, sprite, speed, health, melee_damage)
-{}
-
-void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> current_obj)
 {
+    available_weapons.push_back(std::make_shared<Weapon>("spitter", 5, "spitter_ammo", -1, 2.0f, 2));
+    current_weapon = available_weapons.at(0);
+}
+
+
+
+void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> current_obj)
+{
+    if(current_weapon->can_shoot())
+    {
+        sf::CircleShape collision_checker;
+        collision_checker.setRadius(5);
+        collision_checker.setOrigin({collision_checker.getRadius(),collision_checker.getRadius()});
+        collision_checker.setPosition(position);
+        collision_checker.setFillColor(sf::Color::Red);
+
+        bool checked{false};
+        while(not checked)
+        {
+            for(std::shared_ptr<Game_Object> const& collide_obj : world.game_objects) {
+                sf::FloatRect collision_bounds = collision_checker.getGlobalBounds();
+                sf::FloatRect other_bounds = (collide_obj->shape).getGlobalBounds();
+
+                if(collide_obj == current_obj || not collision_bounds.intersects(other_bounds)  )
+                {
+                    continue;
+                }
+
+                std::shared_ptr<Player> player_target{std::dynamic_pointer_cast<Player>(collide_obj)};
+                if( player_target == nullptr)
+                {
+                    checked = true;
+                    break;
+                }
+                else
+                {
+                    current_weapon->shoot(direction, world, position, current_obj);
+                    checked = true;
+                    break;
+                }
+            }
+            collision_checker.setPosition(collision_checker.getPosition() - direction * 16.0f * 2.f * 0.9f);
+        }
+    }
+
     if(health <= 0)
     {
         world.kill_queue.push_back(current_obj);
@@ -65,7 +107,7 @@ void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
         {
             if(length(position - collide_obj->position)
                > std::sqrt(std::pow(collision_shape.getRadius()*2,2)
-               + std::pow(length(collide_obj->shape.getSize()),2)) * 1.1f)
+                           + std::pow(length(collide_obj->shape.getSize()),2)) * 1.1f)
             {
                 continue;
             }
@@ -98,5 +140,3 @@ void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
         }
     }
 }
-
-
