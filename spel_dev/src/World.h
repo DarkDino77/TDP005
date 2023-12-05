@@ -25,10 +25,13 @@ public:
     void add_texture(std::string const& name,  std::string const& filename);
     void add_sound(std::string const& name,  std::string const& filename);
     void play_sound(std::string const& name);
-    void add_game_object(std::string const& name, sf::Vector2f const& position);
+
     void add_player(sf::Vector2f const& position, sf::Window const& window);
     void add_melee_enemy(std::string const& name, sf::Vector2f const& position);
     void add_ranged_enemy(std::string const& name, sf::Vector2f const& position);
+    void add_wall(sf::Vector2f const& position);
+    void add_explosive_barrel(sf::Vector2f const& position);
+    void add_crate(sf::Vector2f const& position);
     void add_explosion(std::string const& name, sf::Vector2f const& position);
     void spawn_monsters();
     void load_level_file(std::string const& filename, sf::Window const& window);
@@ -38,5 +41,6 @@ public:
 private:
     std::shared_ptr<Player> player{nullptr};
     std::vector<std::shared_ptr<sf::Sound>> sound_queue{};
+    int current_wave{1};
 };
 #endif

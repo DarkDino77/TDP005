@@ -12,7 +12,7 @@ Bullet::Bullet(int damage, sf::Vector2f const& aim_direction, double speed, sf::
     shape.setRotation((rotate_degrees*180/3.1415f) - 90.f);
 }
 
-void Bullet::update(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> obj)
+void Bullet::update(sf::Time const& delta_time, World & , std::shared_ptr<Game_Object>)
 {
     float distance = 250.0f * delta_time.asSeconds() * speed;
     position -= direction * distance;
@@ -20,22 +20,23 @@ void Bullet::update(sf::Time const& delta_time, World & world, std::shared_ptr<G
     collision_shape.setPosition(position);
 }
 
-void Bullet::handle_collision(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> current_obj, std::shared_ptr<Game_Object> other_obj)
+void Bullet::handle_collision(World & world, std::shared_ptr<Game_Object> current_obj, std::shared_ptr<Game_Object> other_obj)
 {
     if (other_obj == source || not is_alive || std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr)
     {
         return;
     }
 
-    std::shared_ptr<Character> character_target =  std::dynamic_pointer_cast<Character>(other_obj);
-    std::shared_ptr<Destructible> destructible_target =  std::dynamic_pointer_cast<Destructible>(other_obj);
-    if(character_target != nullptr) {
-        character_target->take_damage(damage);
-        character_target->knock_back(direction);
-    }
-    else if(destructible_target)
+    std::shared_ptr<Damageable> damageable_target =  std::dynamic_pointer_cast<Damageable>(other_obj);
+    if(damageable_target != nullptr)
     {
-        destructible_target->take_damage(damage, other_obj, world);
+        damageable_target->take_damage(damage);
+
+        std::shared_ptr<Character> character_target =  std::dynamic_pointer_cast<Character>(other_obj);
+        if(character_target != nullptr) {
+
+            character_target->knock_back(direction, 10);
+        }
     }
 
     world.kill_queue.push_back(current_obj);

@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "point.h"
 #include "Enemy.h"
+#include "Explosion.h"
 
 sf::Vector2f find_direction() {
     sf::Vector2f direction;
@@ -51,9 +52,10 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     }
 }
 
-void Player::handle_collision(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> current_obj, std::shared_ptr<Game_Object> other_obj)
+void Player::handle_collision(World &, std::shared_ptr<Game_Object>, std::shared_ptr<Game_Object> other_obj)
 {
-    if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr || std::dynamic_pointer_cast<Enemy>(other_obj) != nullptr)
+    if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr || std::dynamic_pointer_cast<Enemy>(other_obj) != nullptr||
+            std::dynamic_pointer_cast<Explosion>(other_obj)!=nullptr)
     {
         return;
     }

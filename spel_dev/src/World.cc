@@ -9,6 +9,7 @@
 #include "Crate.h"
 #include "Explosion.h"
 #include "Explosive_Barrel.h"
+#include "Wall.h"
 #include <vector>
 #include <memory>
 #include <random>
@@ -72,13 +73,6 @@ void World::play_sound(std::string const& name)
     sound_queue.push_back(sound);
 }
 
-void World::add_game_object(std::string const& name, sf::Vector2f const& position)
-{
-    auto game_obj = std::make_shared<Game_Object>(grid_to_coord(position),
-                                                  *sprites[name]);
-    game_objects.push_back(game_obj);
-}
-
 void World::add_player(sf::Vector2f const& position, sf::Window const& window)
 {
     auto player_obj = std::make_shared<Player>(grid_to_coord(position),
@@ -89,23 +83,50 @@ void World::add_player(sf::Vector2f const& position, sf::Window const& window)
 
 void World::add_melee_enemy(std::string const& name, sf::Vector2f const& position)
 {
-    auto enemy = std::make_shared<Melee>(grid_to_coord(position),
-                                         *sprites[name], 0.3f, 20, 10);
-    game_objects.push_back(enemy);
+    if(name == "zombie")
+    {
+        auto enemy = std::make_shared<Melee>(grid_to_coord(position),
+                                             *sprites["melee1"], 0.3f, 20, 5);
+        game_objects.push_back(enemy);
+    }
 }
 
 void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& position)
 {
-    auto enemy = std::make_shared<Ranged>(grid_to_coord(position),
-                                         *sprites[name], 0.3f, 20, 10);
-    game_objects.push_back(enemy);
+    if(name == "spitter")
+    {
+        auto enemy = std::make_shared<Ranged>(grid_to_coord(position),
+                                             *sprites["spitter1"], 0.15f, 20, 2);
+        game_objects.push_back(enemy);
+    }
+}
+
+void World::add_wall(sf::Vector2f const& position)
+{
+    auto wall = std::make_shared<Wall>(grid_to_coord(position),
+                                                  *sprites["wall"]);
+    game_objects.push_back(wall);
+}
+
+void World::add_explosive_barrel(sf::Vector2f const& position)
+{
+    auto explosive_barrel = std::make_shared<Explosive_Barrel>(grid_to_coord(position),
+                                                  *sprites["explosive_barrel"], 10);
+    game_objects.push_back(explosive_barrel);
+}
+
+void World::add_crate(sf::Vector2f const& position)
+{
+    auto crate = std::make_shared<Crate>(grid_to_coord(position),
+                                                  *sprites["crate"], 50);
+    game_objects.push_back(crate);
 }
 
 void World::add_explosion(std::string const& name, sf::Vector2f const& position)
 {
-    auto explosion = std::make_shared<Explosion>(grid_to_coord(position),
-                                          *sprites[name], 1000, 100);
-    game_objects.push_back(explosion);
+    auto explosion = std::make_shared<Explosion>(position,
+                                          *sprites[name], 100, 10);
+    add_queue.push_back(explosion);
 }
 
 std::shared_ptr<Player> World::get_player()
@@ -115,7 +136,10 @@ std::shared_ptr<Player> World::get_player()
 
 void World::spawn_monsters()
 {
-    // TODO: Add a wave mechanic for the enemies, with a "wave-pot"
+    std::cout << "HERE" << std::endl;
+    int num_enemies{5 + ((current_wave - 1) * 2)};
+    int num_ranged{int(std::floor(float(current_wave) * 0.5f))};
+    std::cout << "ranged:" << num_ranged << std::endl;
 
     std::vector<sf::Vector2f> spawn_positions{};
     std::vector<std::string> enemy_sprites{"melee1","melee2", "melee3", "melee4", "melee5", "melee6", "melee7"};
@@ -124,24 +148,38 @@ void World::spawn_monsters()
     std::uniform_int_distribution<int> for_x_uniform(1,2);
     std::uniform_int_distribution<int> for_y_uniform(1,31);
     std::uniform_int_distribution<int> sprite_randomizer(1,int(enemy_sprites.size()));
-    while(spawn_positions.size() < 4)
+
+
+    int num_melee_spawned{0};
+    while ( num_melee_spawned < (num_enemies-num_ranged))
     {
         int pos_x{(for_x_uniform(rd)-1)*59};
         int pos_y{(for_y_uniform(rd)-1)};
-
         sf::Vector2f pos{float(pos_x), float(pos_y)};
         auto it = std::find(spawn_positions.begin(), spawn_positions.end(), pos);
         if(it == spawn_positions.end())
         {
+            add_melee_enemy("zombie", pos);
+            num_melee_spawned++;
             spawn_positions.push_back(pos);
         }
     }
 
-    for(sf::Vector2f pos : spawn_positions)
+    int num_ranged_spawned{0};
+    while(num_ranged_spawned < num_ranged)
     {
-        add_melee_enemy(enemy_sprites.at(sprite_randomizer(rd)-1), pos);
+        int pos_x{(for_x_uniform(rd)-1)*59};
+        int pos_y{(for_y_uniform(rd)-1)};
+        sf::Vector2f pos{float(pos_x), float(pos_y)};
+        auto it = std::find(spawn_positions.begin(), spawn_positions.end(), pos);
+        if(it == spawn_positions.end())
+        {
+            add_ranged_enemy("spitter", pos);
+            num_ranged_spawned++;
+            spawn_positions.push_back(pos);
+        }
     }
-    add_ranged_enemy("spitter1", {0,0});
+    current_wave++;
 }
 
 void World::load_level_file(std::string const& filename, sf::Window const& window)
@@ -161,7 +199,7 @@ void World::load_level_file(std::string const& filename, sf::Window const& windo
             char symbol = row[x];
             switch (symbol) {
                 case '#':
-                    add_game_object("wall",{float(x-1),float(y-1)});
+                    add_wall({float(x-1),float(y-1)});
                     break;
 
                 case '@':
@@ -169,11 +207,11 @@ void World::load_level_file(std::string const& filename, sf::Window const& windo
                     break;
 
                 case 'b':
-                    add_game_object("barrel",{float(x-1),float(y-1)});
+                    add_explosive_barrel({float(x-1),float(y-1)});
                     break;
 
                 case 'c':
-                    add_game_object("crate",{float(x-1),float(y-1)});
+                    add_crate({float(x-1),float(y-1)});
                     break;
 
                 default:
@@ -208,7 +246,7 @@ bool World::can_see_player(std::shared_ptr<Game_Object> source, sf::Vector2f dir
                 return false;
             }
             else
-            {1
+            {
                 return true;
             }
         }
@@ -259,7 +297,7 @@ int main() {
 
     world.add_texture("wall", "textures/wall.png");
     world.add_texture("crate", "textures/crate.png");
-    world.add_texture("barrel", "textures/barrel.png");
+    world.add_texture("explosive_barrel", "textures/explosive_barrel.png");
     world.add_texture("player", "textures/player.png");
     world.add_texture("melee1", "textures/zombie1.png");
     world.add_texture("melee2", "textures/zombie2.png");
@@ -271,12 +309,12 @@ int main() {
     world.add_texture("glock_ammo", "textures/glock_ammo.png");
     world.add_texture("spitter_ammo", "textures/spitter_ammo.png");
     world.add_texture("spitter1", "textures/spitter1.png");
+    world.add_texture("explosion", "textures/explosion.png");
+
+
 
     world.load_level_file("level1.txt", window);
     world.spawn_monsters();
-
-    auto crate = std::make_shared<Explosive_Barrel>(grid_to_coord({10,10}), *world.sprites["barrel"], 20);
-    world.game_objects.push_back(crate);
 
     sf::Clock clock;
     float time_since_spawn{0};
@@ -345,23 +383,33 @@ int main() {
 
             sf::FloatRect current_bounds = current_obj->shape.getGlobalBounds();
             std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(current_obj)};
-            if(movable_target != nullptr)
+            std::shared_ptr<Explosion> explosive_target{std::dynamic_pointer_cast<Explosion>(current_obj)};
+            if(movable_target != nullptr  )
             {
                 current_bounds = movable_target->collision_shape.getGlobalBounds();
+            }
+            else if(explosive_target != nullptr)
+            {
+                current_bounds = explosive_target->collision_shape.getGlobalBounds();
             }
 
             for(std::shared_ptr<Game_Object> const& other_obj : world.game_objects)
             {
                 sf::FloatRect other_bounds = (other_obj->shape).getGlobalBounds();
                 std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
+                std::shared_ptr<Explosion> other_explosive_target{std::dynamic_pointer_cast<Explosion>(other_obj)};
                 if(other_movable_target != nullptr)
                 {
                     other_bounds = other_movable_target->collision_shape.getGlobalBounds();
                 }
+                else if(other_explosive_target != nullptr)
+                {
+                    other_bounds = other_explosive_target->collision_shape.getGlobalBounds();
+                }
 
                 if(current_obj != other_obj && current_bounds.intersects(other_bounds))
                 {
-                    current_obj->handle_collision( delta_time, world, current_obj, other_obj);
+                    current_obj->handle_collision(world, current_obj, other_obj);
                 }
             }
         }
@@ -374,10 +422,15 @@ int main() {
         {
             if(world.debug_mode)
             {
-                std::shared_ptr<Movable> target_obj{std::dynamic_pointer_cast<Movable>(obj)};
-                if(target_obj != nullptr)
+                std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(obj)};
+                std::shared_ptr<Explosion> explosive_target{std::dynamic_pointer_cast<Explosion>(obj)};
+                if(movable_target != nullptr)
                 {
-                    window.draw(target_obj->collision_shape);
+                    window.draw(movable_target->collision_shape);
+                }
+                else if(explosive_target != nullptr)
+                {
+                    window.draw(explosive_target->collision_shape);
                 }
                 window.draw(fps_text);
             }
@@ -394,11 +447,11 @@ int main() {
         while (!world.kill_queue.empty())
         {
             // Turns off the game when player is dead.
-            /*if (world.kill_queue.at(0) == world.get_player())
+            if (world.kill_queue.at(0) == world.get_player())
             {
                 quit = true;
                 break;
-            }*/
+            }
             auto delete_it{std::remove(world.game_objects.begin(), world.game_objects.end(),
                                        world.kill_queue.at(0))};
             world.game_objects.erase(delete_it);

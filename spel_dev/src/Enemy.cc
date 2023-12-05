@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "point.h"
+#include "Explosion.h"
 #include <cmath>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -8,9 +9,9 @@ Enemy::Enemy(sf::Vector2f position, sf::Texture const& sprite, float speed, int 
         : Character(position, sprite, speed, health), melee_damage{melee_damage}
 {}
 
-void Enemy::handle_collision(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> current_obj, std::shared_ptr<Game_Object> other_obj)
+void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object>, std::shared_ptr<Game_Object> other_obj)
 {
-    if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr)
+    if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr || std::dynamic_pointer_cast<Explosion>(other_obj) != nullptr)
     {
         return;
     }
@@ -54,7 +55,7 @@ void Enemy::handle_collision(sf::Time const& delta_time, World & world, std::sha
             melee_timer = life_time;
             world.play_sound("player_hurt");
             player_target->take_damage(melee_damage);
-            player_target->knock_back(direction);
+            player_target->knock_back(direction, 10);
         }
     }
 
