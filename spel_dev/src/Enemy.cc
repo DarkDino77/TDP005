@@ -52,6 +52,7 @@ void Enemy::handle_collision(sf::Time const& delta_time, World & world, std::sha
         if( player_target != nullptr && life_time > melee_timer + 1)
         {
             melee_timer = life_time;
+            world.play_sound("player_hurt");
             player_target->take_damage(melee_damage);
             player_target->knock_back(direction);
         }

@@ -1,6 +1,6 @@
 CCC = g++
 CFLAGS = -std=c++17 -Wall -Wextra -Weffc++ -Wpedantic -Weffc++ -g -fno-elide-constructors
-SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
 
 SRC := src#Source directory
 BIN := bin#Output directory

@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include "standard.h"
 #include "World.h"
 #include "Player.h"
@@ -31,12 +33,43 @@ void World::add_texture(std::string const& name, std::string const& filename)
     auto texture = std::make_shared<sf::Texture>();
     if(!texture->loadFromFile(filename))
     {
-        std::cerr << "Could not find image with name '" << filename << "'." << std::endl;
+        std::cerr << "Error: Could not find image with name '" << filename << "'." << std::endl;
     }
     else
     {
         sprites[name] = texture;
     }
+}
+
+void World::add_sound(std::string const& category,  std::string const& filename)
+{
+    auto sound_buffer = std::make_shared<sf::SoundBuffer>();
+    if (!sound_buffer->loadFromFile(filename))
+    {
+        std::cerr << "Error: Could not find file with name '" << filename << "'." << std::endl;
+    }
+    else
+    {
+        sound_buffers[category].push_back(sound_buffer);
+    }
+}
+
+void World::play_sound(std::string const& name)
+{
+    if(sound_buffers[name].empty())
+    {
+        std::cerr << "Error: Sound with name '" << name << "' was never added to world." << std::endl;
+        return;
+    }
+
+    std::random_device rd;
+    std::uniform_int_distribution<int> rd_uniform(1,int(sound_buffers[name].size()));
+    int track_index{(rd_uniform(rd)-1)};
+
+    std::shared_ptr<sf::Sound> sound{std::make_shared<sf::Sound>()};
+    sound->setBuffer(*sound_buffers[name].at(track_index));
+    sound->play();
+    sound_queue.push_back(sound);
 }
 
 void World::add_game_object(std::string const& name, sf::Vector2f const& position)
@@ -150,6 +183,39 @@ void World::load_level_file(std::string const& filename, sf::Window const& windo
     }
 }
 
+bool World::can_see_player(std::shared_ptr<Game_Object> source, sf::Vector2f direction)
+{
+    sf::CircleShape collision_checker;
+    collision_checker.setRadius(5);
+    collision_checker.setOrigin({collision_checker.getRadius(),collision_checker.getRadius()});
+    collision_checker.setPosition(source->position);
+    //collision_checker.setFillColor(sf::Color::Red);
+
+    while(true)
+    {
+        for(std::shared_ptr<Game_Object> const& collide_obj : game_objects) {
+            sf::FloatRect collision_bounds = collision_checker.getGlobalBounds();
+            sf::FloatRect other_bounds = (collide_obj->shape).getGlobalBounds();
+
+            if(collide_obj == source || not collision_bounds.intersects(other_bounds)  )
+            {
+                continue;
+            }
+
+            std::shared_ptr<Player> player_target{std::dynamic_pointer_cast<Player>(collide_obj)};
+            if( player_target == nullptr)
+            {
+                return false;
+            }
+            else
+            {1
+                return true;
+            }
+        }
+        collision_checker.setPosition(collision_checker.getPosition() - direction * 16.0f * 2.f * 0.9f);
+    }
+}
+
 int main() {
     sf::RenderWindow window{sf::VideoMode{window_width, window_height}, "The Grand Arena"};
 
@@ -191,7 +257,6 @@ int main() {
     // ==============================[ Create World ]==============================
     World world{};
 
-
     world.add_texture("wall", "textures/wall.png");
     world.add_texture("crate", "textures/crate.png");
     world.add_texture("barrel", "textures/barrel.png");
@@ -216,6 +281,20 @@ int main() {
     sf::Clock clock;
     float time_since_spawn{0};
     float elapsed_time{0};
+
+    // ==============================[ Add audio ]==============================
+    world.add_sound("glock_shoot", "audio/glock_shoot_1.wav");
+    world.add_sound("glock_shoot", "audio/glock_shoot_2.wav");
+    world.add_sound("spitter_shoot", "audio/spitter_shoot.wav");
+    world.add_sound("player_hurt", "audio/player_hurt.wav");
+
+    sf::Music music;
+    if (!music.openFromFile("audio/music.ogg"))
+    {
+        std::cerr << "Error: Could not find music with filename 'audio/music.ogg'." << std::endl;
+        return 1;
+    }
+    music.play();
 
     // ==============================[ Game Loop ]==============================
     bool quit = false;
@@ -311,16 +390,15 @@ int main() {
             world.add_queue.erase(world.add_queue.begin());
         }
 
-
         // 3. Delete any game objects in the kill queue.
         while (!world.kill_queue.empty())
         {
             // Turns off the game when player is dead.
-            if (world.kill_queue.at(0) == world.get_player())
+            /*if (world.kill_queue.at(0) == world.get_player())
             {
                 quit = true;
                 break;
-            }
+            }*/
             auto delete_it{std::remove(world.game_objects.begin(), world.game_objects.end(),
                                        world.kill_queue.at(0))};
             world.game_objects.erase(delete_it);
