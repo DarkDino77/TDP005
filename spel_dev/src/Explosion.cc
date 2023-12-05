@@ -18,7 +18,7 @@ void Explosion::update(sf::Time const& delta_time, World & world, std::shared_pt
     life_time += delta_time.asSeconds();
     if(life_time > life_span)
     {
-        world.kill_queue.push_back(current_obj);
+        world.kill(current_obj);
     }
 }
 

@@ -19,7 +19,7 @@ sf::Vector2f find_direction() {
 }
 
 Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, int health, sf::Window const& window)
-        : Character(position, sprite, speed, health), window{window}
+: Character(position, sprite, speed, health), window{window}
 {
     available_weapons.push_back(std::make_shared<Weapon>("glock", 5, "glock_ammo", -1, 2.0f, 2));
     current_weapon = available_weapons.at(0);
@@ -29,7 +29,7 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
 {
     if(health <= 0)
     {
-        world.kill_queue.push_back(current_obj);
+        world.kill(current_obj);
         return;
     }
 
@@ -71,7 +71,6 @@ void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std:
     push_direction = normalize(position - other_obj->position);
     float temp_increment{0.005f};
 
-    // TODO:Cheack if movable target should be sent in to this function or not.
     std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
     // If other object is not a movable object, make the push-direction perpendicular to the collided surface.
     if (movable_target == nullptr) {

@@ -14,16 +14,12 @@ Ranged::Ranged(sf::Vector2f position, sf::Texture const& sprite, float speed,int
 
 void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj)
 {
-    if(current_weapon->can_shoot() && world.can_see_player(current_obj, direction))
-    {
-        current_weapon->shoot(direction, world, position, current_obj);
-    }
-
     if(health <= 0)
     {
-        world.kill_queue.push_back(current_obj);
+        world.kill(current_obj);
         return;
     }
+
     life_time += delta_time.asSeconds();
     std::shared_ptr<Player> player{world.get_player()};
 
@@ -38,4 +34,9 @@ void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     position -= rotate_direction * distance;
     shape.setPosition(position);
     collision_shape.setPosition(position);
+
+    if(current_weapon->can_shoot() && world.can_see_player(current_obj, direction))
+    {
+        current_weapon->shoot(direction, world, position, current_obj);
+    }
 }

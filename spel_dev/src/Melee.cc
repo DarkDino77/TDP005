@@ -11,7 +11,7 @@ void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
 {
     if(health <= 0)
     {
-        world.kill_queue.push_back(current_obj);
+        world.kill(current_obj);
         return;
     }
     life_time += delta_time.asSeconds();
