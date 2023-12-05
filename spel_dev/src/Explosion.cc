@@ -13,7 +13,7 @@ Explosion::Explosion(sf::Vector2f const& position, sf::Texture const& sprite, fl
     collision_shape.setFillColor(sf::Color::Red);
 }
 
-void Explosion::update(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> current_obj)
+void Explosion::update(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> const& current_obj)
 {
     life_time += delta_time.asSeconds();
     if(life_time > life_span)
@@ -22,7 +22,7 @@ void Explosion::update(sf::Time const& delta_time, World & world, std::shared_pt
     }
 }
 
-void Explosion::handle_collision( World &, std::shared_ptr<Game_Object>, std::shared_ptr<Game_Object> other_obj)
+void Explosion::handle_collision( World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
 {
     std::shared_ptr<Damageable> damageable_target =  std::dynamic_pointer_cast<Damageable>(other_obj);
     if(damageable_target == nullptr)

@@ -12,7 +12,7 @@ Ranged::Ranged(sf::Vector2f position, sf::Texture const& sprite, float speed,int
 
 
 
-void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> current_obj)
+void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj)
 {
     if(current_weapon->can_shoot() && world.can_see_player(current_obj, direction))
     {

@@ -14,8 +14,8 @@ public:
 
     Game_Object(sf::Vector2f position, sf::Texture const& sprite);
     virtual ~Game_Object() = default;
-    virtual void update(sf::Time const&, World &, std::shared_ptr<Game_Object>);
-    virtual void handle_collision(World &, std::shared_ptr<Game_Object>, std::shared_ptr<Game_Object>);
+    virtual void update(sf::Time const&, World &, std::shared_ptr<Game_Object> const&);
+    virtual void handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const&);
     virtual void render(sf::RenderWindow &window);
 
 private:

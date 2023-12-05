@@ -25,7 +25,7 @@ Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, in
     current_weapon = available_weapons.at(0);
 }
 
-void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> current_obj)
+void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj)
 {
     if(health <= 0)
     {
@@ -52,7 +52,7 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     }
 }
 
-void Player::handle_collision(World &, std::shared_ptr<Game_Object>, std::shared_ptr<Game_Object> other_obj)
+void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
 {
     if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr || std::dynamic_pointer_cast<Enemy>(other_obj) != nullptr||
             std::dynamic_pointer_cast<Explosion>(other_obj)!=nullptr)

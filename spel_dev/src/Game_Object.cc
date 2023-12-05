@@ -15,9 +15,9 @@ Game_Object::Game_Object(sf::Vector2f position, sf::Texture const& sprite)
     shape.setPosition(position);
 }
 
-void Game_Object::update(sf::Time const& , World & , std::shared_ptr<Game_Object> ){}
+void Game_Object::update(sf::Time const& , World & , std::shared_ptr<Game_Object> const&){}
 
-void Game_Object::handle_collision(World &, std::shared_ptr<Game_Object>, std::shared_ptr<Game_Object>){}
+void Game_Object::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const&){}
 
 void Game_Object::render(sf::RenderWindow &window)
 {

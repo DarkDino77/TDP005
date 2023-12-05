@@ -7,7 +7,7 @@ Melee::Melee(sf::Vector2f position, sf::Texture const& sprite, float speed,int h
         : Enemy(position, sprite, speed, health, melee_damage)
 {}
 
-void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> current_obj)
+void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj)
 {
     if(health <= 0)
     {

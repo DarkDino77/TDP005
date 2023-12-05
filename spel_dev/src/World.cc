@@ -142,12 +142,12 @@ void World::spawn_monsters()
     std::cout << "ranged:" << num_ranged << std::endl;
 
     std::vector<sf::Vector2f> spawn_positions{};
-    std::vector<std::string> enemy_sprites{"melee1","melee2", "melee3", "melee4", "melee5", "melee6", "melee7"};
+    //std::vector<std::string> enemy_sprites{"melee1","melee2", "melee3", "melee4", "melee5", "melee6", "melee7"};
 
     std::random_device rd;
     std::uniform_int_distribution<int> for_x_uniform(1,2);
     std::uniform_int_distribution<int> for_y_uniform(1,31);
-    std::uniform_int_distribution<int> sprite_randomizer(1,int(enemy_sprites.size()));
+    //std::uniform_int_distribution<int> sprite_randomizer(1,int(enemy_sprites.size()));
 
 
     int num_melee_spawned{0};
@@ -259,7 +259,7 @@ int main() {
 
     window.setMouseCursorVisible(false);
     window.setKeyRepeatEnabled(false);
-    window.setVerticalSyncEnabled(true);
+    window.setVerticalSyncEnabled(false);
 
     float sprite_scale{2.0f};
 
@@ -291,7 +291,6 @@ int main() {
     mouse_cursor.setOrigin(mouse_texture_size / 2.f);
     mouse_cursor.setScale(sprite_scale,sprite_scale);
 
-
     // ==============================[ Create World ]==============================
     World world{};
 
@@ -311,14 +310,14 @@ int main() {
     world.add_texture("spitter1", "textures/spitter1.png");
     world.add_texture("explosion", "textures/explosion.png");
 
-
-
     world.load_level_file("level1.txt", window);
     world.spawn_monsters();
 
     sf::Clock clock;
     float time_since_spawn{0};
     float elapsed_time{0};
+    float last_time{0};
+    float fps{0};
 
     // ==============================[ Add audio ]==============================
     world.add_sound("glock_shoot", "audio/glock_shoot_1.wav");
@@ -372,6 +371,11 @@ int main() {
             time_since_spawn = elapsed_time;
             world.spawn_monsters();
         }
+
+
+        fps = 1.0f / (elapsed_time - last_time); // the asSeconds returns a float
+        //std::cout << "fps =" << floor(fps) << std::endl; // flooring it will make the frame rate a rounded number
+        last_time = elapsed_time;
 
         sf::Vector2f mouse_pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
         mouse_cursor.setPosition(mouse_pos);
@@ -432,6 +436,7 @@ int main() {
                 {
                     window.draw(explosive_target->collision_shape);
                 }
+                fps_text.setString("FPS:" + std::to_string(floor(fps)));
                 window.draw(fps_text);
             }
             obj -> render(window);
