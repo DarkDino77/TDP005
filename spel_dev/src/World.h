@@ -33,6 +33,7 @@ public:
     void add_explosive_barrel(sf::Vector2f const& position);
     void add_crate(sf::Vector2f const& position);
     void add_explosion(std::string const& name, sf::Vector2f const& position);
+    void add_pick_up(sf::Vector2f const& position);
     void add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& ammo_type,
                     sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source);
     void spawn_monsters();
@@ -42,6 +43,7 @@ public:
 
 private:
     std::vector<std::shared_ptr<Game_Object>> game_objects{}; //TODO: Determine if public and if unique_ptr
+    std::vector<std::string> available_pick_ups{};
     std::shared_ptr<Player> player{nullptr};
     std::vector<std::shared_ptr<sf::Sound>> sound_queue{};
     int current_wave{1};

@@ -21,7 +21,7 @@ sf::Vector2f find_direction() {
 Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, int health, sf::Window const& window)
 : Character(position, sprite, speed, health), window{window}
 {
-    available_weapons.push_back(std::make_shared<Weapon>("glock", 5, "glock_ammo", -1, 2.0f, 2));
+    available_weapons.push_back(std::make_shared<Weapon>("glock", 5, "glock_bullet", -1, 2.0f, 2));
     current_weapon = available_weapons.at(0);
 }
 

@@ -75,6 +75,7 @@ void Enemy::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
     {
         world.kill(current_obj);
         world.add_player_xp(xp);
+        world.add_pick_up(position);
         return;
     }
 
