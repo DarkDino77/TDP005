@@ -13,6 +13,7 @@ public:
     std::shared_ptr<Weapon> current_weapon{};
 
     Character(sf::Vector2f position, sf::Texture const& sprite, float speed, int health);
+    ~Character() override = default;
     void knock_back(sf::Vector2f const& direction, float force);
 };
 
