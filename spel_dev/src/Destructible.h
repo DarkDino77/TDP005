@@ -1,9 +1,10 @@
 #ifndef DESTRUCTIBLE_H
 #define DESTRUCTIBLE_H
-#include "Map_Object.h"
+#include "Updatable.h"
 #include "Damageable.h"
 
-class Destructible :public Map_Object, public Damageable{
+class Destructible :public Updatable, public Damageable
+{
 public:
     Destructible(sf::Vector2f const& position, sf::Texture const& sprite, int health);
     ~Destructible() override = default;

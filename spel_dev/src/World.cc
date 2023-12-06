@@ -10,6 +10,7 @@
 #include "Explosion.h"
 #include "Explosive_Barrel.h"
 #include "Wall.h"
+#include "Updatable.h"
 #include <vector>
 #include <memory>
 #include <random>
@@ -382,12 +383,13 @@ void World::update_game_objects(sf::Time const& delta_time)
 {
     for(const std::shared_ptr<Game_Object>& current_obj : game_objects)
     {
-        std::shared_ptr<Wall> wall_target{std::dynamic_pointer_cast<Wall>(current_obj)};
-        if(wall_target != nullptr)
+        std::shared_ptr<Updatable> updatable_target{std::dynamic_pointer_cast<Updatable>(current_obj)};
+        if(updatable_target == nullptr)
         {
             continue;
         }
-        current_obj->update(delta_time, *this, current_obj);
+        updatable_target->update(delta_time, *this, current_obj);
+
         std::shared_ptr<Destructible> destructible_target{std::dynamic_pointer_cast<Destructible>(current_obj)};
         if(destructible_target != nullptr)
         {
@@ -395,15 +397,10 @@ void World::update_game_objects(sf::Time const& delta_time)
         }
 
         sf::FloatRect current_bounds = current_obj->get_shape().getGlobalBounds();
-        std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(current_obj)};
-        std::shared_ptr<Explosion> explosive_target{std::dynamic_pointer_cast<Explosion>(current_obj)};
-        if(movable_target != nullptr  )
+        std::shared_ptr<Collidable> collidable_target{std::dynamic_pointer_cast<Collidable>(current_obj)};
+        if(collidable_target != nullptr  )
         {
-            current_bounds = movable_target->get_collision_shape().getGlobalBounds();
-        }
-        else if(explosive_target != nullptr)
-        {
-            current_bounds = explosive_target->get_collision_shape().getGlobalBounds();
+            current_bounds = collidable_target->get_collision_shape().getGlobalBounds();
         }
 
         for(std::shared_ptr<Game_Object> const& other_obj : game_objects)
@@ -414,20 +411,16 @@ void World::update_game_objects(sf::Time const& delta_time)
                 continue;
             }
 
-            std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
-            std::shared_ptr<Explosion> other_explosive_target{std::dynamic_pointer_cast<Explosion>(other_obj)};
-            if(other_movable_target != nullptr)
+            std::shared_ptr<Collidable> other_colliadable_target{std::dynamic_pointer_cast<Collidable>(other_obj)};
+            if(other_colliadable_target != nullptr)
             {
-                other_bounds = other_movable_target->get_collision_shape().getGlobalBounds();
+                other_bounds = other_colliadable_target->get_collision_shape().getGlobalBounds();
             }
-            else if(other_explosive_target != nullptr)
-            {
-                other_bounds = other_explosive_target->get_collision_shape().getGlobalBounds();
-            }
+
 
             if(current_obj != other_obj && current_bounds.intersects(other_bounds))
             {
-                current_obj->handle_collision(*this, current_obj, other_obj);
+                collidable_target->handle_collision(*this, current_obj, other_obj);
             }
         }
     }
@@ -441,15 +434,11 @@ void World::draw_game_objects()
     {
         if(debug_mode)
         {
-            std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(obj)};
-            std::shared_ptr<Explosion> explosive_target{std::dynamic_pointer_cast<Explosion>(obj)};
-            if(movable_target != nullptr)
+            std::shared_ptr<Collidable> collidable_target{std::dynamic_pointer_cast<Collidable>(obj)};
+
+            if(collidable_target != nullptr)
             {
-                window.draw(movable_target->get_collision_shape());
-            }
-            else if(explosive_target != nullptr)
-            {
-                window.draw(explosive_target->get_collision_shape());
+                window.draw(collidable_target->get_collision_shape());
             }
         }
         obj -> render(window);

@@ -8,5 +8,4 @@ Damageable::Damageable(int health)
 void Damageable::take_damage(int damage)
 {
     health -= damage;
-
 }

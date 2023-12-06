@@ -5,12 +5,14 @@
 #include <iostream>
 
 Explosion::Explosion(sf::Vector2f const& position, sf::Texture const& sprite, float explosive_radius, int explosive_damage)
-: Game_Object(position, sprite), explosive_radius{explosive_radius}, explosive_damage(explosive_damage)
+: Collidable(position, sprite), explosive_radius{explosive_radius}, explosive_damage(explosive_damage)
 {
+    /*
     collision_shape.setRadius(shape.getSize().x);
     collision_shape.setOrigin({collision_shape.getRadius(),collision_shape.getRadius()});
     collision_shape.setPosition(position);
     collision_shape.setFillColor(sf::Color::Red);
+     */
 }
 
 void Explosion::update(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> const& current_obj)
@@ -43,8 +45,8 @@ void Explosion::handle_collision( World &, std::shared_ptr<Game_Object> const&, 
         character_target->knock_back(normalize(position - character_target->get_position()), 3);
     }
 }
-
+/*
 sf::CircleShape Explosion::get_collision_shape()
 {
     return collision_shape;
-}
+}*/

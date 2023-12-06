@@ -1,7 +1,7 @@
 #include "Collidable.h"
 
 Collidable::Collidable(sf::Vector2f position, sf::Texture const& sprite)
-: Game_Object(position, sprite)
+: Updatable(position, sprite)
 {
     collision_shape.setRadius(shape.getSize().x*0.9f);
     collision_shape.setOrigin({collision_shape.getRadius(),collision_shape.getRadius()});
