@@ -12,12 +12,15 @@ public:
     //sf::Texture const& hud_sprite;
     void shoot(sf::Vector2f direction, World & world, sf::Vector2f position, std::shared_ptr<Game_Object> source);
     bool can_shoot();
+    std::string get_ammo_type();
+    void add_ammo(int amount);
 
 private:
     std::string name;
     int damage;
     std::string ammo_type;
     int ammo_capacity;
+    int ammo_amount{0};
     double bullet_speed;
     double fire_rate;
     sf::Clock time_since_shot{};

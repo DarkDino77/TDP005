@@ -65,6 +65,7 @@ private:
     int player_level_progression{0};
     int xp_to_level{20};
 
+    void add_player_weapon();
     void level_up_player();
     void make_window();
     void load_font();

@@ -27,6 +27,27 @@ sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate)
     return {pos_x, pos_y};
 }
 
+void World::add_player_weapon()
+{
+    std::cout << "New weapon unlocked" << std::endl;
+    switch (player_level)
+    {
+        case(1):
+            player->add_weapon("baretta", 15, "glock_ammo", 200, 2.5, 5);
+            player->add_ammo("glock_ammo", 200);
+            break;
+        case(20):
+            player->add_weapon("uzi", 10, "glock_ammo", 500, 2.5, 5);
+            break;
+        case(30):
+            player->add_weapon("shotgun", 30, "glock_ammo", 50, 2, 0.75);
+            break;
+        case(40):
+            player->add_weapon("assault_rifle", 35, "glock_ammo", 300, 2.5, 4);
+            break;
+    }
+}
+
 void World::level_up_player()
 {
     player_level_progression -= xp_to_level;
@@ -34,11 +55,12 @@ void World::level_up_player()
     player_level+= 1;
 
     switch (player_level%10) {
-        case 0:
-            std::cout << "NEW WEAPON!" << std::endl;
+        case 1:
+            add_player_weapon();
             break;
         case 5:
             std::cout << "FASTER!" << std::endl;
+            add_player_weapon();
             break;
         default:
             break;

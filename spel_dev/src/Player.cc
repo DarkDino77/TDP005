@@ -25,10 +25,8 @@ Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, in
     current_weapon = available_weapons.at(0);
 }
 
-void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj)
-{
-    if(health <= 0)
-    {
+void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj) {
+    if (health <= 0) {
         world.kill(current_obj);
         return;
     }
@@ -37,8 +35,9 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     sf::Vector2f mouse_pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
     sf::Vector2f rotate_direction = normalize(position - mouse_pos);
     float rotate_degrees = std::atan2(rotate_direction.y, rotate_direction.x);
-    shape.setRotation((rotate_degrees*180/3.1415f) - 90.f);
+    shape.setRotation((rotate_degrees * 180 / 3.1415f) - 90.f);
 
+    // ==============================[ INPUT ]==============================
     // Update the players position based on input.
     direction = find_direction();
     float distance = 250.0f * delta_time.asSeconds() * float(speed);
@@ -46,13 +45,24 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     shape.setPosition(position);
     collision_shape.setPosition(position);
 
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         current_weapon->shoot(rotate_direction, world, position, current_obj);
     }
 
-    //world.set_health_percent(health);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+    {
+        current_weapon = available_weapons[0];
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+    {
+        if(int(available_weapons.size()) >= 2)
+        {
+            current_weapon = available_weapons[1];
+        }
+    }
 }
+    //world.set_health_percent(health);
+
 
 void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
 {
@@ -100,6 +110,17 @@ void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std:
         position += push_direction * temp_increment;
         shape.setPosition(position);
         collision_shape.setPosition(position);
+    }
+}
+
+void Player::add_ammo(std::string ammo_type, int amount)
+{
+    for (std::shared_ptr<Weapon> weapon: available_weapons)
+    {
+        if(ammo_type == weapon->get_ammo_type())
+        {
+            weapon->add_ammo(amount);
+        }
     }
 }
 

@@ -12,11 +12,25 @@ bool Weapon::can_shoot()
 
 void Weapon::shoot(sf::Vector2f direction, World & world, sf::Vector2f position, std::shared_ptr<Game_Object> source)
 {
-    if(can_shoot())
+    if(can_shoot() && (ammo_capacity == -1 || ammo_amount > 0 ))
     {
         world.play_sound(name + "_shoot");
         sf::Vector2f bullet_spawn{position -= direction*16.0f};
         world.add_bullet(damage, direction, bullet_speed, ammo_type, bullet_spawn, source);
         time_since_shot.restart();
+        ammo_amount--;
+    }
+
+}
+std::string Weapon::get_ammo_type()
+{
+    return ammo_type;
+}
+void Weapon::add_ammo(int amount)
+{
+    ammo_amount += amount;
+    if (ammo_capacity != -1 && ammo_amount > ammo_capacity)
+    {
+        ammo_amount -= ammo_amount - ammo_capacity;
     }
 }
