@@ -18,7 +18,9 @@ public:
     std::shared_ptr<Player> get_player();
 
     //Setter
-    void kill(std::shared_ptr<Game_Object> obj_to_kill);
+    void kill(std::shared_ptr<Game_Object> const& obj_to_kill);
+    void set_health_percent(int health);
+    void set_level_percent(int level_progress);
 
     void add_texture(std::string const& name,  std::string const& filename);
     void add_sound(std::string const& name,  std::string const& filename);
@@ -56,6 +58,9 @@ private:
     std::map<std::string, std::vector<std::shared_ptr<sf::SoundBuffer>>> sound_buffers{};
     std::vector<std::shared_ptr<Game_Object>> add_queue{};
     std::vector<std::shared_ptr<Game_Object>> kill_queue{};
+    std::vector<std::shared_ptr<sf::RectangleShape>> hud_elements{};
+    float health_percent{100};
+    float level_percent{0};
     bool debug_mode{false};
 
     void make_window();
@@ -64,9 +69,11 @@ private:
     void load_cursor();
     void load_textures();
     void load_audio();
+    void load_hud();
     void update_game_objects(sf::Time const& delta_time);
     void draw_game_objects();
     void add_game_objects();
     bool delete_game_objects();
+    void draw_hud();
 };
 #endif

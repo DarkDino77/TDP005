@@ -31,7 +31,6 @@ void Bullet::handle_collision(World & world, std::shared_ptr<Game_Object> const&
     if(damageable_target != nullptr)
     {
         damageable_target->take_damage(damage);
-        std::cout << "Collided " << std::endl;
         std::shared_ptr<Character> character_target =  std::dynamic_pointer_cast<Character>(other_obj);
         if(character_target != nullptr) {
             character_target->knock_back(direction, 10);

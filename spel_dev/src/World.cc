@@ -131,9 +131,19 @@ std::shared_ptr<Player> World::get_player()
     return player;
 }
 
-void World::kill(std::shared_ptr<Game_Object> obj_to_kill)
+void World::kill(std::shared_ptr<Game_Object> const& obj_to_kill)
 {
     kill_queue.push_back(obj_to_kill);
+}
+void World::set_health_percent(int health)
+{
+    health_percent = health;
+    hud_elements.at(0)->setScale(4.0f*health_percent/100, 4.0f);
+}
+void World::set_level_percent(int level_progress)
+{
+    level_percent = level_progress;
+    hud_elements.at(2)->setScale(4.0f*level_percent/100, 4.0f);
 }
 
 void World::add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& ammo_type, sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source)
@@ -154,7 +164,6 @@ void World::spawn_monsters()
     std::uniform_int_distribution<int> for_x_uniform(1,2);
     std::uniform_int_distribution<int> for_y_uniform(1,31);
     //std::uniform_int_distribution<int> sprite_randomizer(1,int(enemy_sprites.size()));
-
 
     int num_melee_spawned{0};
     while ( num_melee_spawned < (num_enemies-num_ranged))
@@ -264,7 +273,7 @@ void World::make_window()
 {
     window.setMouseCursorVisible(false);
     window.setKeyRepeatEnabled(false);
-    window.setVerticalSyncEnabled(true);
+    window.setVerticalSyncEnabled(false);
 }
 
 void World::load_font()
@@ -308,6 +317,13 @@ void World::load_textures()
     add_texture("spitter_ammo", "textures/spitter_ammo.png");
     add_texture("spitter1", "textures/spitter1.png");
     add_texture("explosion", "textures/explosion.png");
+
+    // HUD
+    add_texture("hud_level", "textures/hud_level.png");
+    add_texture("hud_health", "textures/hud_health.png");
+    add_texture("hud_health_fill", "textures/hud_health_fill.png");
+    add_texture("hud_level_fill", "textures/hud_level_fill.png");
+    add_texture("hud_weapon_background", "textures/hud_weapon_background.png");
 }
 
 void World::load_audio()
@@ -317,6 +333,49 @@ void World::load_audio()
     add_sound("spitter_shoot", "audio/spitter_shoot.wav");
     add_sound("player_hurt", "audio/player_hurt.wav");
     add_sound("explosion", "audio/explosion.wav");
+}
+
+void World::load_hud()
+{
+    std::shared_ptr<sf::RectangleShape> hud_current_health = std::make_shared<sf::RectangleShape>();
+    hud_current_health->setTexture(&*sprites["hud_health_fill"]);
+    hud_current_health->setSize(sf::Vector2f(hud_current_health->getTexture()->getSize()));
+    hud_current_health->setOrigin({hud_current_health->getSize().x,hud_current_health->getSize().y/2.0f});
+    hud_current_health->setPosition(1906-18*4,26);
+    hud_current_health->setScale(4.0f * health_percent/100, 4.0f);
+    hud_elements.push_back(hud_current_health);
+
+    std::shared_ptr<sf::RectangleShape> hud_health = std::make_shared<sf::RectangleShape>();
+    hud_health->setTexture(&*sprites["hud_health"]);
+    hud_health->setSize(sf::Vector2f(hud_health->getTexture()->getSize()));
+    hud_health->setOrigin({hud_health->getSize().x,0});
+    hud_health->setPosition(1910-18*4,10);
+    hud_health->setScale(4.0f, 4.0f);
+    hud_elements.push_back(hud_health);
+
+    std::shared_ptr<sf::RectangleShape> hud_current_level = std::make_shared<sf::RectangleShape>();
+    hud_current_level->setTexture(&*sprites["hud_level_fill"]);
+    hud_current_level->setSize(sf::Vector2f(hud_current_level->getTexture()->getSize()));
+    hud_current_level->setOrigin({0,hud_current_level->getSize().y/2.0f});
+    hud_current_level->setPosition(14,26);
+    hud_current_level->setScale(4.0f * level_percent/100, 4.0f);
+    hud_elements.push_back(hud_current_level);
+
+    std::shared_ptr<sf::RectangleShape> hud_level = std::make_shared<sf::RectangleShape>();
+    hud_level->setTexture(&*sprites["hud_level"]);
+    hud_level->setSize(sf::Vector2f(hud_level->getTexture()->getSize()));
+    hud_level->setOrigin({0,0});
+    hud_level->setPosition(10,10);
+    hud_level->setScale(4.0f, 4.0f);
+    hud_elements.push_back(hud_level);
+
+    std::shared_ptr<sf::RectangleShape> hud_weapon_background = std::make_shared<sf::RectangleShape>();
+    hud_weapon_background->setTexture(&*sprites["hud_weapon_background"]);
+    hud_weapon_background->setSize(sf::Vector2f(hud_weapon_background->getTexture()->getSize()));
+    hud_weapon_background->setOrigin({hud_weapon_background->getSize().x, 0});
+    hud_weapon_background->setPosition(1910, 10);
+    hud_weapon_background->setScale(4.0f, 4.0f);
+    hud_elements.push_back(hud_weapon_background);
 }
 
 void World::update_game_objects(sf::Time const& delta_time)
@@ -424,6 +483,14 @@ bool World::delete_game_objects()
     return true;
 }
 
+void World::draw_hud()
+{
+    for(std::shared_ptr<sf::RectangleShape> const& hud_element : hud_elements)
+    {
+        window.draw(*hud_element);
+    }
+}
+
 void World::simulate()
 {
     make_window();
@@ -432,7 +499,26 @@ void World::simulate()
     sf::Text fps_text;
     fps_text.setFont(font);
     fps_text.setCharacterSize(font_size);
+    fps_text.setOutlineColor(sf::Color (0x373737ff));
+    fps_text.setOutlineThickness(4);
     fps_text.setString("FPS:0");
+
+    /*
+    sf::Texture number_texture;
+    if(!number_texture.loadFromFile("textures/numbers.png"))
+    {
+        return;
+    }
+
+    sf::Sprite number_sprites[11];
+    int char_width{5};
+
+    for (int i = 0; i < 11; i++)
+    {
+        number_sprites[i].setTexture(number_texture);
+        number_sprites[i].setTextureRect(sf::IntRect(i * char_width, 0, char_width, 8));
+        number_sprites[i].setPosition(i * char_width, 0);
+    }*/
 
     // ==============================[ Background ]==============================
     load_background();
@@ -452,6 +538,9 @@ void World::simulate()
         return;
     }
     music.play();
+
+    // ==============================[ HUD ]==============================
+    load_hud();
 
     load_level_file("level1.txt", window);
     spawn_monsters();
@@ -530,6 +619,8 @@ void World::simulate()
             window.draw(fps_text);
         }
         window.draw(mouse_cursor);
+
+        draw_hud();
         window.display();
 
     }
