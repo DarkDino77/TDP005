@@ -27,6 +27,36 @@ sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate)
     return {pos_x, pos_y};
 }
 
+void World::level_up_player()
+{
+    player_level_progression -= xp_to_level;
+    xp_to_level+=5;
+    player_level+= 1;
+
+    switch (player_level%10) {
+        case 0:
+            std::cout << "NEW WEAPON!" << std::endl;
+            break;
+        case 5:
+            std::cout << "FASTER!" << std::endl;
+            break;
+        default:
+            break;
+
+    }
+}
+
+void World::add_player_xp(int xp)
+{
+    player_level_progression+=xp;
+    while(player_level_progression >= xp_to_level)
+    {
+        level_up_player();
+    }
+}
+
+
+
 void World::add_texture(std::string const& name, std::string const& filename)
 {
     auto texture = std::make_shared<sf::Texture>();
@@ -55,7 +85,7 @@ void World::add_sound(std::string const& category,  std::string const& filename)
 
 void World::play_sound(std::string const& name)
 {
-    if(sound_buffers[name].empty())
+    /*if(sound_buffers[name].empty())
     {
         std::cerr << "Error: Sound with name '" << name << "' was never added to world." << std::endl;
         return;
@@ -68,7 +98,7 @@ void World::play_sound(std::string const& name)
     std::shared_ptr<sf::Sound> sound{std::make_shared<sf::Sound>()};
     sound->setBuffer(*sound_buffers[name].at(track_index));
     sound->play();
-    sound_queue.push_back(sound);
+    sound_queue.push_back(sound);*/
 }
 
 void World::add_player(sf::Vector2f const& position, sf::Window const& window)
@@ -84,7 +114,7 @@ void World::add_melee_enemy(std::string const& name, sf::Vector2f const& positio
     if(name == "zombie")
     {
         auto enemy = std::make_shared<Melee>(grid_to_coord(position),
-                                             *sprites["melee1"], 0.3f, 20, 5);
+                                             *sprites["melee1"], 0.3f, 20, 5, 10);
         game_objects.push_back(enemy);
     }
 }
@@ -94,7 +124,7 @@ void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& positi
     if(name == "spitter")
     {
         auto enemy = std::make_shared<Ranged>(grid_to_coord(position),
-                                             *sprites["spitter1"], 0.15f, 20, 2);
+                                             *sprites["spitter1"], 0.15f, 20, 2, 12);
         game_objects.push_back(enemy);
     }
 }
@@ -123,7 +153,7 @@ void World::add_crate(sf::Vector2f const& position)
 void World::add_explosion(std::string const& name, sf::Vector2f const& position)
 {
     auto explosion = std::make_shared<Explosion>(position,
-                                          *sprites[name], 100, 10);
+                                          *sprites[name], 100, 50);
     add_queue.push_back(explosion);
 }
 
@@ -379,50 +409,49 @@ void World::load_audio()
     hud_elements.push_back(hud_weapon_background);
 }*/
 
+void World::check_collision(std::shared_ptr<Game_Object> const& current_obj)
+{
+// Handel collision
+    std::shared_ptr<Collidable> collidable_target{std::dynamic_pointer_cast<Collidable>(current_obj)};
+    if(collidable_target == nullptr)
+    {
+        return;
+    }
+
+    sf::FloatRect current_bounds = collidable_target->get_collision_shape().getGlobalBounds();
+
+    for(std::shared_ptr<Game_Object> const& other_obj : game_objects)
+    {
+        sf::FloatRect other_bounds = (other_obj->get_shape()).getGlobalBounds();
+        if(not current_bounds.intersects(other_bounds))
+        {
+            continue;
+        }
+
+        std::shared_ptr<Collidable> other_colliadable_target{std::dynamic_pointer_cast<Collidable>(other_obj)};
+        if(other_colliadable_target != nullptr)
+        {
+            other_bounds = other_colliadable_target->get_collision_shape().getGlobalBounds();
+        }
+
+        if(current_obj != other_obj && current_bounds.intersects(other_bounds))
+        {
+            collidable_target->handle_collision(*this, current_obj, other_obj);
+        }
+    }
+}
+
 void World::update_game_objects(sf::Time const& delta_time)
 {
-    for(const std::shared_ptr<Game_Object>& current_obj : game_objects)
-    {
+    for(std::shared_ptr<Game_Object> const& current_obj : game_objects) {
+        // Update
         std::shared_ptr<Updatable> updatable_target{std::dynamic_pointer_cast<Updatable>(current_obj)};
-        if(updatable_target == nullptr)
-        {
+        if (updatable_target == nullptr) {
             continue;
         }
         updatable_target->update(delta_time, *this, current_obj);
 
-        std::shared_ptr<Destructible> destructible_target{std::dynamic_pointer_cast<Destructible>(current_obj)};
-        if(destructible_target != nullptr)
-        {
-            continue;
-        }
-
-        sf::FloatRect current_bounds = current_obj->get_shape().getGlobalBounds();
-        std::shared_ptr<Collidable> collidable_target{std::dynamic_pointer_cast<Collidable>(current_obj)};
-        if(collidable_target != nullptr  )
-        {
-            current_bounds = collidable_target->get_collision_shape().getGlobalBounds();
-        }
-
-        for(std::shared_ptr<Game_Object> const& other_obj : game_objects)
-        {
-            sf::FloatRect other_bounds = (other_obj->get_shape()).getGlobalBounds();
-            if(not current_bounds.intersects(other_bounds))
-            {
-                continue;
-            }
-
-            std::shared_ptr<Collidable> other_colliadable_target{std::dynamic_pointer_cast<Collidable>(other_obj)};
-            if(other_colliadable_target != nullptr)
-            {
-                other_bounds = other_colliadable_target->get_collision_shape().getGlobalBounds();
-            }
-
-
-            if(current_obj != other_obj && current_bounds.intersects(other_bounds))
-            {
-                collidable_target->handle_collision(*this, current_obj, other_obj);
-            }
-        }
+        check_collision(current_obj);
     }
 }
 
@@ -519,14 +548,14 @@ void World::simulate()
     load_textures();
 
     // ==============================[ Add audio ]==============================
-    load_audio();
-    sf::Music music;
+    //load_audio();
+    /*sf::Music music;
     if (!music.openFromFile("audio/music.ogg"))
     {
         std::cerr << "Error: Could not find music with filename 'audio/music.ogg'." << std::endl;
         return;
     }
-    music.play();
+    music.play();*/
 
     // ==============================[ HUD ]==============================
     //load_hud();
@@ -611,7 +640,5 @@ void World::simulate()
 
         //draw_hud();
         window.display();
-
     }
-
 }

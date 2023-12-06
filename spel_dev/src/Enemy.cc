@@ -5,8 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-Enemy::Enemy(sf::Vector2f position, sf::Texture const& sprite, float speed, int health, int melee_damage)
-        : Character(position, sprite, speed, health), melee_damage{melee_damage}
+Enemy::Enemy(sf::Vector2f position, sf::Texture const& sprite, float speed, int health, int melee_damage, int xp)
+        : Character(position, sprite, speed, health), melee_damage{melee_damage}, xp{xp}
 {}
 
 void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
@@ -67,4 +67,29 @@ void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object> const&,
         shape.setPosition(position);
         collision_shape.setPosition(position);
     }
+}
+
+void Enemy::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj)
+{
+    if(health <= 0)
+    {
+        world.kill(current_obj);
+        world.add_player_xp(xp);
+        return;
+    }
+
+    life_time += delta_time.asSeconds();
+    std::shared_ptr<Player> player{world.get_player()};
+
+    // Rotate the enemy towards the player.
+    sf::Vector2f rotate_direction = normalize(position - (player -> get_position()));
+    direction = rotate_direction;
+    float rotate_degrees = std::atan2(rotate_direction.y, rotate_direction.x);
+    shape.setRotation((rotate_degrees*180/3.1415f) - 90.f);
+
+    // Update the enemy position based on delta time.
+    float distance = 250.0f * delta_time.asSeconds() * float(speed);
+    position -= rotate_direction * distance;
+    shape.setPosition(position);
+    collision_shape.setPosition(position);
 }

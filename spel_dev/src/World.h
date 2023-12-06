@@ -21,6 +21,7 @@ public:
     void kill(std::shared_ptr<Game_Object> const& obj_to_kill);
     void set_health_percent(int health);
     void set_level_percent(int level_progress);
+    void add_player_xp(int xp);
 
     void add_texture(std::string const& name,  std::string const& filename);
     void add_sound(std::string const& name,  std::string const& filename);
@@ -38,8 +39,6 @@ public:
     void load_level_file(std::string const& filename, sf::Window const& window);
     bool can_see_player(std::shared_ptr<Game_Object> source, sf::Vector2f direction);
     void simulate();
-
-
 
 private:
     std::vector<std::shared_ptr<Game_Object>> game_objects{}; //TODO: Determine if public and if unique_ptr
@@ -62,7 +61,11 @@ private:
     float health_percent{100};
     float level_percent{0};
     bool debug_mode{false};
+    int player_level{0};
+    int player_level_progression{0};
+    int xp_to_level{20};
 
+    void level_up_player();
     void make_window();
     void load_font();
     void load_background();
@@ -70,6 +73,7 @@ private:
     void load_textures();
     void load_audio();
     void load_hud();
+    void check_collision(std::shared_ptr<Game_Object> const& current_obj);
     void update_game_objects(sf::Time const& delta_time);
     void draw_game_objects();
     void add_game_objects();

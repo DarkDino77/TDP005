@@ -12,8 +12,6 @@ public:
     void handle_collision(World & world, std::shared_ptr<Game_Object> const& current_obj, std::shared_ptr<Game_Object> const& other_obj) override;
 
 private:
-    int level{0};
-    int level_progress{0};
     sf::Window const& window;
 };
 
