@@ -35,15 +35,19 @@ void World::add_player_weapon()
         case(1):
             player->add_weapon("baretta", 15, "glock_ammo", 200, 2.5, 5);
             player->add_ammo("glock_ammo", 200);
+            available_pick_ups.push_back("baretta_ammo");
             break;
         case(20):
             player->add_weapon("uzi", 10, "glock_ammo", 500, 2.5, 5);
+            available_pick_ups.push_back("uzi_ammo");
             break;
         case(30):
             player->add_weapon("shotgun", 30, "glock_ammo", 50, 2, 0.75);
+            available_pick_ups.push_back("shotgun_ammo");
             break;
         case(40):
             player->add_weapon("assault_rifle", 35, "glock_ammo", 300, 2.5, 4);
+            available_pick_ups.push_back("assault_rifle_ammo");
             break;
     }
 }
@@ -177,6 +181,25 @@ void World::add_explosion(std::string const& name, sf::Vector2f const& position)
     auto explosion = std::make_shared<Explosion>(position,
                                           *sprites[name], 100, 50);
     add_queue.push_back(explosion);
+}
+
+void World::add_pick_up(sf::Vector2f const& position)
+{
+    if(available_pick_ups.empty())
+    {
+        return;
+    }
+
+    std::random_device rd;
+    std::uniform_int_distribution<int> uniform_rd(1,100);
+
+    if(uniform_rd(rd) <= 25)
+    {
+        std::uniform_int_distribution<int> rand_pick_up_rd(1,int(available_pick_ups.size()));
+        auto explosion = std::make_shared<Explosion>(position,
+                                                     *sprites["explosion"], 100, 50);
+        add_queue.push_back(explosion);
+    }
 }
 
 std::shared_ptr<Player> World::get_player()
@@ -366,8 +389,8 @@ void World::load_textures()
     add_texture("melee5", "textures/zombie5.png");
     add_texture("melee6", "textures/zombie6.png");
     add_texture("melee7", "textures/zombie7.png");
-    add_texture("glock_ammo", "textures/glock_ammo.png");
-    add_texture("spitter_ammo", "textures/spitter_ammo.png");
+    add_texture("glock_bullet", "textures/glock_bullet.png");
+    add_texture("spitter_bullet", "textures/spitter_bullet.png");
     add_texture("spitter1", "textures/spitter1.png");
     add_texture("explosion", "textures/explosion.png");
 
