@@ -11,6 +11,7 @@
 #include "Explosive_Barrel.h"
 #include "Wall.h"
 #include "Updatable.h"
+#include "Ammo.h"
 #include <vector>
 #include <memory>
 #include <random>
@@ -33,20 +34,20 @@ void World::add_player_weapon()
     switch (player_level)
     {
         case(1):
-            player->add_weapon("baretta", 15, "glock_ammo", 200, 2.5, 5);
+            player->add_weapon("baretta", 15, "glock_bullet", 200, 2.5, 5);
             player->add_ammo("glock_ammo", 200);
             available_pick_ups.push_back("baretta_ammo");
             break;
         case(20):
-            player->add_weapon("uzi", 10, "glock_ammo", 500, 2.5, 5);
+            player->add_weapon("uzi", 10, "glock_bullet", 500, 2.5, 5);
             available_pick_ups.push_back("uzi_ammo");
             break;
         case(30):
-            player->add_weapon("shotgun", 30, "glock_ammo", 50, 2, 0.75);
+            player->add_weapon("shotgun", 30, "glock_bullet", 50, 2, 0.75);
             available_pick_ups.push_back("shotgun_ammo");
             break;
         case(40):
-            player->add_weapon("assault_rifle", 35, "glock_ammo", 300, 2.5, 4);
+            player->add_weapon("assault_rifle", 35, "glock_bullet", 300, 2.5, 4);
             available_pick_ups.push_back("assault_rifle_ammo");
             break;
     }
@@ -193,12 +194,15 @@ void World::add_pick_up(sf::Vector2f const& position)
     std::random_device rd;
     std::uniform_int_distribution<int> uniform_rd(1,100);
 
-    if(uniform_rd(rd) <= 25)
+    if(uniform_rd(rd) <= 100)
     {
+        std::cout << "Added pickup" << std::endl;
         std::uniform_int_distribution<int> rand_pick_up_rd(1,int(available_pick_ups.size()));
-        auto explosion = std::make_shared<Explosion>(position,
-                                                     *sprites["explosion"], 100, 50);
-        add_queue.push_back(explosion);
+
+        int random_int{rand_pick_up_rd(rd)-1};
+        auto ammo = std::make_shared<Ammo>(position, *sprites[available_pick_ups.at(random_int)],
+                                           available_pick_ups.at(random_int));
+        add_queue.push_back(ammo);
     }
 }
 
@@ -393,6 +397,10 @@ void World::load_textures()
     add_texture("spitter_bullet", "textures/spitter_bullet.png");
     add_texture("spitter1", "textures/spitter1.png");
     add_texture("explosion", "textures/explosion.png");
+    add_texture("baretta_ammo", "textures/baretta_ammo.png");
+    add_texture("uzi_ammo", "textures/uzi_ammo.png");
+    add_texture("shotgun_ammo", "textures/shotgun_ammo.png");
+    add_texture("assault_rifle_ammo", "textures/assault_rifle_ammo.png");
 
     // HUD
     add_texture("hud_level", "textures/hud_level.png");

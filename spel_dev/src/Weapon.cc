@@ -14,6 +14,7 @@ void Weapon::shoot(sf::Vector2f direction, World & world, sf::Vector2f position,
 {
     if(can_shoot() && (ammo_capacity == -1 || ammo_amount > 0 ))
     {
+        std::cout << "Could shoot" << std::endl;
         world.play_sound(name + "_shoot");
         sf::Vector2f bullet_spawn{position -= direction*16.0f};
         world.add_bullet(damage, direction, bullet_speed, ammo_type, bullet_spawn, source);
