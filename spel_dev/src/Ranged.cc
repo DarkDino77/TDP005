@@ -6,11 +6,10 @@
 Ranged::Ranged(sf::Vector2f position, sf::Texture const& sprite, float speed,int health, int melee_damage)
         : Enemy(position, sprite, speed, health, melee_damage)
 {
+    //TODO: Fix so that ranged enemy takes in weapon parameter as a construction variable
     available_weapons.push_back(std::make_shared<Weapon>("spitter", 5, "spitter_ammo", -1, 1.0f, 0.5));
     current_weapon = available_weapons.at(0);
 }
-
-
 
 void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj)
 {
@@ -24,7 +23,7 @@ void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     std::shared_ptr<Player> player{world.get_player()};
 
     // Rotate the enemy towards the player.
-    sf::Vector2f rotate_direction = normalize(position - (player -> position));
+    sf::Vector2f rotate_direction = normalize(position - (player -> get_position()));
     direction = rotate_direction;
     float rotate_degrees = std::atan2(rotate_direction.y, rotate_direction.x);
     shape.setRotation((rotate_degrees*180/3.1415f) - 90.f);

@@ -2,7 +2,6 @@
 #include "Game_Object.h"
 #include "World.h"
 
-
 Game_Object::Game_Object(sf::Vector2f position, sf::Texture const& sprite)
 : position{position}, sprite{sprite}
 {
@@ -22,4 +21,12 @@ void Game_Object::handle_collision(World &, std::shared_ptr<Game_Object> const&,
 void Game_Object::render(sf::RenderWindow &window)
 {
     window.draw(shape);
+}
+sf::RectangleShape Game_Object::get_shape()
+{
+    return shape;
+}
+sf::Vector2f Game_Object::get_position()
+{
+    return position;
 }

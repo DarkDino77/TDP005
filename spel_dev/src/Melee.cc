@@ -18,7 +18,7 @@ void Melee::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
     std::shared_ptr<Player> player{world.get_player()};
 
     // Rotate the enemy towards the player.
-    sf::Vector2f rotate_direction = normalize(position - (player -> position));
+    sf::Vector2f rotate_direction = normalize(position - (player -> get_position()));
     direction = rotate_direction;
     float rotate_degrees = std::atan2(rotate_direction.y, rotate_direction.x);
     shape.setRotation((rotate_degrees*180/3.1415f) - 90.f);

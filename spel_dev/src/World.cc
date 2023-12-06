@@ -135,7 +135,7 @@ void World::kill(std::shared_ptr<Game_Object> const& obj_to_kill)
 {
     kill_queue.push_back(obj_to_kill);
 }
-void World::set_health_percent(int health)
+/*void World::set_health_percent(int health)
 {
     health_percent = health;
     hud_elements.at(0)->setScale(4.0f*health_percent/100, 4.0f);
@@ -144,7 +144,7 @@ void World::set_level_percent(int level_progress)
 {
     level_percent = level_progress;
     hud_elements.at(2)->setScale(4.0f*level_percent/100, 4.0f);
-}
+}*/
 
 void World::add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& ammo_type, sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source)
 {
@@ -241,14 +241,14 @@ bool World::can_see_player(std::shared_ptr<Game_Object> source, sf::Vector2f dir
     sf::CircleShape collision_checker;
     collision_checker.setRadius(5);
     collision_checker.setOrigin({collision_checker.getRadius(),collision_checker.getRadius()});
-    collision_checker.setPosition(source->position);
+    collision_checker.setPosition(source->get_position());
     //collision_checker.setFillColor(sf::Color::Red);
 
     while(true)
     {
         for(std::shared_ptr<Game_Object> const& collide_obj : game_objects) {
             sf::FloatRect collision_bounds = collision_checker.getGlobalBounds();
-            sf::FloatRect other_bounds = (collide_obj->shape).getGlobalBounds();
+            sf::FloatRect other_bounds = (collide_obj->get_shape()).getGlobalBounds();
 
             if(collide_obj == source || not collision_bounds.intersects(other_bounds)  )
             {
@@ -335,7 +335,7 @@ void World::load_audio()
     add_sound("explosion", "audio/explosion.wav");
 }
 
-void World::load_hud()
+/*void World::load_hud()
 {
     std::shared_ptr<sf::RectangleShape> hud_current_health = std::make_shared<sf::RectangleShape>();
     hud_current_health->setTexture(&*sprites["hud_health_fill"]);
@@ -376,7 +376,7 @@ void World::load_hud()
     hud_weapon_background->setPosition(1910, 10);
     hud_weapon_background->setScale(4.0f, 4.0f);
     hud_elements.push_back(hud_weapon_background);
-}
+}*/
 
 void World::update_game_objects(sf::Time const& delta_time)
 {
@@ -394,21 +394,21 @@ void World::update_game_objects(sf::Time const& delta_time)
             continue;
         }
 
-        sf::FloatRect current_bounds = current_obj->shape.getGlobalBounds();
+        sf::FloatRect current_bounds = current_obj->get_shape().getGlobalBounds();
         std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(current_obj)};
         std::shared_ptr<Explosion> explosive_target{std::dynamic_pointer_cast<Explosion>(current_obj)};
         if(movable_target != nullptr  )
         {
-            current_bounds = movable_target->collision_shape.getGlobalBounds();
+            current_bounds = movable_target->get_collision_shape().getGlobalBounds();
         }
         else if(explosive_target != nullptr)
         {
-            current_bounds = explosive_target->collision_shape.getGlobalBounds();
+            current_bounds = explosive_target->get_collision_shape().getGlobalBounds();
         }
 
         for(std::shared_ptr<Game_Object> const& other_obj : game_objects)
         {
-            sf::FloatRect other_bounds = (other_obj->shape).getGlobalBounds();
+            sf::FloatRect other_bounds = (other_obj->get_shape()).getGlobalBounds();
             if(not current_bounds.intersects(other_bounds))
             {
                 continue;
@@ -418,11 +418,11 @@ void World::update_game_objects(sf::Time const& delta_time)
             std::shared_ptr<Explosion> other_explosive_target{std::dynamic_pointer_cast<Explosion>(other_obj)};
             if(other_movable_target != nullptr)
             {
-                other_bounds = other_movable_target->collision_shape.getGlobalBounds();
+                other_bounds = other_movable_target->get_collision_shape().getGlobalBounds();
             }
             else if(other_explosive_target != nullptr)
             {
-                other_bounds = other_explosive_target->collision_shape.getGlobalBounds();
+                other_bounds = other_explosive_target->get_collision_shape().getGlobalBounds();
             }
 
             if(current_obj != other_obj && current_bounds.intersects(other_bounds))
@@ -445,11 +445,11 @@ void World::draw_game_objects()
             std::shared_ptr<Explosion> explosive_target{std::dynamic_pointer_cast<Explosion>(obj)};
             if(movable_target != nullptr)
             {
-                window.draw(movable_target->collision_shape);
+                window.draw(movable_target->get_collision_shape());
             }
             else if(explosive_target != nullptr)
             {
-                window.draw(explosive_target->collision_shape);
+                window.draw(explosive_target->get_collision_shape());
             }
         }
         obj -> render(window);
@@ -483,13 +483,13 @@ bool World::delete_game_objects()
     return true;
 }
 
-void World::draw_hud()
+/*void World::draw_hud()
 {
     for(std::shared_ptr<sf::RectangleShape> const& hud_element : hud_elements)
     {
         window.draw(*hud_element);
     }
-}
+}*/
 
 void World::simulate()
 {
@@ -540,7 +540,7 @@ void World::simulate()
     music.play();
 
     // ==============================[ HUD ]==============================
-    load_hud();
+    //load_hud();
 
     load_level_file("level1.txt", window);
     spawn_monsters();
@@ -620,7 +620,7 @@ void World::simulate()
         }
         window.draw(mouse_cursor);
 
-        draw_hud();
+        //draw_hud();
         window.display();
 
     }

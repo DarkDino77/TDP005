@@ -21,7 +21,7 @@ sf::Vector2f find_direction() {
 Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, int health, sf::Window const& window)
 : Character(position, sprite, speed, health), window{window}
 {
-    available_weapons.push_back(std::make_shared<Weapon>("glock", 5, "glock_ammo", -1, 2.0f, 10));
+    available_weapons.push_back(std::make_shared<Weapon>("glock", 5, "glock_ammo", -1, 2.0f, 2));
     current_weapon = available_weapons.at(0);
 }
 
@@ -51,7 +51,7 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
         current_weapon->shoot(rotate_direction, world, position, current_obj);
     }
 
-    world.set_health_percent(health);
+    //world.set_health_percent(health);
 }
 
 void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
@@ -62,15 +62,15 @@ void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std:
         return;
     }
 
-    if(length(position - other_obj->position)
+    if(length(position - other_obj->get_position())
        > std::sqrt(std::pow(collision_shape.getRadius()*2,2)
-       + std::pow(length(other_obj->shape.getSize()),2)))
+       + std::pow(length(other_obj->get_shape().getSize()),2)))
     {
         return;
     }
 
     sf::Vector2f push_direction{};
-    push_direction = normalize(position - other_obj->position);
+    push_direction = normalize(position - other_obj->get_position());
     float temp_increment{0.005f};
 
     std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
@@ -88,11 +88,11 @@ void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std:
         }
     }
 
-    sf::FloatRect other_bounds = (other_obj->shape).getGlobalBounds();
+    sf::FloatRect other_bounds = (other_obj->get_shape()).getGlobalBounds();
     std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
     if(other_movable_target != nullptr)
     {
-        other_bounds = other_movable_target->collision_shape.getGlobalBounds();
+        other_bounds = other_movable_target->get_collision_shape().getGlobalBounds();
     }
 
     // Push the player in the push-direction until it no longer collides with the other object

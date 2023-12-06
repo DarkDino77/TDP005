@@ -9,5 +9,4 @@ public:
     void destroy(std::shared_ptr<Game_Object> destructible_target, World & world) override;
 };
 
-
 #endif

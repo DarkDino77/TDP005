@@ -1,17 +1,19 @@
 #ifndef MOVABLE_H
 #define MOVABLE_H
-#include "Game_Object.h"
+#include "Collidable.h"
 
-class Movable : public Game_Object
+class Movable : public Collidable
 {
 public:
-    sf::CircleShape collision_shape{};
-    sf::Vector2f direction{};
-
     Movable(sf::Vector2f position, sf::Texture const& sprite, float speed);
+    //sf::CircleShape get_collision_shape();
+    //sf::Vector2f get_direction();
 
 protected:
     double speed{};
+    //sf::CircleShape collision_shape{};
+    sf::Vector2f direction{};
+
 };
 
 

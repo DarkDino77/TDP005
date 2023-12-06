@@ -40,6 +40,11 @@ void Explosion::handle_collision( World &, std::shared_ptr<Game_Object> const&, 
     std::shared_ptr<Character> character_target =  std::dynamic_pointer_cast<Character>(other_obj);
     if(character_target != nullptr)
     {
-        character_target->knock_back(normalize(position - character_target->position), 3);
+        character_target->knock_back(normalize(position - character_target->get_position()), 3);
     }
+}
+
+sf::CircleShape Explosion::get_collision_shape()
+{
+    return collision_shape;
 }

@@ -16,15 +16,15 @@ void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object> const&,
         return;
     }
 
-    if(length(position - other_obj->position)
+    if(length(position - other_obj->get_position())
        > std::sqrt(std::pow(collision_shape.getRadius()*2,2)
-       + std::pow(length(other_obj->shape.getSize()),2)) * 1.1f)
+       + std::pow(length(other_obj->get_shape().getSize()),2)) * 1.1f)
     {
         return;
     }
 
     sf::Vector2f push_direction{};
-    push_direction = normalize(position - other_obj->position);
+    push_direction = normalize(position - other_obj->get_position());
     float temp_increment{0.005f};
 
     // TODO:Cheack if movable target should be sent in to this function or not.
@@ -43,11 +43,11 @@ void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object> const&,
         }
     }
 
-    sf::FloatRect other_bounds = (other_obj->shape).getGlobalBounds();
+    sf::FloatRect other_bounds = (other_obj->get_shape()).getGlobalBounds();
     std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
     if(other_movable_target != nullptr)
     {
-        other_bounds = other_movable_target->collision_shape.getGlobalBounds();
+        other_bounds = other_movable_target->get_collision_shape().getGlobalBounds();
 
         std::shared_ptr<Player> player_target{std::dynamic_pointer_cast<Player>(other_obj)};
         if( player_target != nullptr && life_time > melee_timer + 1)
