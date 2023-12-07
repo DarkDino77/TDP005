@@ -19,6 +19,11 @@ public:
     std::shared_ptr<Player> get_player();
     sf::Texture& get_sprite(std::string const& category);
     sf::Font& get_font();
+    int get_level();
+    float get_level_percent();
+    float get_health_percent();
+    std::shared_ptr<Weapon> get_weapon_stats();
+
 
     //Setter
     void kill(std::shared_ptr<Game_Object> const& obj_to_kill);
@@ -68,11 +73,13 @@ private:
     std::vector<std::shared_ptr<sf::Text>> hud_texts{};
 
     float health_percent{100};
+    float level_percent{0};
+    std::shared_ptr<Weapon> weapon_stats{};
     bool debug_mode{false};
     int player_level{0};
     int player_level_progression{0};
     int xp_to_level{20};
-    Hud hud{};
+    std::shared_ptr<Hud> hud{};
 
     void add_player_weapon();
     void level_up_player();

@@ -4,6 +4,40 @@
 #include "Hud.h"
 #include "World.h"
 
+Hud::Hud(sf::Vector2f const& position, sf::Texture const& sprite, World & world)
+: Updatable(position, sprite)
+{
+    shape.setOrigin(0,0);
+    shape.setScale(1,1);
+    load_hud(world);
+}
+
+void Hud::update(sf::Time const&, World & world, std::shared_ptr<Game_Object> const&)
+{
+    health_percent = world.get_health_percent();
+    hud_elements.at(0)->setScale(4.0f * health_percent, 4.0f);
+
+    level_percent = world.get_level_percent();
+    hud_elements.at(1)->setScale(4.0f * level_percent, 4.0f);
+
+    player_level = world.get_level();
+    hud_texts.at(0)->setString(std::to_string(player_level));
+
+    if(world.get_weapon_stats()->get_ammo_capacity() == -1)
+    {
+        hud_texts.at(1)->setString("o");
+        hud_texts.at(1)->setPosition(1906-5*4 - hud_texts.at(1)->getLocalBounds().width, 10+23*4);
+    }
+    else
+    {
+        hud_texts.at(1)->setString(std::to_string(world.get_weapon_stats()->get_ammo_amount()));
+        hud_texts.at(1)->setPosition(1906-5*4 - hud_texts.at(1)->getLocalBounds().width, 10+23*4);
+    }
+
+    hud_elements.at(2)->setTexture(&world.get_sprite(world.get_weapon_stats()->get_name() + "_hud"));
+
+}
+
 void Hud::load_hud(World & world)
 {
     std::shared_ptr<sf::Text> level_text{std::make_shared<sf::Text>()};
@@ -30,17 +64,9 @@ void Hud::load_hud(World & world)
     hud_current_health->setTexture(&world.get_sprite("hud_health_fill"));
     hud_current_health->setSize(sf::Vector2f(hud_current_health->getTexture()->getSize()));
     hud_current_health->setOrigin({hud_current_health->getSize().x,hud_current_health->getSize().y/2.0f});
-    hud_current_health->setPosition( 1906-18*4,26);
+    hud_current_health->setPosition( 1906-17*4,26);
     hud_current_health->setScale(4.0f * health_percent, 4.0f);
     hud_elements.push_back(hud_current_health);
-
-    std::shared_ptr<sf::RectangleShape> hud_health = std::make_shared<sf::RectangleShape>();
-    hud_health->setTexture(&world.get_sprite("hud_health"));
-    hud_health->setSize(sf::Vector2f(hud_health->getTexture()->getSize()));
-    hud_health->setOrigin({hud_health->getSize().x,0});
-    hud_health->setPosition(1910-18*4,10);
-    hud_health->setScale(4.0f, 4.0f);
-    hud_elements.push_back(hud_health);
 
     std::shared_ptr<sf::RectangleShape> hud_current_level = std::make_shared<sf::RectangleShape>();
     hud_current_level->setTexture(&world.get_sprite("hud_level_fill"));
@@ -49,22 +75,6 @@ void Hud::load_hud(World & world)
     hud_current_level->setPosition(14,26);
     hud_current_level->setScale(4.0f * level_percent * 4.0f, 4.0f);
     hud_elements.push_back(hud_current_level);
-
-    std::shared_ptr<sf::RectangleShape> hud_level = std::make_shared<sf::RectangleShape>();
-    hud_level->setTexture(&world.get_sprite("hud_level"));
-    hud_level->setSize(sf::Vector2f(hud_level->getTexture()->getSize()));
-    hud_level->setOrigin({0,0});
-    hud_level->setPosition(10,10);
-    hud_level->setScale(4.0f, 4.0f);
-    hud_elements.push_back(hud_level);
-
-    std::shared_ptr<sf::RectangleShape> hud_weapon_background = std::make_shared<sf::RectangleShape>();
-    hud_weapon_background->setTexture(&world.get_sprite("hud_weapon_background"));
-    hud_weapon_background->setSize(sf::Vector2f(hud_weapon_background->getTexture()->getSize()));
-    hud_weapon_background->setOrigin({hud_weapon_background->getSize().x, 0});
-    hud_weapon_background->setPosition(1910, 10);
-    hud_weapon_background->setScale(4.0f, 4.0f);
-    hud_elements.push_back(hud_weapon_background);
 
     std::shared_ptr<sf::RectangleShape> hud_weapon = std::make_shared<sf::RectangleShape>();
     hud_weapon->setTexture(&world.get_sprite("glock_hud"));
@@ -75,48 +85,16 @@ void Hud::load_hud(World & world)
     hud_elements.push_back(hud_weapon);
 }
 
-void Hud::draw_hud(sf::RenderWindow & window)
+void Hud::render(sf::RenderWindow &window)
 {
-    for(std::shared_ptr<sf::RectangleShape> const& hud_element : hud_elements)
-    {
-        window.draw(*hud_element);
-    }
+
+    window.draw(*hud_elements.at(0));
+    window.draw(*hud_elements.at(1));
+    window.draw(shape);
+    window.draw(*hud_elements.at(2));
     for(std::shared_ptr<sf::Text> const& text : hud_texts)
     {
         window.draw(*text);
     }
-}
-
-void Hud::set_level_percent(float percent)
-{
-    level_percent = percent;
-    hud_elements.at(2)->setScale(4.0f * level_percent, 4.0f);
-}
-
-void Hud::set_health_percent(float percent)
-{
-    health_percent = percent;
-    hud_elements.at(0)->setScale(4.0f * health_percent, 4.0f);
-}
-
-void Hud::set_player_level(int level)
-{
-    player_level = level;
-    hud_texts.at(0)->setString(std::to_string(level));
-}
-
-void Hud::set_weapon_stats(std::shared_ptr<Weapon> const& weapon, World & world)
-{
-    if(weapon->get_ammo_capacity() == -1)
-    {
-        hud_texts.at(1)->setString("o");
-        hud_texts.at(1)->setPosition(1906-5*4 - hud_texts.at(1)->getLocalBounds().width, 10+23*4);
-    }
-    else
-    {
-        hud_texts.at(1)->setString(std::to_string(weapon->get_ammo_amount()));
-        hud_texts.at(1)->setPosition(1906-5*4 - hud_texts.at(1)->getLocalBounds().width, 10+23*4);
-    }
-    hud_elements.at(5)->setTexture(&world.get_sprite(weapon->get_name() + "_hud"));
 
 }

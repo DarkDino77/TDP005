@@ -4,20 +4,19 @@
 #include <vector>
 #include <memory>
 #include <SFML/Graphics.hpp>
+#include "Updatable.h"
 
 class Weapon;
 
 class World;
 
-class Hud {
+class Hud : public Updatable
+{
 public:
-    Hud() = default;
+    Hud(sf::Vector2f const& position, sf::Texture const& sprite, World & world);
+    void update(sf::Time const&, World &, std::shared_ptr<Game_Object> const&) override;
     void load_hud(World & world);
-    void draw_hud(sf::RenderWindow & window);
-    void set_level_percent(float percent);
-    void set_health_percent(float health_percent);
-    void set_player_level(int player_level);
-    void set_weapon_stats(std::shared_ptr<Weapon> const& weapon, World & world);
+    void render(sf::RenderWindow &window) override;
 
 private:
     int player_level{0};

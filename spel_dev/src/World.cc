@@ -34,6 +34,26 @@ sf::Font& World::get_font()
     return font;
 }
 
+int World::get_level()
+{
+    return player_level;
+}
+
+float World::get_level_percent()
+{
+    return level_percent;
+}
+
+float World::get_health_percent()
+{
+    return health_percent;
+}
+
+std::shared_ptr<Weapon> World::get_weapon_stats()
+{
+    return weapon_stats;
+}
+
 void World::add_player_weapon()
 {
     std::cout << "New weapon unlocked" << std::endl;
@@ -67,7 +87,6 @@ void World::level_up_player()
     player_level_progression -= xp_to_level;
     xp_to_level+=5;
     player_level+= 1;
-    hud.set_player_level(player_level);
 
     switch (player_level%2) {
         case 0:
@@ -90,8 +109,7 @@ void World::add_player_xp(int xp)
     {
         level_up_player();
     }
-    float level_percent = float(player_level_progression)/float(xp_to_level);
-    hud.set_level_percent(level_percent);
+    level_percent = float(player_level_progression)/float(xp_to_level);
 }
 
 sf::Texture& World::get_sprite(std::string const& category)
@@ -156,7 +174,7 @@ void World::play_sound(std::string const& name)
 void World::add_player(sf::Vector2f const& position, sf::Window const& window)
 {
     auto player_obj = std::make_shared<Player>(grid_to_coord(position),
-                                               get_sprite("player"), 1.0f, 100, window);
+                                               get_sprite("player"), 1.0f, 100, window, *this);
     game_objects.push_back(player_obj);
     player = std::dynamic_pointer_cast<Player>(player_obj);
 }
@@ -239,13 +257,14 @@ void World::kill(std::shared_ptr<Game_Object> const& obj_to_kill)
 {
     kill_queue.push_back(obj_to_kill);
 }
+
 void World::set_health_percent(int health, int max_health)
 {
-    hud.set_health_percent(float(health) / float(max_health));
+    health_percent = (float(health) / float(max_health));
 }
 void World::set_weapon_stats(std::shared_ptr<Weapon> weapon)
 {
-    hud.set_weapon_stats(weapon, *this);
+    weapon_stats = weapon;
 }
 
 void World::add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& bullet_type, sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source)
@@ -434,6 +453,7 @@ void World::load_textures()
     add_texture("assault_rifle_ammo", "textures/assault_rifle_ammo.png");
 
     // HUD
+    add_texture("hud", "textures/hud.png");
     add_texture("hud_level", "textures/hud_level.png");
     add_texture("hud_health", "textures/hud_health.png");
     add_texture("hud_health_fill", "textures/hud_health_fill.png");
@@ -611,7 +631,8 @@ void World::simulate()
     music.play();
 
     // ==============================[ HUD ]==============================
-    hud.load_hud(*this);
+    auto hud_obj = std::make_shared<Hud>(sf::Vector2f {0,0}, get_sprite("hud"), *this);
+    hud = hud_obj;
 
     load_level_file("level1.txt", window);
     spawn_monsters();
@@ -643,7 +664,6 @@ void World::simulate()
                             debug_mode = true;
                         }
                     }
-
                 default:
                     break;
             }
@@ -670,6 +690,7 @@ void World::simulate()
 
         // 1. Update all game objects and handle collisions.
         update_game_objects(delta_time);
+        hud->update(delta_time, *this, hud);
 
         // 2. Draw each game object.
         draw_game_objects();
@@ -690,8 +711,8 @@ void World::simulate()
             window.draw(fps_text);
         }
         window.draw(mouse_cursor);
-
-        hud.draw_hud(window);
+        hud->render(window);
+        //hud->draw_hud(window);
         window.display();
     }
 }
