@@ -12,6 +12,7 @@
 #include "Wall.h"
 #include "Updatable.h"
 #include "Ammo.h"
+#include "Hud.h"
 #include <vector>
 #include <memory>
 #include <random>
@@ -28,26 +29,34 @@ sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate)
     return {pos_x, pos_y};
 }
 
+sf::Font& World::get_font()
+{
+    return font;
+}
+
 void World::add_player_weapon()
 {
     std::cout << "New weapon unlocked" << std::endl;
     switch (player_level)
     {
-        case(1):
-            player->add_weapon("baretta", 15, "glock_bullet", 200, 2.5, 5);
-            player->add_ammo("glock_ammo", 200);
+        case(2):
+            player->add_weapon("baretta", 15, 200, 2.5, 10);
+            player->add_ammo("baretta_ammo", 200);
             available_pick_ups.push_back("baretta_ammo");
             break;
-        case(20):
-            player->add_weapon("uzi", 10, "glock_bullet", 500, 2.5, 5);
+        case(4):
+            player->add_weapon("uzi", 10, 500, 2.5, 5);
+            player->add_ammo("uzi_ammo", 500);
             available_pick_ups.push_back("uzi_ammo");
             break;
-        case(30):
-            player->add_weapon("shotgun", 30, "glock_bullet", 50, 2, 0.75);
+        case(6):
+            player->add_weapon("shotgun", 30, 50, 2, 0.75);
+            player->add_ammo("shotgun_ammo", 50);
             available_pick_ups.push_back("shotgun_ammo");
             break;
-        case(40):
-            player->add_weapon("assault_rifle", 35, "glock_bullet", 300, 2.5, 4);
+        case(8):
+            player->add_weapon("assault_rifle", 35, 300, 2.5, 4);
+            player->add_ammo("assault_rifle_ammo", 300);
             available_pick_ups.push_back("assault_rifle_ammo");
             break;
     }
@@ -58,15 +67,19 @@ void World::level_up_player()
     player_level_progression -= xp_to_level;
     xp_to_level+=5;
     player_level+= 1;
+    hud.set_player_level(player_level);
 
-    switch (player_level%10) {
-        case 1:
+    std::cout << "Player leveled up to level: " << player_level << "!" << std::endl;
+
+    switch (player_level%2) {
+        case 0:
+            std::cout << "Added new weapon" << std::endl;
             add_player_weapon();
             break;
-        case 5:
+        /*case 5:
             std::cout << "FASTER!" << std::endl;
             add_player_weapon();
-            break;
+            break;*/
         default:
             break;
 
@@ -80,11 +93,26 @@ void World::add_player_xp(int xp)
     {
         level_up_player();
     }
+    float level_percent = float(player_level_progression)/float(xp_to_level);
+    hud.set_level_percent(level_percent);
 }
 
+sf::Texture& World::get_sprite(std::string const& category)
+{
+    if(sprites[category].empty())
+    {
+        std::cerr << "Error: A sprite in the category '" << category << "' was never added to world." << std::endl;
+        return *sprites["error"].at(0);
+    }
 
+    std::random_device rd;
+    std::uniform_int_distribution<int> rd_uniform(1,int(sprites[category].size()));
+    int sprite_index{(rd_uniform(rd)-1)};
 
-void World::add_texture(std::string const& name, std::string const& filename)
+    return *sprites[category].at(sprite_index);
+}
+
+void World::add_texture(std::string const& category, std::string const& filename)
 {
     auto texture = std::make_shared<sf::Texture>();
     if(!texture->loadFromFile(filename))
@@ -93,7 +121,7 @@ void World::add_texture(std::string const& name, std::string const& filename)
     }
     else
     {
-        sprites[name] = texture;
+        sprites[category].push_back(texture);
     }
 }
 
@@ -107,12 +135,15 @@ void World::add_sound(std::string const& category,  std::string const& filename)
     else
     {
         sound_buffers[category].push_back(sound_buffer);
+        std::shared_ptr<sf::Sound> sound{std::make_shared<sf::Sound>()};
+        sound->setBuffer(*sound_buffers[category].back());
+        sounds[category].push_back(sound);
     }
 }
 
 void World::play_sound(std::string const& name)
 {
-    /*if(sound_buffers[name].empty())
+    if(sounds[name].empty())
     {
         std::cerr << "Error: Sound with name '" << name << "' was never added to world." << std::endl;
         return;
@@ -122,16 +153,13 @@ void World::play_sound(std::string const& name)
     std::uniform_int_distribution<int> rd_uniform(1,int(sound_buffers[name].size()));
     int track_index{(rd_uniform(rd)-1)};
 
-    std::shared_ptr<sf::Sound> sound{std::make_shared<sf::Sound>()};
-    sound->setBuffer(*sound_buffers[name].at(track_index));
-    sound->play();
-    sound_queue.push_back(sound);*/
+    sounds[name].at(track_index)->play();
 }
 
 void World::add_player(sf::Vector2f const& position, sf::Window const& window)
 {
     auto player_obj = std::make_shared<Player>(grid_to_coord(position),
-                                               *sprites["player"], 1.0f, 100, window);
+                                               get_sprite("player"), 1.0f, 100, window);
     game_objects.push_back(player_obj);
     player = std::dynamic_pointer_cast<Player>(player_obj);
 }
@@ -141,7 +169,7 @@ void World::add_melee_enemy(std::string const& name, sf::Vector2f const& positio
     if(name == "zombie")
     {
         auto enemy = std::make_shared<Melee>(grid_to_coord(position),
-                                             *sprites["melee1"], 0.3f, 20, 5, 10);
+                                             get_sprite("melee"), 0.3f, 20, 5, 10);
         game_objects.push_back(enemy);
     }
 }
@@ -151,7 +179,7 @@ void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& positi
     if(name == "spitter")
     {
         auto enemy = std::make_shared<Ranged>(grid_to_coord(position),
-                                             *sprites["spitter1"], 0.15f, 20, 2, 12);
+                                              get_sprite("spitter1"), 0.15f, 20, 2, 12);
         game_objects.push_back(enemy);
     }
 }
@@ -159,28 +187,28 @@ void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& positi
 void World::add_wall(sf::Vector2f const& position)
 {
     auto wall = std::make_shared<Wall>(grid_to_coord(position),
-                                                  *sprites["wall"]);
+                                       get_sprite("wall"));
     game_objects.push_back(wall);
 }
 
 void World::add_explosive_barrel(sf::Vector2f const& position)
 {
     auto explosive_barrel = std::make_shared<Explosive_Barrel>(grid_to_coord(position),
-                                                  *sprites["explosive_barrel"], 10);
+                                                               get_sprite("explosive_barrel"), 10);
     game_objects.push_back(explosive_barrel);
 }
 
 void World::add_crate(sf::Vector2f const& position)
 {
     auto crate = std::make_shared<Crate>(grid_to_coord(position),
-                                                  *sprites["crate"], 50);
+                                         get_sprite("crate"), 50);
     game_objects.push_back(crate);
 }
 
-void World::add_explosion(std::string const& name, sf::Vector2f const& position)
+void World::add_explosion(sf::Vector2f const& position)
 {
     auto explosion = std::make_shared<Explosion>(position,
-                                          *sprites[name], 100, 50);
+                                                 get_sprite("explosion"), 100, 50);
     add_queue.push_back(explosion);
 }
 
@@ -196,11 +224,10 @@ void World::add_pick_up(sf::Vector2f const& position)
 
     if(uniform_rd(rd) <= 100)
     {
-        std::cout << "Added pickup" << std::endl;
         std::uniform_int_distribution<int> rand_pick_up_rd(1,int(available_pick_ups.size()));
 
         int random_int{rand_pick_up_rd(rd)-1};
-        auto ammo = std::make_shared<Ammo>(position, *sprites[available_pick_ups.at(random_int)],
+        auto ammo = std::make_shared<Ammo>(position, get_sprite(available_pick_ups.at(random_int)),
                                            available_pick_ups.at(random_int));
         add_queue.push_back(ammo);
     }
@@ -215,20 +242,18 @@ void World::kill(std::shared_ptr<Game_Object> const& obj_to_kill)
 {
     kill_queue.push_back(obj_to_kill);
 }
-/*void World::set_health_percent(int health)
+void World::set_health_percent(int health, int max_health)
 {
-    health_percent = health;
-    hud_elements.at(0)->setScale(4.0f*health_percent/100, 4.0f);
+    hud.set_health_percent(float(health) / float(max_health));
 }
-void World::set_level_percent(int level_progress)
+void World::set_weapon_stats(std::shared_ptr<Weapon> weapon)
 {
-    level_percent = level_progress;
-    hud_elements.at(2)->setScale(4.0f*level_percent/100, 4.0f);
-}*/
+    hud.set_weapon_stats(weapon);
+}
 
-void World::add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& ammo_type, sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source)
+void World::add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& bullet_type, sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source)
 {
-    auto bullet = std::make_shared<Bullet>(damage, direction, bullet_speed, *sprites[ammo_type], bullet_spawn, source);
+    auto bullet = std::make_shared<Bullet>(damage, direction, bullet_speed, get_sprite(bullet_type), bullet_spawn, source);
     add_queue.push_back(bullet);
 }
 
@@ -238,12 +263,10 @@ void World::spawn_monsters()
     int num_ranged{int(std::floor(float(current_wave) * 0.5f))};
 
     std::vector<sf::Vector2f> spawn_positions{};
-    //std::vector<std::string> enemy_sprites{"melee1","melee2", "melee3", "melee4", "melee5", "melee6", "melee7"};
 
     std::random_device rd;
     std::uniform_int_distribution<int> for_x_uniform(1,2);
     std::uniform_int_distribution<int> for_y_uniform(1,31);
-    //std::uniform_int_distribution<int> sprite_randomizer(1,int(enemy_sprites.size()));
 
     int num_melee_spawned{0};
     while ( num_melee_spawned < (num_enemies-num_ranged))
@@ -358,7 +381,7 @@ void World::make_window()
 
 void World::load_font()
 {
-    if(!font.loadFromFile("res/font.ttf"))
+    if(!font.loadFromFile("res/font2.ttf"))
     {
         std::cerr << "Could not load font" << std::endl;
     }
@@ -382,21 +405,32 @@ void World::load_cursor()
 
 void World::load_textures()
 {
-    add_texture("wall", "textures/wall.png");
+    // Map objects
+    add_texture("error", "textures/error.png");
+    add_texture("wall", "textures/wall_1.png");
+    add_texture("wall", "textures/wall_2.png");
     add_texture("crate", "textures/crate.png");
     add_texture("explosive_barrel", "textures/explosive_barrel.png");
+
+    // Characters
     add_texture("player", "textures/player.png");
-    add_texture("melee1", "textures/zombie1.png");
-    add_texture("melee2", "textures/zombie2.png");
-    add_texture("melee3", "textures/zombie3.png");
+    add_texture("melee", "textures/zombie1.png");
+    add_texture("melee", "textures/zombie2.png");
+    add_texture("melee", "textures/zombie3.png");
     add_texture("melee4", "textures/zombie4.png");
     add_texture("melee5", "textures/zombie5.png");
     add_texture("melee6", "textures/zombie6.png");
     add_texture("melee7", "textures/zombie7.png");
-    add_texture("glock_bullet", "textures/glock_bullet.png");
+
+    // Weapons
     add_texture("spitter_bullet", "textures/spitter_bullet.png");
     add_texture("spitter1", "textures/spitter1.png");
     add_texture("explosion", "textures/explosion.png");
+    add_texture("glock_bullet", "textures/glock_bullet.png");
+    add_texture("baretta_bullet", "textures/baretta_bullet.png");
+    add_texture("uzi_bullet", "textures/uzi_bullet.png");
+    add_texture("shotgun_bullet", "textures/shotgun_bullet.png");
+    add_texture("assault_rifle_bullet", "textures/assault_rifle_bullet.png");
     add_texture("baretta_ammo", "textures/baretta_ammo.png");
     add_texture("uzi_ammo", "textures/uzi_ammo.png");
     add_texture("shotgun_ammo", "textures/shotgun_ammo.png");
@@ -412,59 +446,46 @@ void World::load_textures()
 
 void World::load_audio()
 {
+    // Weapons
     add_sound("glock_shoot", "audio/glock_shoot_1.wav");
     add_sound("glock_shoot", "audio/glock_shoot_2.wav");
+    add_sound("baretta_shoot", "audio/baretta_shoot_1.wav");
+    add_sound("baretta_shoot", "audio/baretta_shoot_2.wav");
+    add_sound("uzi_shoot", "audio/uzi_shoot_1.wav");
+    add_sound("uzi_shoot", "audio/uzi_shoot_2.wav");
+    add_sound("uzi_shoot", "audio/uzi_shoot_3.wav");
+    add_sound("shotgun_shoot", "audio/shotgun_shoot_1.wav");
+    add_sound("shotgun_shoot", "audio/shotgun_shoot_2.wav");
+    add_sound("shotgun_shoot", "audio/shotgun_shoot_3.wav");
+    add_sound("assault_rifle_shoot", "audio/assault_rifle_shoot_1.wav");
+    add_sound("assault_rifle_shoot", "audio/assault_rifle_shoot_2.wav");
+    add_sound("assault_rifle_shoot", "audio/assault_rifle_shoot_3.wav");
     add_sound("spitter_shoot", "audio/spitter_shoot.wav");
-    add_sound("player_hurt", "audio/player_hurt.wav");
+    add_sound("ammo_pick_up", "audio/ammo_pick_up.wav");
+
+    // Player
+    add_sound("player_hurt", "audio/player_hurt_1.wav");
+    add_sound("player_hurt", "audio/player_hurt_2.wav");
+    add_sound("player_hurt", "audio/player_hurt_3.wav");
+    add_sound("player_hurt", "audio/player_hurt_4.wav");
+
+    // Enemy
+    add_sound("enemy_hurt", "audio/enemy_hurt_1.wav");
+    add_sound("enemy_hurt", "audio/enemy_hurt_2.wav");
+    add_sound("enemy_hurt", "audio/enemy_hurt_3.wav");
+    add_sound("enemy_hurt", "audio/enemy_hurt_4.wav");
+
+    // Other
     add_sound("explosion", "audio/explosion.wav");
+    add_sound("crate_destroy", "audio/crate_destroy.wav");
+    add_sound("bullet_impact", "audio/bullet_impact_1.wav");
+    add_sound("bullet_impact", "audio/bullet_impact_2.wav");
+    add_sound("bullet_impact", "audio/bullet_impact_3.wav");
 }
-
-/*void World::load_hud()
-{
-    std::shared_ptr<sf::RectangleShape> hud_current_health = std::make_shared<sf::RectangleShape>();
-    hud_current_health->setTexture(&*sprites["hud_health_fill"]);
-    hud_current_health->setSize(sf::Vector2f(hud_current_health->getTexture()->getSize()));
-    hud_current_health->setOrigin({hud_current_health->getSize().x,hud_current_health->getSize().y/2.0f});
-    hud_current_health->setPosition(1906-18*4,26);
-    hud_current_health->setScale(4.0f * health_percent/100, 4.0f);
-    hud_elements.push_back(hud_current_health);
-
-    std::shared_ptr<sf::RectangleShape> hud_health = std::make_shared<sf::RectangleShape>();
-    hud_health->setTexture(&*sprites["hud_health"]);
-    hud_health->setSize(sf::Vector2f(hud_health->getTexture()->getSize()));
-    hud_health->setOrigin({hud_health->getSize().x,0});
-    hud_health->setPosition(1910-18*4,10);
-    hud_health->setScale(4.0f, 4.0f);
-    hud_elements.push_back(hud_health);
-
-    std::shared_ptr<sf::RectangleShape> hud_current_level = std::make_shared<sf::RectangleShape>();
-    hud_current_level->setTexture(&*sprites["hud_level_fill"]);
-    hud_current_level->setSize(sf::Vector2f(hud_current_level->getTexture()->getSize()));
-    hud_current_level->setOrigin({0,hud_current_level->getSize().y/2.0f});
-    hud_current_level->setPosition(14,26);
-    hud_current_level->setScale(4.0f * level_percent/100, 4.0f);
-    hud_elements.push_back(hud_current_level);
-
-    std::shared_ptr<sf::RectangleShape> hud_level = std::make_shared<sf::RectangleShape>();
-    hud_level->setTexture(&*sprites["hud_level"]);
-    hud_level->setSize(sf::Vector2f(hud_level->getTexture()->getSize()));
-    hud_level->setOrigin({0,0});
-    hud_level->setPosition(10,10);
-    hud_level->setScale(4.0f, 4.0f);
-    hud_elements.push_back(hud_level);
-
-    std::shared_ptr<sf::RectangleShape> hud_weapon_background = std::make_shared<sf::RectangleShape>();
-    hud_weapon_background->setTexture(&*sprites["hud_weapon_background"]);
-    hud_weapon_background->setSize(sf::Vector2f(hud_weapon_background->getTexture()->getSize()));
-    hud_weapon_background->setOrigin({hud_weapon_background->getSize().x, 0});
-    hud_weapon_background->setPosition(1910, 10);
-    hud_weapon_background->setScale(4.0f, 4.0f);
-    hud_elements.push_back(hud_weapon_background);
-}*/
 
 void World::check_collision(std::shared_ptr<Game_Object> const& current_obj)
 {
-// Handel collision
+// Handle collision
     std::shared_ptr<Collidable> collidable_target{std::dynamic_pointer_cast<Collidable>(current_obj)};
     if(collidable_target == nullptr)
     {
@@ -554,13 +575,6 @@ bool World::delete_game_objects()
     return true;
 }
 
-/*void World::draw_hud()
-{
-    for(std::shared_ptr<sf::RectangleShape> const& hud_element : hud_elements)
-    {
-        window.draw(*hud_element);
-    }
-}*/
 
 void World::simulate()
 {
@@ -601,17 +615,17 @@ void World::simulate()
     load_textures();
 
     // ==============================[ Add audio ]==============================
-    //load_audio();
-    /*sf::Music music;
+    load_audio();
+    sf::Music music;
     if (!music.openFromFile("audio/music.ogg"))
     {
         std::cerr << "Error: Could not find music with filename 'audio/music.ogg'." << std::endl;
         return;
     }
-    music.play();*/
+    music.play();
 
     // ==============================[ HUD ]==============================
-    //load_hud();
+    hud.load_hud(*this);
 
     load_level_file("level1.txt", window);
     spawn_monsters();
@@ -691,7 +705,7 @@ void World::simulate()
         }
         window.draw(mouse_cursor);
 
-        //draw_hud();
+        hud.draw_hud(window);
         window.display();
     }
 }

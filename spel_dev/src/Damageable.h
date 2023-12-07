@@ -8,6 +8,7 @@ public:
     void take_damage(int damage);
 protected:
     int health{};
+    bool hit{false};
 };
 
 

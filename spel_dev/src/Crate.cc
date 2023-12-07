@@ -8,5 +8,6 @@ Crate::Crate(sf::Vector2f const& position, sf::Texture const& sprite, int health
 
 void Crate::destroy(std::shared_ptr<Game_Object> destructible_target, World & world)
 {
+    world.play_sound("crate_destroy");
     world.kill(destructible_target);
 }

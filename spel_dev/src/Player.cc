@@ -22,11 +22,16 @@ sf::Vector2f find_direction() {
 Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, int health, sf::Window const& window)
 : Character(position, sprite, speed, health), window{window}
 {
-    available_weapons.push_back(std::make_shared<Weapon>("glock", 5, "glock_bullet", -1, 2.0f, 2));
+    available_weapons.push_back(std::make_shared<Weapon>("glock", 5, -1, 2.0f, 2));
     current_weapon = available_weapons.at(0);
 }
 
 void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj) {
+    if(hit)
+    {
+        hit = false;
+        world.play_sound("player_hurt");
+    }
     if (health <= 0) {
         world.kill(current_obj);
         return;
@@ -47,22 +52,53 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     collision_shape.setPosition(position);
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        current_weapon->shoot(rotate_direction, world, position, current_obj);
+        if(current_weapon->shoot(rotate_direction, world, position, current_obj))
+        {
+            world.set_weapon_stats(current_weapon);
+        }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
     {
         current_weapon = available_weapons[0];
+        world.set_weapon_stats(current_weapon);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
     {
         if(int(available_weapons.size()) >= 2)
         {
             current_weapon = available_weapons[1];
+            world.set_weapon_stats(current_weapon);
         }
     }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+    {
+        if(int(available_weapons.size()) >= 3)
+        {
+            current_weapon = available_weapons[2];
+            world.set_weapon_stats(current_weapon);
+        }
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
+    {
+        if(int(available_weapons.size()) >= 4)
+        {
+            current_weapon = available_weapons[3];
+            world.set_weapon_stats(current_weapon);
+        }
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5))
+    {
+        if(int(available_weapons.size()) >= 5)
+        {
+            current_weapon = available_weapons[4];
+            world.set_weapon_stats(current_weapon);
+        }
+    }
+
+    world.set_health_percent(health, max_health);
 }
-    //world.set_health_percent(health);
+
 
 
 void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)

@@ -7,7 +7,7 @@ Ranged::Ranged(sf::Vector2f position, sf::Texture const& sprite, float speed,int
         : Enemy(position, sprite, speed, health, melee_damage, xp)
 {
     //TODO: Fix so that ranged enemy takes in weapon parameter as a construction variable
-    available_weapons.push_back(std::make_shared<Weapon>("spitter", 5, "spitter_bullet", -1, 1.0f, 0.5));
+    available_weapons.push_back(std::make_shared<Weapon>("spitter", 5, -1, 1.0f, 0.5));
     current_weapon = available_weapons.at(0);
 }
 

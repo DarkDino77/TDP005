@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Pick_Up.h"
 #include "Player.h"
 
@@ -9,6 +10,7 @@ void Pick_Up::update(const sf::Time & delta_time, World & world, const std::shar
 {
     if(picked_up)
     {
+        world.play_sound("ammo_pick_up");
         world.kill(current_obj);
     }
 }

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Ammo.h"
 
 Ammo::Ammo(sf::Vector2f const& position, sf::Texture const& sprite, std::string const& ammo_type)

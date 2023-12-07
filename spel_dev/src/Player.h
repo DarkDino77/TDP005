@@ -14,6 +14,7 @@ public:
 
 private:
     sf::Window const& window;
+    int max_health{100};
 };
 
 #endif

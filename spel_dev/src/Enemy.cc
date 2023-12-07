@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "point.h"
 #include "Explosion.h"
+#include "Pick_Up.h"
 #include <cmath>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -11,7 +12,9 @@ Enemy::Enemy(sf::Vector2f position, sf::Texture const& sprite, float speed, int 
 
 void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
 {
-    if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr || std::dynamic_pointer_cast<Explosion>(other_obj) != nullptr)
+    if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr
+            || std::dynamic_pointer_cast<Explosion>(other_obj) != nullptr
+            || std::dynamic_pointer_cast<Pick_Up>(other_obj) != nullptr)
     {
         return;
     }
@@ -27,7 +30,7 @@ void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object> const&,
     push_direction = normalize(position - other_obj->get_position());
     float temp_increment{0.005f};
 
-    // TODO:Cheack if movable target should be sent in to this function or not.
+    // TODO:Check if movable target should be sent in to this function or not.
     std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
     // If other object is not a movable object, make the push-direction perpendicular to the collided surface.
     if (movable_target == nullptr) {
@@ -53,13 +56,10 @@ void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object> const&,
         if( player_target != nullptr && life_time > melee_timer + 1)
         {
             melee_timer = life_time;
-            world.play_sound("player_hurt");
             player_target->take_damage(melee_damage);
             player_target->knock_back(direction, 10);
         }
     }
-
-
 
     // Push the player in the push-direction until it no longer collides with the other object
     while (collision_shape.getGlobalBounds().intersects(other_bounds)) {
@@ -71,6 +71,11 @@ void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object> const&,
 
 void Enemy::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj)
 {
+    if(hit)
+    {
+        hit = false;
+        world.play_sound("enemy_hurt");
+    }
     if(health <= 0)
     {
         world.kill(current_obj);
