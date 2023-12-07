@@ -23,6 +23,7 @@ public:
     float get_level_percent();
     float get_health_percent();
     std::shared_ptr<Weapon> get_weapon_stats();
+    sf::Vector2f get_mouse_pos();
 
 
     //Setter
@@ -34,7 +35,7 @@ public:
     void add_texture(std::string const& category,  std::string const& filename);
     void add_sound(std::string const& name,  std::string const& filename);
     void play_sound(std::string const& name);
-    void add_player(sf::Vector2f const& position, sf::Window const& window);
+    void add_player(sf::Vector2f const& position);
     void add_melee_enemy(std::string const& name, sf::Vector2f const& position);
     void add_ranged_enemy(std::string const& name, sf::Vector2f const& position);
     void add_wall(sf::Vector2f const& position);
@@ -45,9 +46,11 @@ public:
     void add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& bullet_type,
                     sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source);
     void spawn_monsters();
-    void load_level_file(std::string const& filename, sf::Window const& window);
+    void load_level_file(std::string const& filename);
     bool can_see_player(std::shared_ptr<Game_Object> source, sf::Vector2f direction);
-    void simulate();
+    void load();
+    bool simulate(sf::Time const& delta_time, float const elapsed_time, sf::RenderWindow &window);
+    void render(sf::RenderWindow &window);
 
 private:
     std::vector<std::shared_ptr<Game_Object>> game_objects{}; //TODO: Determine if public and if unique_ptr
@@ -56,12 +59,13 @@ private:
     std::vector<std::shared_ptr<sf::Sound>> sound_queue{};
     int current_wave{1};
     bool sound_on{false};
-    sf::RenderWindow window{sf::VideoMode{1920, 1024}, "The Grand Arena"};
+    //sf::RenderWindow window{sf::VideoMode{1920, 1024}, "The Grand Arena"};
     sf::Font font{};
     sf::Texture background_texture{};
     sf::Sprite background_sprite{};
     sf::Texture mouse_cursor_texture{};
     sf::RectangleShape mouse_cursor{};
+    sf::Vector2f mouse_pos{};
 
 
     std::map<std::string, std::vector<std::shared_ptr<sf::Texture>>> sprites{};
@@ -72,6 +76,7 @@ private:
     std::vector<std::shared_ptr<sf::RectangleShape>> hud_elements{};
     std::vector<std::shared_ptr<sf::Text>> hud_texts{};
 
+    float time_since_spawn{0};
     float health_percent{100};
     float level_percent{0};
     std::shared_ptr<Weapon> weapon_stats{};
@@ -83,7 +88,6 @@ private:
 
     void add_player_weapon();
     void level_up_player();
-    void make_window();
     void load_font();
     void load_background();
     void load_cursor();
@@ -91,7 +95,7 @@ private:
     void load_audio();
     void check_collision(std::shared_ptr<Game_Object> const& current_obj);
     void update_game_objects(sf::Time const& delta_time);
-    void draw_game_objects();
+    void draw_game_objects(sf::RenderWindow & window);
     void add_game_objects();
     bool delete_game_objects();
 };

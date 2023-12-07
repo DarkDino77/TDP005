@@ -21,6 +21,7 @@
 #include <iterator>
 
 const int font_size{12};
+
 sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate)
 {
     float sprite_scale{2.0f};
@@ -32,6 +33,11 @@ sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate)
 sf::Font& World::get_font()
 {
     return font;
+}
+
+sf::Vector2f World::get_mouse_pos()
+{
+    return mouse_pos;
 }
 
 int World::get_level()
@@ -171,10 +177,10 @@ void World::play_sound(std::string const& name)
     sounds[name].at(track_index)->play();
 }
 
-void World::add_player(sf::Vector2f const& position, sf::Window const& window)
+void World::add_player(sf::Vector2f const& position)
 {
     auto player_obj = std::make_shared<Player>(grid_to_coord(position),
-                                               get_sprite("player"), 1.0f, 100, window, *this);
+                                               get_sprite("player"), 1.0f, 100, *this);
     game_objects.push_back(player_obj);
     player = std::dynamic_pointer_cast<Player>(player_obj);
 }
@@ -316,7 +322,7 @@ void World::spawn_monsters()
     current_wave++;
 }
 
-void World::load_level_file(std::string const& filename, sf::Window const& window)
+void World::load_level_file(std::string const& filename)
 {
     std::ifstream filestream{"res/"+filename, std::ifstream::in};
 
@@ -337,7 +343,7 @@ void World::load_level_file(std::string const& filename, sf::Window const& windo
                     break;
 
                 case '@':
-                    add_player({float(x-1),float(y-1)}, window);
+                    add_player({float(x-1),float(y-1)});
                     break;
 
                 case 'b':
@@ -386,13 +392,6 @@ bool World::can_see_player(std::shared_ptr<Game_Object> source, sf::Vector2f dir
         }
         collision_checker.setPosition(collision_checker.getPosition() - direction * 16.0f * 2.f * 0.9f);
     }
-}
-
-void World::make_window()
-{
-    window.setMouseCursorVisible(false);
-    window.setKeyRepeatEnabled(false);
-    window.setVerticalSyncEnabled(false);
 }
 
 void World::load_font()
@@ -551,7 +550,7 @@ void World::update_game_objects(sf::Time const& delta_time)
     }
 }
 
-void World::draw_game_objects()
+void World::draw_game_objects(sf::RenderWindow & window)
 {
     window.clear();
     window.draw(background_sprite);
@@ -597,19 +596,18 @@ bool World::delete_game_objects()
     return true;
 }
 
-
-void World::simulate()
+void World::load()
 {
-    make_window();
+    //make_window();
     load_font();
 
-    sf::Text fps_text;
+    /*sf::Text fps_text;
     fps_text.setFont(font);
     fps_text.setCharacterSize(font_size);
     fps_text.setOutlineColor(sf::Color (0x373737ff));
     fps_text.setOutlineThickness(4);
     fps_text.setPosition(10+33*4,10 + 4*4);
-    fps_text.setString("FPS:0");
+    fps_text.setString("FPS:0");*/
 
     // ==============================[ Background ]==============================
     load_background();
@@ -634,85 +632,91 @@ void World::simulate()
     auto hud_obj = std::make_shared<Hud>(sf::Vector2f {0,0}, get_sprite("hud"), *this);
     hud = hud_obj;
 
-    load_level_file("level1.txt", window);
+    load_level_file("level1.txt");
     spawn_monsters();
 
-    sf::Clock clock;
-    float time_since_spawn{0};
-    float elapsed_time{0};
-    float last_time{0};
-    float fps;
+    //sf::Clock clock;
+    //float time_since_spawn{0};
+    //float elapsed_time{0};
+    //float last_time{0};
+    //float fps;
+}
 
+bool World::simulate(sf::Time const& delta_time, float const elapsed_time, sf::RenderWindow & window)
+{
     // ==============================[ Game Loop ]==============================
     bool quit = false;
-    while (true) {
-        sf::Event event{};
-        while (window.pollEvent(event)) {
-            switch (event.type) {
-                case sf::Event::Closed:
-                    quit = true;
-                    break;
-                case sf::Event::KeyPressed:
-                    if(event.key.code == sf::Keyboard::F5)
+
+    sf::Event event{};
+    while (window.pollEvent(event)) {
+        switch (event.type) {
+            case sf::Event::Closed:
+                quit = true;
+                break;
+            case sf::Event::KeyPressed:
+                if(event.key.code == sf::Keyboard::F5)
+                {
+                    if(debug_mode)
                     {
-                        if(debug_mode)
-                        {
-                            debug_mode = false;
-                        }
-                        else
-                        {
-                            debug_mode = true;
-                        }
+                        debug_mode = false;
                     }
-                default:
-                    break;
-            }
+                    else
+                    {
+                        debug_mode = true;
+                    }
+                }
+            default:
+                break;
         }
-
-        if (quit)
-        {
-            break;
-        }
-
-        auto delta_time = clock.restart();
-        elapsed_time += delta_time.asSeconds();
-        if(elapsed_time > time_since_spawn + 30)
-        {
-            time_since_spawn = elapsed_time;
-            spawn_monsters();
-        }
-
-        fps = 1.0f / (elapsed_time - last_time);
-        last_time = elapsed_time;
-
-        sf::Vector2f mouse_pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
-        mouse_cursor.setPosition(mouse_pos);
-
-        // 1. Update all game objects and handle collisions.
-        update_game_objects(delta_time);
-        hud->update(delta_time, *this, hud);
-
-        // 2. Draw each game object.
-        draw_game_objects();
-
-        // 3. Add all game_objects in add queue
-        add_game_objects();
-
-        // 4. Delete any game objects in the kill queue.
-        if(not delete_game_objects())
-        {
-            quit = true;
-            break;
-        }
-
-        if (debug_mode)
-        {
-            fps_text.setString("FPS: " + std::to_string(int(fps)));
-            window.draw(fps_text);
-        }
-        window.draw(mouse_cursor);
-        hud->render(window);
-        //hud->draw_hud(window);
-        window.display();
     }
+
+    if (quit)
+    {
+        return quit;
+    }
+
+    //auto delta_time = clock.restart();
+    //elapsed_time += delta_time.asSeconds();
+    if(elapsed_time > time_since_spawn + 30)
+    {
+        time_since_spawn = elapsed_time;
+        spawn_monsters();
+    }
+
+    /*fps = 1.0f / (elapsed_time - last_time);
+    last_time = elapsed_time;*/
+
+    mouse_pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+    mouse_cursor.setPosition(mouse_pos);
+
+    // 1. Update all game objects and handle collisions.
+    update_game_objects(delta_time);
+    hud->update(delta_time, *this, hud);
+
+    // 2. Draw each game object.
+    draw_game_objects(window);
+
+    // 3. Add all game_objects in add queue
+    add_game_objects();
+
+    // 4. Delete any game objects in the kill queue.
+    if(not delete_game_objects())
+    {
+        quit = true;
+        return quit;
+    }
+
+    /*if (debug_mode)
+    {
+        fps_text.setString("FPS: " + std::to_string(int(fps)));
+        window.draw(fps_text);
+    }*/
+
+    return quit;
+}
+
+void World::render(sf::RenderWindow & window)
+{
+    window.draw(mouse_cursor);
+    hud->render(window);
 }
