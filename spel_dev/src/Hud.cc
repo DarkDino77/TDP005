@@ -22,7 +22,7 @@ void Hud::load_hud(World & world)
     ammo_text->setOutlineColor(sf::Color (0x373737ff));
     ammo_text->setOutlineThickness(4);
     ammo_text->setOrigin(12,0);
-    ammo_text->setString("-");
+    ammo_text->setString("o");
     ammo_text->setPosition(1906-5*4 - ammo_text->getLocalBounds().width, 10+23*4);
     hud_texts.push_back(ammo_text);
 
@@ -65,6 +65,14 @@ void Hud::load_hud(World & world)
     hud_weapon_background->setPosition(1910, 10);
     hud_weapon_background->setScale(4.0f, 4.0f);
     hud_elements.push_back(hud_weapon_background);
+
+    std::shared_ptr<sf::RectangleShape> hud_weapon = std::make_shared<sf::RectangleShape>();
+    hud_weapon->setTexture(&world.get_sprite("glock_hud"));
+    hud_weapon->setSize(sf::Vector2f(hud_weapon->getTexture()->getSize()));
+    hud_weapon->setOrigin({hud_weapon->getSize().x, 0});
+    hud_weapon->setPosition(1910, 10);
+    hud_weapon->setScale(4.0f, 4.0f);
+    hud_elements.push_back(hud_weapon);
 }
 
 void Hud::draw_hud(sf::RenderWindow & window)
@@ -97,11 +105,11 @@ void Hud::set_player_level(int level)
     hud_texts.at(0)->setString(std::to_string(level));
 }
 
-void Hud::set_weapon_stats(std::shared_ptr<Weapon> const& weapon)
+void Hud::set_weapon_stats(std::shared_ptr<Weapon> const& weapon, World & world)
 {
     if(weapon->get_ammo_capacity() == -1)
     {
-        hud_texts.at(1)->setString("-");
+        hud_texts.at(1)->setString("o");
         hud_texts.at(1)->setPosition(1906-5*4 - hud_texts.at(1)->getLocalBounds().width, 10+23*4);
     }
     else
@@ -109,5 +117,6 @@ void Hud::set_weapon_stats(std::shared_ptr<Weapon> const& weapon)
         hud_texts.at(1)->setString(std::to_string(weapon->get_ammo_amount()));
         hud_texts.at(1)->setPosition(1906-5*4 - hud_texts.at(1)->getLocalBounds().width, 10+23*4);
     }
+    hud_elements.at(5)->setTexture(&world.get_sprite(weapon->get_name() + "_hud"));
 
 }

@@ -10,16 +10,12 @@ Bullet::Bullet(int damage, sf::Vector2f const& aim_direction, double speed, sf::
 : Movable(position, sprite, speed), damage{damage}, source{source}
 {
     direction = aim_direction;
-    float rotate_degrees = std::atan2(direction.y, direction.x);
-    shape.setRotation((rotate_degrees*180/3.1415f) - 90.f);
+    set_rotation(direction);
 }
 
 void Bullet::update(sf::Time const& delta_time, World & , std::shared_ptr<Game_Object> const&)
 {
-    float distance = 250.0f * delta_time.asSeconds() * speed;
-    position -= direction * distance;
-    shape.setPosition(position);
-    collision_shape.setPosition(position);
+    update_position(delta_time);
 }
 
 void Bullet::handle_collision(World & world, std::shared_ptr<Game_Object> const& current_obj, std::shared_ptr<Game_Object> const& other_obj)

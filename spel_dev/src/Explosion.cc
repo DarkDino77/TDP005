@@ -6,7 +6,13 @@
 
 Explosion::Explosion(sf::Vector2f const& position, sf::Texture const& sprite, float explosive_radius, int explosive_damage)
 : Collidable(position, sprite), explosive_radius{explosive_radius}, explosive_damage(explosive_damage)
-{}
+{
+    shape.setSize({explosive_radius, explosive_radius});
+    collision_shape.setRadius(explosive_radius);
+    collision_shape.setOrigin(explosive_radius, explosive_radius);
+    shape.setOrigin(collision_shape.getOrigin()/2.0f);
+    shape.setPosition(collision_shape.getPosition());
+}
 
 void Explosion::update(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> const& current_obj)
 {

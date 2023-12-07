@@ -40,16 +40,12 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     // Rotate the player towards the mouse cursor.
     sf::Vector2f mouse_pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
     sf::Vector2f rotate_direction = normalize(position - mouse_pos);
-    float rotate_degrees = std::atan2(rotate_direction.y, rotate_direction.x);
-    shape.setRotation((rotate_degrees * 180 / 3.1415f) - 90.f);
-
+    set_rotation(rotate_direction);
     // ==============================[ INPUT ]==============================
     // Update the players position based on input.
-    direction = find_direction();
-    float distance = 250.0f * delta_time.asSeconds() * float(speed);
-    position += direction * distance;
-    shape.setPosition(position);
-    collision_shape.setPosition(position);
+    direction = -find_direction();
+    update_position(delta_time);
+
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         if(current_weapon->shoot(rotate_direction, world, position, current_obj))
@@ -154,7 +150,7 @@ void Player::add_ammo(std::string ammo_type, int amount)
 {
     for (std::shared_ptr<Weapon> weapon: available_weapons)
     {
-        if(ammo_type == weapon->get_ammo_type())
+        if(ammo_type == weapon->get_name() + "_ammo")
         {
             weapon->add_ammo(amount);
         }

@@ -35,7 +35,7 @@ public:
     void add_wall(sf::Vector2f const& position);
     void add_explosive_barrel(sf::Vector2f const& position);
     void add_crate(sf::Vector2f const& position);
-    void add_explosion(sf::Vector2f const& position);
+    void add_explosion(sf::Vector2f const& position, float const explosive_radius, int explosive_damage);
     void add_pick_up(sf::Vector2f const& position);
     void add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& bullet_type,
                     sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source);
@@ -64,6 +64,8 @@ private:
     std::map<std::string, std::vector<std::shared_ptr<sf::Sound>>> sounds{};
     std::vector<std::shared_ptr<Game_Object>> add_queue{};
     std::vector<std::shared_ptr<Game_Object>> kill_queue{};
+    std::vector<std::shared_ptr<sf::RectangleShape>> hud_elements{};
+    std::vector<std::shared_ptr<sf::Text>> hud_texts{};
 
     float health_percent{100};
     bool debug_mode{false};

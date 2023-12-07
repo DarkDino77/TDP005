@@ -14,6 +14,9 @@ protected:
     //sf::CircleShape collision_shape{};
     sf::Vector2f direction{};
 
+    void update_position(sf::Time const& delata_time);
+    void set_rotation(sf::Vector2f rotate_direction);
+
 };
 
 

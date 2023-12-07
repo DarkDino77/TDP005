@@ -20,7 +20,7 @@
 #include <fstream>
 #include <iterator>
 
-const int font_size{40};
+const int font_size{12};
 sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate)
 {
     float sprite_scale{2.0f};
@@ -40,7 +40,7 @@ void World::add_player_weapon()
     switch (player_level)
     {
         case(2):
-            player->add_weapon("baretta", 15, 200, 2.5, 10);
+            player->add_weapon("baretta", 15, 200, 2.5, 2);
             player->add_ammo("baretta_ammo", 200);
             available_pick_ups.push_back("baretta_ammo");
             break;
@@ -69,11 +69,8 @@ void World::level_up_player()
     player_level+= 1;
     hud.set_player_level(player_level);
 
-    std::cout << "Player leveled up to level: " << player_level << "!" << std::endl;
-
     switch (player_level%2) {
         case 0:
-            std::cout << "Added new weapon" << std::endl;
             add_player_weapon();
             break;
         /*case 5:
@@ -205,10 +202,10 @@ void World::add_crate(sf::Vector2f const& position)
     game_objects.push_back(crate);
 }
 
-void World::add_explosion(sf::Vector2f const& position)
+void World::add_explosion(sf::Vector2f const& position, float const explosive_radius, int const explosive_damage)
 {
     auto explosion = std::make_shared<Explosion>(position,
-                                                 get_sprite("explosion"), 100, 50);
+                                                 get_sprite("explosion"), explosive_radius, explosive_damage);
     add_queue.push_back(explosion);
 }
 
@@ -248,7 +245,7 @@ void World::set_health_percent(int health, int max_health)
 }
 void World::set_weapon_stats(std::shared_ptr<Weapon> weapon)
 {
-    hud.set_weapon_stats(weapon);
+    hud.set_weapon_stats(weapon, *this);
 }
 
 void World::add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& bullet_type, sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source)
@@ -442,6 +439,11 @@ void World::load_textures()
     add_texture("hud_health_fill", "textures/hud_health_fill.png");
     add_texture("hud_level_fill", "textures/hud_level_fill.png");
     add_texture("hud_weapon_background", "textures/hud_weapon_background.png");
+    add_texture("glock_hud", "textures/glock_hud.png");
+    add_texture("baretta_hud", "textures/baretta_hud.png");
+    add_texture("uzi_hud", "textures/uzi_hud.png");
+    add_texture("shotgun_hud", "textures/shotgun_hud.png");
+    add_texture("assault_rifle_hud", "textures/assault_rifle_hud.png");
 }
 
 void World::load_audio()
@@ -586,24 +588,8 @@ void World::simulate()
     fps_text.setCharacterSize(font_size);
     fps_text.setOutlineColor(sf::Color (0x373737ff));
     fps_text.setOutlineThickness(4);
+    fps_text.setPosition(10+33*4,10 + 4*4);
     fps_text.setString("FPS:0");
-
-    /*
-    sf::Texture number_texture;
-    if(!number_texture.loadFromFile("textures/numbers.png"))
-    {
-        return;
-    }
-
-    sf::Sprite number_sprites[11];
-    int char_width{5};
-
-    for (int i = 0; i < 11; i++)
-    {
-        number_sprites[i].setTexture(number_texture);
-        number_sprites[i].setTextureRect(sf::IntRect(i * char_width, 0, char_width, 8));
-        number_sprites[i].setPosition(i * char_width, 0);
-    }*/
 
     // ==============================[ Background ]==============================
     load_background();
@@ -700,7 +686,7 @@ void World::simulate()
 
         if (debug_mode)
         {
-            fps_text.setString("FPS:" + std::to_string(int(fps)));
+            fps_text.setString("FPS: " + std::to_string(int(fps)));
             window.draw(fps_text);
         }
         window.draw(mouse_cursor);

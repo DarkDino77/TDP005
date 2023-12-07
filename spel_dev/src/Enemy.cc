@@ -10,7 +10,7 @@ Enemy::Enemy(sf::Vector2f position, sf::Texture const& sprite, float speed, int 
         : Character(position, sprite, speed, health), melee_damage{melee_damage}, xp{xp}
 {}
 
-void Enemy::handle_collision(World & world, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
+void Enemy::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
 {
     if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr
             || std::dynamic_pointer_cast<Explosion>(other_obj) != nullptr
@@ -90,12 +90,8 @@ void Enemy::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
     // Rotate the enemy towards the player.
     sf::Vector2f rotate_direction = normalize(position - (player -> get_position()));
     direction = rotate_direction;
-    float rotate_degrees = std::atan2(rotate_direction.y, rotate_direction.x);
-    shape.setRotation((rotate_degrees*180/3.1415f) - 90.f);
-
+    set_rotation(direction);
     // Update the enemy position based on delta time.
-    float distance = 250.0f * delta_time.asSeconds() * float(speed);
-    position -= rotate_direction * distance;
-    shape.setPosition(position);
-    collision_shape.setPosition(position);
+    update_position(delta_time);
+
 }

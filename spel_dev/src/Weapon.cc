@@ -24,9 +24,9 @@ bool Weapon::shoot(sf::Vector2f const& direction, World & world, sf::Vector2f co
     return false;
 }
 
-std::string Weapon::get_ammo_type()
+std::string Weapon::get_name()
 {
-    return name + "_ammo";
+    return name;
 }
 void Weapon::add_ammo(int amount)
 {

@@ -12,7 +12,7 @@ public:
     //sf::Texture const& hud_sprite;
     bool shoot(sf::Vector2f const& direction, World & world, sf::Vector2f const& position, std::shared_ptr<Game_Object> const& source);
     bool can_shoot();
-    std::string get_ammo_type();
+    std::string get_name();
     void add_ammo(int amount);
     int get_ammo_amount();
     int get_ammo_capacity();
