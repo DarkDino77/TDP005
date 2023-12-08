@@ -1,8 +1,8 @@
 #ifndef WALL_H
 #define WALL_H
-#include "Map_Object.h"
+#include "Game_Object.h"
 
-class Wall : public Map_Object
+class Wall : public Game_Object
 {
 public:
     Wall(sf::Vector2f const& position, sf::Texture const& sprite);

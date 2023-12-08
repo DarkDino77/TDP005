@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
-#include "standard.h"
+#include <iostream>
 #include "World.h"
 #include "Player.h"
 #include "Melee.h"

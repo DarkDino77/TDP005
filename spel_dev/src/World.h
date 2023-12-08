@@ -32,6 +32,7 @@ public:
     void add_player_xp(int xp);
 
     // ==============================[ Creation ]==============================
+       void load();
     void add_explosion(sf::Vector2f const& position, float explosive_radius, int explosive_damage);
     void add_pick_up(sf::Vector2f const& position);
     void add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& bullet_type,
@@ -90,7 +91,7 @@ private:
 
     // ==============================[ Load ]==============================
     void load_level_file(std::string const& filename);
-    void load();
+ 
     void load_font();
     void load_background();
     void load_cursor();
