@@ -58,8 +58,6 @@ private:
     std::shared_ptr<Player> player{nullptr};
     std::vector<std::shared_ptr<sf::Sound>> sound_queue{};
     int current_wave{1};
-    bool sound_on{false};
-    //sf::RenderWindow window{sf::VideoMode{1920, 1024}, "The Grand Arena"};
     sf::Font font{};
     sf::Texture background_texture{};
     sf::Sprite background_sprite{};
@@ -77,6 +75,8 @@ private:
     std::vector<std::shared_ptr<sf::Text>> hud_texts{};
 
     float time_since_spawn{0};
+    float last_time{0};
+    sf::Text fps_text;
     float health_percent{100};
     float level_percent{0};
     std::shared_ptr<Weapon> weapon_stats{};

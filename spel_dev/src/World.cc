@@ -20,8 +20,6 @@
 #include <fstream>
 #include <iterator>
 
-const int font_size{12};
-
 sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate)
 {
     float sprite_scale{2.0f};
@@ -518,21 +516,22 @@ void World::check_collision(std::shared_ptr<Game_Object> const& current_obj)
     for(std::shared_ptr<Game_Object> const& other_obj : game_objects)
     {
         sf::FloatRect other_bounds = (other_obj->get_shape()).getGlobalBounds();
-        if(not current_bounds.intersects(other_bounds))
+        if(not current_bounds.intersects(other_bounds) || current_obj == other_obj)
         {
             continue;
         }
 
-        std::shared_ptr<Collidable> other_colliadable_target{std::dynamic_pointer_cast<Collidable>(other_obj)};
+        /*std::shared_ptr<Collidable> other_colliadable_target{std::dynamic_pointer_cast<Collidable>(other_obj)};
         if(other_colliadable_target != nullptr)
         {
             other_bounds = other_colliadable_target->get_collision_shape().getGlobalBounds();
-        }
+        }*/
 
-        if(current_obj != other_obj && current_bounds.intersects(other_bounds))
-        {
+        collidable_target->handle_collision(*this, current_obj, other_obj);
+        /*if(current_obj != other_obj && current_bounds.intersects(other_bounds))
+        {w
             collidable_target->handle_collision(*this, current_obj, other_obj);
-        }
+        }*/
     }
 }
 
@@ -601,13 +600,12 @@ void World::load()
     //make_window();
     load_font();
 
-    /*sf::Text fps_text;
     fps_text.setFont(font);
-    fps_text.setCharacterSize(font_size);
+    fps_text.setCharacterSize(24);
     fps_text.setOutlineColor(sf::Color (0x373737ff));
     fps_text.setOutlineThickness(4);
     fps_text.setPosition(10+33*4,10 + 4*4);
-    fps_text.setString("FPS:0");*/
+    fps_text.setString("FPS:0");
 
     // ==============================[ Background ]==============================
     load_background();
@@ -662,6 +660,7 @@ bool World::simulate(sf::Time const& delta_time, float const elapsed_time, sf::R
                     }
                     else
                     {
+                        std::cout << "Debug on" << std::endl;
                         debug_mode = true;
                     }
                 }
@@ -683,8 +682,8 @@ bool World::simulate(sf::Time const& delta_time, float const elapsed_time, sf::R
         spawn_monsters();
     }
 
-    /*fps = 1.0f / (elapsed_time - last_time);
-    last_time = elapsed_time;*/
+    float fps = 1.0f / (elapsed_time - last_time);
+    last_time = elapsed_time;
 
     mouse_pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
     mouse_cursor.setPosition(mouse_pos);
@@ -706,11 +705,11 @@ bool World::simulate(sf::Time const& delta_time, float const elapsed_time, sf::R
         return quit;
     }
 
-    /*if (debug_mode)
+    if (debug_mode)
     {
         fps_text.setString("FPS: " + std::to_string(int(fps)));
         window.draw(fps_text);
-    }*/
+    }
 
     return quit;
 }

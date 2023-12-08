@@ -15,8 +15,11 @@ void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
 {
     Enemy::update(delta_time, world, current_obj);
 
-    if(current_weapon->can_shoot() && world.can_see_player(current_obj, direction))
+    if(current_weapon->can_shoot())
     {
-        current_weapon->shoot(direction, world, position, current_obj);
+        if(world.can_see_player(current_obj, direction))
+        {
+            current_weapon->shoot(direction, world, position, current_obj);
+        }
     }
 }
