@@ -24,7 +24,7 @@ bool Weapon::shoot(sf::Vector2f const& direction, World & world, sf::Vector2f co
     return false;
 }
 
-std::string Weapon::get_name()
+std::string& Weapon::get_name()
 {
     return name;
 }
