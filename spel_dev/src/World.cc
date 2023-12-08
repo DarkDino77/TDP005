@@ -404,7 +404,7 @@ void World::load_font()
 
 void World::load_background()
 {
-    background_texture.loadFromFile("textures/background2.png");
+    background_texture.loadFromFile("textures/background.png");
     background_sprite.setTexture(background_texture);
 }
 
