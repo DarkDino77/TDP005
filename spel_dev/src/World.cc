@@ -270,8 +270,6 @@ bool World::simulate(sf::Time const& delta_time, float const elapsed_time_in, sf
         return quit;
     }
 
-    //auto delta_time = clock.restart();
-    //elapsed_time += delta_time.asSeconds();
     if(elapsed_time > time_since_spawn + 30)
     {
         time_since_spawn = elapsed_time;
@@ -287,9 +285,6 @@ bool World::simulate(sf::Time const& delta_time, float const elapsed_time_in, sf
     // 1. Update all game objects and handle collisions.
     update_game_objects(delta_time);
     hud->update(delta_time, *this, hud);
-
-    // 2. Draw each game object.
-    draw_game_objects(window);
 
     // 3. Add all game_objects in add queue
     add_game_objects();
@@ -312,6 +307,7 @@ bool World::simulate(sf::Time const& delta_time, float const elapsed_time_in, sf
 
 void World::render(sf::RenderWindow & window)
 {
+    draw_game_objects(window);
     window.draw(mouse_cursor);
     hud->render(window);
 }
@@ -362,7 +358,7 @@ void World::load_level_file(std::string const& filename)
 
 void World::load_font()
 {
-    if(!font.loadFromFile("res/font2.ttf"))
+    if(!font.loadFromFile("res/font3.ttf"))
     {
         std::cerr << "Could not load font" << std::endl;
     }
@@ -666,7 +662,7 @@ void World::level_up_player()
     switch (player_level%10) {
         case 0:
             player->increase_max_health(10);
-            hud->pop_up("MAX HEALTH INCREASED");
+            hud->pop_up("MAX HEALTH +10");
             break;
         case 2:
             add_player_weapon();
