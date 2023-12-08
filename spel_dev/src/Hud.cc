@@ -26,38 +26,37 @@ void Hud::update(sf::Time const&, World & world, std::shared_ptr<Game_Object> co
     if(world.get_weapon_stats()->get_ammo_capacity() == -1)
     {
         hud_texts.at(1)->setString("o");
-        hud_texts.at(1)->setPosition(1906-5*4 - hud_texts.at(1)->getLocalBounds().width, 10+23*4);
+        hud_texts.at(1)->setPosition(1906-2*4 - hud_texts.at(1)->getLocalBounds().width, 10+20*4);
     }
     else
     {
         hud_texts.at(1)->setString(std::to_string(world.get_weapon_stats()->get_ammo_amount()));
-        hud_texts.at(1)->setPosition(1906-5*4 - hud_texts.at(1)->getLocalBounds().width, 10+23*4);
+        hud_texts.at(1)->setPosition(1906-2*4 - hud_texts.at(1)->getLocalBounds().width, 10+20*4);
     }
 
     hud_elements.at(2)->setTexture(&world.get_sprite(world.get_weapon_stats()->get_name() + "_hud"));
 
 }
-
 void Hud::load_hud(World & world)
 {
     std::shared_ptr<sf::Text> level_text{std::make_shared<sf::Text>()};
     level_text->setFont(world.get_font());
-    level_text->setCharacterSize(12);
+    level_text->setCharacterSize(24);
     level_text->setOutlineColor(sf::Color (0x373737ff));
     level_text->setOutlineThickness(4);
-    level_text->setOrigin(12,0);
+    level_text->setOrigin(24,0);
     level_text->setString("0");
-    level_text->setPosition(10+30*4, 10+13*4);
+    level_text->setPosition(10+33*4, 10+10*4);
     hud_texts.push_back(level_text);
 
     std::shared_ptr<sf::Text> ammo_text{std::make_shared<sf::Text>()};
     ammo_text->setFont(world.get_font());
-    ammo_text->setCharacterSize(12);
+    ammo_text->setCharacterSize(24);
     ammo_text->setOutlineColor(sf::Color (0x373737ff));
     ammo_text->setOutlineThickness(4);
-    ammo_text->setOrigin(12,0);
+    ammo_text->setOrigin(24,0);
     ammo_text->setString("o");
-    ammo_text->setPosition(1906-5*4 - ammo_text->getLocalBounds().width, 10+23*4);
+    ammo_text->setPosition(1906-2*4 - ammo_text->getLocalBounds().width, 10+20*4);
     hud_texts.push_back(ammo_text);
 
     std::shared_ptr<sf::RectangleShape> hud_current_health = std::make_shared<sf::RectangleShape>();

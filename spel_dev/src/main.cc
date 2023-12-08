@@ -14,7 +14,7 @@ int main() {
     sf::RenderWindow window{sf::VideoMode{1920, 1024}, "The Grand Arena"};
     window.setMouseCursorVisible(false);
     window.setKeyRepeatEnabled(false);
-    window.setVerticalSyncEnabled(false);
+    window.setVerticalSyncEnabled(true);
 
 
     State::run(window, std::make_shared<Menu_State>(nullptr));

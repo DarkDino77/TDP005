@@ -82,15 +82,15 @@ Menu_State::Menu_State(std::shared_ptr<State> resume)
 : selected(0), enter_pressed(false), delay(sf::milliseconds(300))
 {
 
-    font.loadFromFile("res/font.ttf");
+    font.loadFromFile("res/font2.ttf");
 
     if (resume) {
-        add("Resume", [resume]() { return resume; });
+        add("RESUME", [resume]() { return resume; });
         background = resume;
     }
 
-    add("New game", []() { return std::make_shared<Game_State>(); });
-    add("Exit", []() { return std::make_shared<Exit_State>(); });
+    add("NEW GAME", []() { return std::make_shared<Game_State>(); });
+    add("EXIT", []() { return std::make_shared<Exit_State>(); });
 }
 
 void Menu_State::add(const std::string &text, Action action) {
