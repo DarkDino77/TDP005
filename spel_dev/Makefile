@@ -41,4 +41,4 @@ run:
 
 .PHONY:
 leak_run:
-	valgrind --tool=memcheck --leak-check=yes ./the_grand_arena
+	valgrind --tool=memcheck --leak-check=yes --suppressions=path_to_suppression_file.txt ./the_grand_arena

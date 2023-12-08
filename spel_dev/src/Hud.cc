@@ -12,7 +12,7 @@ Hud::Hud(sf::Vector2f const& position, sf::Texture const& sprite, World & world)
     load_hud(world);
 }
 
-void Hud::update(sf::Time const&, World & world, std::shared_ptr<Game_Object> const&)
+void Hud::update(sf::Time const& delta_time, World & world, std::shared_ptr<Game_Object> const&)
 {
     health_percent = world.get_health_percent();
     hud_elements.at(0)->setScale(4.0f * health_percent, 4.0f);
@@ -36,6 +36,20 @@ void Hud::update(sf::Time const&, World & world, std::shared_ptr<Game_Object> co
 
     hud_elements.at(2)->setTexture(&world.get_sprite(world.get_weapon_stats()->get_name() + "_hud"));
 
+    // Popup
+    if(not is_pop_up_visible && not pop_up_queue.empty())
+    {
+        hud_texts.at(2)->setString(pop_up_queue.at(0));
+        hud_texts.at(2)->setPosition(965 - hud_texts.at(2)->getLocalBounds().width/2, 10 + 4);
+        time_since_pop_up = world.get_elapsed_time();
+        is_pop_up_visible = true;
+    }
+    else if(not pop_up_queue.empty() && time_since_pop_up + 3 < world.get_elapsed_time())
+    {
+        pop_up_queue.erase(pop_up_queue.begin());
+        hud_texts.at(2)->setString("");
+        is_pop_up_visible = false;
+    }
 }
 void Hud::load_hud(World & world)
 {
@@ -58,6 +72,16 @@ void Hud::load_hud(World & world)
     ammo_text->setString("o");
     ammo_text->setPosition(1906-2*4 - ammo_text->getLocalBounds().width, 10+20*4);
     hud_texts.push_back(ammo_text);
+
+    std::shared_ptr<sf::Text> popup_text{std::make_shared<sf::Text>()};
+    popup_text->setFont(world.get_font());
+    popup_text->setCharacterSize(24);
+    popup_text->setOutlineColor(sf::Color (0x373737ff));
+    popup_text->setOutlineThickness(4);
+    popup_text->setString("");
+    popup_text->setOrigin(int(popup_text->getString().getSize())/2,0);
+    popup_text->setPosition(965 - popup_text->getLocalBounds().width/2, 10 + 4);
+    hud_texts.push_back(popup_text);
 
     std::shared_ptr<sf::RectangleShape> hud_current_health = std::make_shared<sf::RectangleShape>();
     hud_current_health->setTexture(&world.get_sprite("hud_health_fill"));
@@ -95,5 +119,9 @@ void Hud::render(sf::RenderWindow &window)
     {
         window.draw(*text);
     }
+}
 
+void Hud::pop_up(std::string const& message)
+{
+    pop_up_queue.push_back(message);
 }

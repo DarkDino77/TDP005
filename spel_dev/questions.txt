@@ -1,2 +1,4 @@
 * Const på många variabler?
 
+* Hur ska man göra när man vi ändra saker i kravspecifikationen (Siffror i tabeller)
+

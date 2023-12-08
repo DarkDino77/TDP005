@@ -157,3 +157,17 @@ void Player::add_ammo(std::string const& ammo_type, int const amount)
     }
 }
 
+void Player::add_health(int const amount)
+{
+    health += amount;
+    if (health > max_health)
+    {
+        health -= health - max_health;
+    }
+}
+
+void Player::increase_max_health(int const amount)
+{
+    max_health += amount;
+}
+

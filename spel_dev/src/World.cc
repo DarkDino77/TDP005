@@ -14,6 +14,7 @@
 #include "Ammo.h"
 #include "Hud.h"
 #include "point.h"
+#include "Health_Drop.h"
 #include <vector>
 #include <memory>
 #include <random>
@@ -73,6 +74,11 @@ sf::Vector2f& World::get_mouse_pos()
     return mouse_pos;
 }
 
+float World::get_elapsed_time() const
+{
+    return elapsed_time;
+}
+
 // ==============================[ Setters ]==============================
 void World::kill(std::shared_ptr<Game_Object> const& obj_to_kill)
 {
@@ -121,6 +127,10 @@ void World::load()
 
     // ==============================[ Add audio ]==============================
     load_audio();
+
+    load_pick_ups();
+
+
     sf::Music music;
     if (!music.openFromFile("audio/music.ogg"))
     {
@@ -144,24 +154,30 @@ void World::add_explosion(sf::Vector2f const& position, float const explosive_ra
     add_queue.push_back(explosion);
 }
 
-void World::add_pick_up(sf::Vector2f const& position)
+void World::add_pick_up(sf::Vector2f const& position, int const drop_chance)
 {
-    if(available_pick_ups.empty())
-    {
-        return;
-    }
-
     std::random_device rd;
     std::uniform_int_distribution<int> uniform_rd(1,100);
+    int rand_int{uniform_rd(rd)};
 
-    if(uniform_rd(rd) <= 100)
+
+    if(rand_int <= drop_chance)
     {
         std::uniform_int_distribution<int> rand_pick_up_rd(1,int(available_pick_ups.size()));
 
         int random_int{rand_pick_up_rd(rd)-1};
-        auto ammo = std::make_shared<Ammo>(position, get_sprite(available_pick_ups.at(random_int)),
-                                           available_pick_ups.at(random_int));
-        add_queue.push_back(ammo);
+
+        if(random_int == 0)
+        {
+            auto health_drop = std::make_shared<Health_Drop>(position, get_sprite("health_drop"));
+            add_queue.push_back(health_drop);
+        }
+        else
+        {
+            auto ammo = std::make_shared<Ammo>(position, get_sprite(available_pick_ups.at(random_int)),
+                                               available_pick_ups.at(random_int));
+            add_queue.push_back(ammo);
+        }
     }
 }
 
@@ -220,9 +236,10 @@ void World::play_sound(std::string const& name)
 }
 
 // ==============================[ Game Loop ]==============================
-bool World::simulate(sf::Time const& delta_time, float const elapsed_time, sf::RenderWindow & window)
+bool World::simulate(sf::Time const& delta_time, float const elapsed_time_in, sf::RenderWindow & window)
 {
     bool quit = false;
+    elapsed_time = elapsed_time_in;
 
     sf::Event event{};
     while (window.pollEvent(event)) {
@@ -367,6 +384,11 @@ void World::load_cursor()
     mouse_cursor.setScale(2.0f,2.0f);
 }
 
+void World::load_pick_ups()
+{
+    available_pick_ups.push_back("health_drop");
+}
+
 void World::load_textures()
 {
     // Map objects
@@ -399,6 +421,8 @@ void World::load_textures()
     add_texture("uzi_ammo", "textures/uzi_ammo.png");
     add_texture("shotgun_ammo", "textures/shotgun_ammo.png");
     add_texture("assault_rifle_ammo", "textures/assault_rifle_ammo.png");
+
+    add_texture("health_drop", "textures/health_pick_up.png");
 
     // HUD
     add_texture("hud", "textures/hud.png");
@@ -634,12 +658,26 @@ void World::add_player_weapon()
 
 void World::level_up_player()
 {
+    hud->pop_up("LEVEL UP");
     player_level_progression -= xp_to_level;
     xp_to_level+=5;
     player_level+= 1;
 
-    switch (player_level%2) {
+    switch (player_level%10) {
         case 0:
+            player->increase_max_health(10);
+            hud->pop_up("MAX HEALTH INCREASED");
+            break;
+        case 2:
+            add_player_weapon();
+            break;
+        case 4:
+            add_player_weapon();
+            break;
+        case 6:
+            add_player_weapon();
+            break;
+        case 8:
             add_player_weapon();
             break;
         default:

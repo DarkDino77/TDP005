@@ -16,13 +16,17 @@ public:
     void update(sf::Time const&, World &, std::shared_ptr<Game_Object> const&) override;
     void load_hud(World & world);
     void render(sf::RenderWindow & window) override;
+    void pop_up(std::string const& message);
 
 private:
     int player_level{0};
     float level_percent{0};
     float health_percent{100};
+    float time_since_pop_up{0};
+    bool is_pop_up_visible{false};
     std::vector<std::shared_ptr<sf::RectangleShape>> hud_elements{};
     std::vector<std::shared_ptr<sf::Text>> hud_texts{};
+    std::vector<std::string> pop_up_queue{};
 };
 
 #endif
