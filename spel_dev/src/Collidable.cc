@@ -9,7 +9,7 @@ Collidable::Collidable(sf::Vector2f position, sf::Texture const& sprite)
     collision_shape.setFillColor(sf::Color::Red);
 }
 
-sf::CircleShape Collidable::get_collision_shape()
+sf::CircleShape& Collidable::get_collision_shape()
 {
     return collision_shape;
 }

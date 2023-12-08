@@ -18,11 +18,11 @@ void Game_Object::render(sf::RenderWindow &window)
 {
     window.draw(shape);
 }
-sf::RectangleShape Game_Object::get_shape()
+sf::RectangleShape& Game_Object::get_shape()
 {
     return shape;
 }
-sf::Vector2f Game_Object::get_position()
+sf::Vector2f& Game_Object::get_position()
 {
     return position;
 }

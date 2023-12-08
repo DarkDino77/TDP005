@@ -13,8 +13,8 @@ public:
     virtual ~Game_Object() = default;
 
     virtual void render(sf::RenderWindow &window);
-    sf::RectangleShape get_shape();
-    sf::Vector2f get_position();
+    sf::RectangleShape& get_shape();
+    sf::Vector2f& get_position();
 
 protected:
     sf::RectangleShape shape{};
