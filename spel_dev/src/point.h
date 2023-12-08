@@ -13,3 +13,11 @@ inline sf::Vector2f normalize(const sf::Vector2f &v) {
     else
         return v * (1.0f/len);
 }
+
+inline sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate)
+{
+    float sprite_scale{2.0f};
+    float pos_x = 8.0f * sprite_scale + grid_coordinate.x * 16.0f * sprite_scale;
+    float pos_y = 8.0f * sprite_scale + grid_coordinate.y * 16.0f * sprite_scale;
+    return {pos_x, pos_y};
+}

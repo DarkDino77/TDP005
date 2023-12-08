@@ -9,10 +9,14 @@ class World;
 class Game_Object
 {
 public:
-    Game_Object(sf::Vector2f position, sf::Texture const& sprite);
+    Game_Object(sf::Vector2f const& position, sf::Texture const& sprite);
     virtual ~Game_Object() = default;
+    Game_Object(Game_Object const& other_obj) = delete;
+    Game_Object(Game_Object && other_obj) = delete;
+    Game_Object& operator=(Game_Object const& other_obj) = delete;
+    Game_Object& operator=(Game_Object && other_obj) = delete;
 
-    virtual void render(sf::RenderWindow &window);
+    virtual void render(sf::RenderWindow & window);
     sf::RectangleShape& get_shape();
     sf::Vector2f& get_position();
 

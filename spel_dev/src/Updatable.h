@@ -7,7 +7,7 @@
 
 class Updatable : public Game_Object{
 public:
-    Updatable(sf::Vector2f position, sf::Texture const& sprite);
+    Updatable(sf::Vector2f const& position, sf::Texture const& sprite);
     virtual ~Updatable() = default;
     virtual void update(sf::Time const&, World &, std::shared_ptr<Game_Object> const&) = 0;
 };

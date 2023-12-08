@@ -1,12 +1,10 @@
-#include <cmath>
-#include <iostream>
 #include "Bullet.h"
 #include "World.h"
 #include "Destructible.h"
 #include "Explosion.h"
 #include "Pick_Up.h"
 
-Bullet::Bullet(int damage, sf::Vector2f const& aim_direction, double speed, sf::Texture const& sprite, sf::Vector2f & position, std::shared_ptr<Game_Object> source)
+Bullet::Bullet(int damage, sf::Vector2f const& aim_direction, double const speed, sf::Texture const& sprite, sf::Vector2f const& position, std::shared_ptr<Game_Object> const& source)
 : Movable(position, sprite, speed), damage{damage}, source{source}
 {
     direction = aim_direction;

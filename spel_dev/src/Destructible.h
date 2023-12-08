@@ -9,7 +9,7 @@ public:
     Destructible(sf::Vector2f const& position, sf::Texture const& sprite, int health);
     ~Destructible() override = default;
     void update(sf::Time const&, World &, std::shared_ptr<Game_Object> const&) override;
-    virtual void destroy(std::shared_ptr<Game_Object> destructible_target, World & world) = 0;
+    virtual void destroy(std::shared_ptr<Game_Object> const& destructible_target, World & world) const = 0;
 
 };
 

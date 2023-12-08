@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-Enemy::Enemy(sf::Vector2f position, sf::Texture const& sprite, float speed, int health, int melee_damage, int xp)
+Enemy::Enemy(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health, int const melee_damage, int const xp)
         : Character(position, sprite, speed, health), melee_damage{melee_damage}, xp{xp}
 {}
 

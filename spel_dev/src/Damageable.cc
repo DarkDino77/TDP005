@@ -1,7 +1,7 @@
 #include "Damageable.h"
 
 
-Damageable::Damageable(int health)
+Damageable::Damageable(int const health)
 : health{health}
 {}
 

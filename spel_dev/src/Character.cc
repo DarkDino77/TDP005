@@ -1,7 +1,7 @@
 #include "Character.h"
 #include "World.h"
 
-Character::Character(sf::Vector2f position, sf::Texture const& sprite, float speed, int health)
+Character::Character(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health)
 : Movable(position, sprite, speed), Damageable(health)
 {}
 

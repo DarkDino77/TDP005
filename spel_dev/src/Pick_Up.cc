@@ -2,11 +2,11 @@
 #include "Pick_Up.h"
 #include "Player.h"
 
-Pick_Up::Pick_Up(sf::Vector2f position, sf::Texture const& sprite)
+Pick_Up::Pick_Up(sf::Vector2f const& position, sf::Texture const& sprite)
 : Collidable(position, sprite)
 {}
 
-void Pick_Up::update(const sf::Time &, World & world, const std::shared_ptr<Game_Object> & current_obj)
+void Pick_Up::update(sf::Time const&, World & world, std::shared_ptr<Game_Object> const& current_obj)
 {
     if(picked_up)
     {
@@ -15,7 +15,7 @@ void Pick_Up::update(const sf::Time &, World & world, const std::shared_ptr<Game
     }
 }
 
-void Pick_Up::handle_collision(World &, const std::shared_ptr<Game_Object> &, const std::shared_ptr<Game_Object> & other_obj)
+void Pick_Up::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
 {
     std::shared_ptr<Player> player_target{std::dynamic_pointer_cast<Player>(other_obj)};
     if(player_target != nullptr)

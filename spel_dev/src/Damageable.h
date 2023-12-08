@@ -3,7 +3,7 @@
 
 class Damageable {
 public:
-    Damageable(int health);
+    Damageable(int const health);
     virtual ~Damageable() = default;
     void take_damage(int damage);
 protected:

@@ -27,24 +27,24 @@ public:
 
     // ==============================[ Setters ]==============================
     void kill(std::shared_ptr<Game_Object> const& obj_to_kill);
-    void set_health_percent(int health, int max_health);
-    void set_weapon_stats(std::shared_ptr<Weapon> weapon);
-    void add_player_xp(int xp);
+    void set_health_percent(int const health, int const max_health);
+    void set_weapon_stats(std::shared_ptr<Weapon> const& weapon);
+    void add_player_xp(int const xp);
 
     // ==============================[ Creation ]==============================
-       void load();
-    void add_explosion(sf::Vector2f const& position, float explosive_radius, int explosive_damage);
+    void load();
+    void add_explosion(sf::Vector2f const& position, float const explosive_radius, int const explosive_damage);
     void add_pick_up(sf::Vector2f const& position);
-    void add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& bullet_type,
-                    sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source);
+    void add_bullet(int const damage, sf::Vector2f const& direction, double const bullet_speed, std::string const& bullet_type,
+                    sf::Vector2f const& bullet_spawn, std::shared_ptr<Game_Object> const& source);
 
     // ==============================[ Misc ]==============================
-    bool can_see_player(std::shared_ptr<Game_Object> source, sf::Vector2f direction);
+    bool can_see_player(std::shared_ptr<Game_Object> const& source, sf::Vector2f const& direction);
     void play_sound(std::string const& name);
 
     // ==============================[ Game Loop ]==============================
-    bool simulate(sf::Time const& delta_time, float elapsed_time, sf::RenderWindow &window);
-    void render(sf::RenderWindow &window);
+    bool simulate(sf::Time const& delta_time, float const elapsed_time, sf::RenderWindow & window);
+    void render(sf::RenderWindow & window);
 
 private:
     // ===[ Containers ]===
@@ -88,10 +88,8 @@ private:
     // ===[ Debug ]===
     bool debug_mode{false};
 
-
     // ==============================[ Load ]==============================
     void load_level_file(std::string const& filename);
- 
     void load_font();
     void load_background();
     void load_cursor();

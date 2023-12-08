@@ -19,7 +19,7 @@ sf::Vector2f find_direction() {
     return normalize(direction);
 }
 
-Player::Player(sf::Vector2f position, sf::Texture const& sprite, float speed, int health, World & world)
+Player::Player(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health, World & world)
 : Character(position, sprite, speed, health)
 {
     available_weapons.push_back(std::make_shared<Weapon>("glock", 5, -1, 2.0f, 2));
@@ -146,7 +146,7 @@ void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std:
     }
 }
 
-void Player::add_ammo(std::string ammo_type, int amount)
+void Player::add_ammo(std::string const& ammo_type, int const amount)
 {
     for (std::shared_ptr<Weapon> weapon: available_weapons)
     {

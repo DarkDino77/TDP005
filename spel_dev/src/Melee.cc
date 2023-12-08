@@ -3,7 +3,7 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
-Melee::Melee(sf::Vector2f position, sf::Texture const& sprite, float speed,int health, int melee_damage, int xp)
+Melee::Melee(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health, int const melee_damage, int const xp)
         : Enemy(position, sprite, speed, health, melee_damage, xp)
 {}
 /*

@@ -2,7 +2,7 @@
 #include "Game_Object.h"
 #include "World.h"
 
-Game_Object::Game_Object(sf::Vector2f position, sf::Texture const& sprite)
+Game_Object::Game_Object(sf::Vector2f const& position, sf::Texture const& sprite)
 : position{position}, sprite{sprite}
 {
     float sprite_scale{2.0f};

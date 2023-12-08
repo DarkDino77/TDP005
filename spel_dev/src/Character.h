@@ -9,7 +9,7 @@ class Weapon;
 class Character : public Movable, public Damageable
 {
 public:
-    Character(sf::Vector2f position, sf::Texture const& sprite, float speed, int health);
+    Character(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health); // TODO:: Fråga simon
     ~Character() override = default;
     void knock_back(sf::Vector2f const& direction, float force);
     void add_weapon(std::string const& name, int damage,

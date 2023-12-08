@@ -2,11 +2,11 @@
 #include "Explosive_Barrel.h"
 #include "World.h"
 
-Explosive_Barrel::Explosive_Barrel(sf::Vector2f const& position, sf::Texture const& sprite, int health)
+Explosive_Barrel::Explosive_Barrel(sf::Vector2f const& position, sf::Texture const& sprite, int const health)
 : Destructible(position, sprite, health)
 {}
 
-void Explosive_Barrel::destroy(std::shared_ptr<Game_Object> destructible_target, World & world)
+void Explosive_Barrel::destroy(std::shared_ptr<Game_Object> const& destructible_target, World & world) const
 {
     world.play_sound("explosion");
     world.add_explosion(position, 80, 30);

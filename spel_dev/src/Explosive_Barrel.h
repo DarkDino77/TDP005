@@ -4,8 +4,8 @@
 
 class Explosive_Barrel: public Destructible{
 public:
-    Explosive_Barrel(sf::Vector2f const& position, sf::Texture const& sprite, int health);
-    void destroy(std::shared_ptr<Game_Object> destructible_target, World & world) override;
+    Explosive_Barrel(sf::Vector2f const& position, sf::Texture const& sprite, int const health);
+    void destroy(std::shared_ptr<Game_Object> const& destructible_target, World & world) const override;
 };
 
 

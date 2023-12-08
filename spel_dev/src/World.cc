@@ -13,21 +13,13 @@
 #include "Updatable.h"
 #include "Ammo.h"
 #include "Hud.h"
+#include "point.h"
 #include <vector>
 #include <memory>
 #include <random>
 #include <algorithm>
 #include <fstream>
 #include <iterator>
-
-// ==============================[ Helpers ]==============================
-sf::Vector2f grid_to_coord(sf::Vector2f const& grid_coordinate) // TODO: Move to point.h
-{
-    float sprite_scale{2.0f};
-    float pos_x = 8.0f * sprite_scale + grid_coordinate.x * 16.0f * sprite_scale;
-    float pos_y = 8.0f * sprite_scale + grid_coordinate.y * 16.0f * sprite_scale;
-    return {pos_x, pos_y};
-}
 
 // ==============================[ Getters ]==============================
 std::shared_ptr<Player>& World::get_player()
@@ -87,16 +79,16 @@ void World::kill(std::shared_ptr<Game_Object> const& obj_to_kill)
     kill_queue.push_back(obj_to_kill);
 }
 
-void World::set_health_percent(int health, int max_health)
+void World::set_health_percent(int const health, int const max_health)
 {
     health_percent = (float(health) / float(max_health));
 }
-void World::set_weapon_stats(std::shared_ptr<Weapon> weapon)
+void World::set_weapon_stats(std::shared_ptr<Weapon> const& weapon)
 {
     weapon_stats = weapon;
 }
 
-void World::add_player_xp(int xp)
+void World::add_player_xp(int const xp)
 {
     player_level_progression+=xp;
     while(player_level_progression >= xp_to_level)
@@ -107,6 +99,44 @@ void World::add_player_xp(int xp)
 }
 
 // ==============================[ Creation ]==============================
+void World::load()
+{
+    load_font();
+
+    fps_text.setFont(font);
+    fps_text.setCharacterSize(24);
+    fps_text.setOutlineColor(sf::Color (0x373737ff));
+    fps_text.setOutlineThickness(4);
+    fps_text.setPosition(10+33*4,10 + 4*4);
+    fps_text.setString("FPS:0");
+
+    // ==============================[ Background ]==============================
+    load_background();
+
+    // ==============================[ Cursor ]==============================
+    load_cursor();
+
+    // ==============================[ Create World ]==============================
+    load_textures();
+
+    // ==============================[ Add audio ]==============================
+    load_audio();
+    sf::Music music;
+    if (!music.openFromFile("audio/music.ogg"))
+    {
+        std::cerr << "Error: Could not find music with filename 'audio/music.ogg'." << std::endl;
+        return;
+    }
+    music.play();
+
+    // ==============================[ HUD ]==============================
+    auto hud_obj = std::make_shared<Hud>(sf::Vector2f {0,0}, get_sprite("hud"), *this);
+    hud = hud_obj;
+
+    load_level_file("level1.txt");
+    spawn_monsters();
+}
+
 void World::add_explosion(sf::Vector2f const& position, float const explosive_radius, int const explosive_damage)
 {
     auto explosion = std::make_shared<Explosion>(position,
@@ -135,20 +165,19 @@ void World::add_pick_up(sf::Vector2f const& position)
     }
 }
 
-void World::add_bullet(int damage, sf::Vector2f const& direction, double bullet_speed, std::string const& bullet_type, sf::Vector2f & bullet_spawn, std::shared_ptr<Game_Object> const& source)
+void World::add_bullet(int const damage, sf::Vector2f const& direction, double const bullet_speed, std::string const& bullet_type, sf::Vector2f const& bullet_spawn, std::shared_ptr<Game_Object> const& source)
 {
     auto bullet = std::make_shared<Bullet>(damage, direction, bullet_speed, get_sprite(bullet_type), bullet_spawn, source);
     add_queue.push_back(bullet);
 }
 
 // ==============================[ Misc ]==============================
-bool World::can_see_player(std::shared_ptr<Game_Object> source, sf::Vector2f direction)
+bool World::can_see_player(std::shared_ptr<Game_Object> const& source, sf::Vector2f const& direction)
 {
     sf::CircleShape collision_checker;
     collision_checker.setRadius(5);
     collision_checker.setOrigin({collision_checker.getRadius(),collision_checker.getRadius()});
     collision_checker.setPosition(source->get_position());
-    //collision_checker.setFillColor(sf::Color::Red);
 
     while(true)
     {
@@ -193,7 +222,6 @@ void World::play_sound(std::string const& name)
 // ==============================[ Game Loop ]==============================
 bool World::simulate(sf::Time const& delta_time, float const elapsed_time, sf::RenderWindow & window)
 {
-    // ==============================[ Game Loop ]==============================
     bool quit = false;
 
     sf::Event event{};
@@ -313,45 +341,6 @@ void World::load_level_file(std::string const& filename)
             }
         }
     }
-}
-
-void World::load()
-{
-    //make_window();
-    load_font();
-
-    fps_text.setFont(font);
-    fps_text.setCharacterSize(24);
-    fps_text.setOutlineColor(sf::Color (0x373737ff));
-    fps_text.setOutlineThickness(4);
-    fps_text.setPosition(10+33*4,10 + 4*4);
-    fps_text.setString("FPS:0");
-
-    // ==============================[ Background ]==============================
-    load_background();
-
-    // ==============================[ Cursor ]==============================
-    load_cursor();
-
-    // ==============================[ Create World ]==============================
-    load_textures();
-
-    // ==============================[ Add audio ]==============================
-    load_audio();
-    sf::Music music;
-    if (!music.openFromFile("audio/music.ogg"))
-    {
-        std::cerr << "Error: Could not find music with filename 'audio/music.ogg'." << std::endl;
-        return;
-    }
-    music.play();
-
-    // ==============================[ HUD ]==============================
-    auto hud_obj = std::make_shared<Hud>(sf::Vector2f {0,0}, get_sprite("hud"), *this);
-    hud = hud_obj;
-
-    load_level_file("level1.txt");
-    spawn_monsters();
 }
 
 void World::load_font()

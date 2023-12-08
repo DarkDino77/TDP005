@@ -3,7 +3,8 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
-Ranged::Ranged(sf::Vector2f position, sf::Texture const& sprite, float speed,int health, int melee_damage, int xp)
+Ranged::Ranged(sf::Vector2f const& position, sf::Texture const& sprite,
+               float const speed, int const health, int const melee_damage, int const xp)
         : Enemy(position, sprite, speed, health, melee_damage, xp)
 {
     //TODO: Fix so that ranged enemy takes in weapon parameter as a construction variable

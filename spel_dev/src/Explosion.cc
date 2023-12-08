@@ -4,7 +4,7 @@
 #include "point.h"
 #include <iostream>
 
-Explosion::Explosion(sf::Vector2f const& position, sf::Texture const& sprite, float explosive_radius, int explosive_damage)
+Explosion::Explosion(sf::Vector2f const& position, sf::Texture const& sprite, float const explosive_radius, int const explosive_damage)
 : Collidable(position, sprite), explosive_radius{explosive_radius}, explosive_damage(explosive_damage)
 {
     shape.setSize({explosive_radius, explosive_radius});
