@@ -61,7 +61,7 @@ void Enemy::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::
         }
     }
 
-    // Push the player in the push-direction until it no longer collides with the other object
+    // Push the enemy in the push-direction until it no longer collides with the other object
     while (collision_shape.getGlobalBounds().intersects(other_bounds)) {
         position += push_direction * temp_increment;
         shape.setPosition(position);
@@ -80,7 +80,7 @@ void Enemy::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
     {
         world.kill(current_obj);
         world.add_player_xp(xp);
-        world.add_pick_up(position);
+        world.add_pick_up(position, 25);
         return;
     }
 

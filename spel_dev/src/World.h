@@ -24,6 +24,7 @@ public:
     float get_health_percent() const;
     std::shared_ptr<Weapon>& get_weapon_stats();
     sf::Vector2f& get_mouse_pos();
+    float get_elapsed_time() const;
 
     // ==============================[ Setters ]==============================
     void kill(std::shared_ptr<Game_Object> const& obj_to_kill);
@@ -34,7 +35,7 @@ public:
     // ==============================[ Creation ]==============================
     void load();
     void add_explosion(sf::Vector2f const& position, float const explosive_radius, int const explosive_damage);
-    void add_pick_up(sf::Vector2f const& position);
+    void add_pick_up(sf::Vector2f const& position, int const drop_chance);
     void add_bullet(int const damage, sf::Vector2f const& direction, double const bullet_speed, std::string const& bullet_type,
                     sf::Vector2f const& bullet_spawn, std::shared_ptr<Game_Object> const& source);
 
@@ -87,12 +88,14 @@ private:
 
     // ===[ Debug ]===
     bool debug_mode{false};
+    float elapsed_time{0};
 
     // ==============================[ Load ]==============================
     void load_level_file(std::string const& filename);
     void load_font();
     void load_background();
     void load_cursor();
+    void load_pick_ups();
     void load_textures();
     void load_audio();
 
