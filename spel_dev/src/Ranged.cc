@@ -20,7 +20,7 @@ void Ranged::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     {
         if(world.can_see_player(current_obj, direction))
         {
-            current_weapon->shoot(direction, world, position, current_obj);
+            current_weapon->shoot(direction, world, position, false);
         }
     }
 }

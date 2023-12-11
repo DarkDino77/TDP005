@@ -12,7 +12,7 @@ public:
            double const bullet_speed, double const fire_rate);
     //sf::Texture const& hud_sprite;
     bool shoot(sf::Vector2f const& direction, World & world,
-               sf::Vector2f const& position, std::shared_ptr<Game_Object> const& source);
+               sf::Vector2f const& position, bool const is_friendly);
     bool can_shoot() const;
     std::string& get_name();
     void add_ammo(int const amount);

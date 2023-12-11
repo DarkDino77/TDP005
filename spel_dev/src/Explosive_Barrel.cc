@@ -8,7 +8,7 @@ Explosive_Barrel::Explosive_Barrel(sf::Vector2f const& position, sf::Texture con
 
 void Explosive_Barrel::destroy(std::shared_ptr<Game_Object> const& destructible_target, World & world) const
 {
-    world.play_sound("explosion");
+    world.get_resource_manager().play_sound("explosion");
     world.add_explosion(position, 80, 30);
     world.kill(destructible_target);
 }

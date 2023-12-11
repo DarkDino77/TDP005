@@ -64,7 +64,7 @@ std::shared_ptr<State> Game_State::tick(sf::Time delta, sf::RenderWindow & windo
     }
 
     // Pause?
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) )
         return std::make_shared<Menu_State>(shared_from_this());
 
     return nullptr;
@@ -105,10 +105,12 @@ void Menu_State::add(const std::string &text, Action action) {
 void Menu_State::on_key_press(sf::Keyboard::Key key) {
     switch (key) {
         case sf::Keyboard::Down:
+        case sf::Keyboard::S:
             if (selected + 1 < entries.size())
                 selected++;
             break;
         case sf::Keyboard::Up:
+        case sf::Keyboard::W:
             if (selected > 0)
                 selected--;
             break;

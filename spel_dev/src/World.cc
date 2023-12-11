@@ -13,13 +13,13 @@
 #include "Updatable.h"
 #include "Ammo.h"
 #include "Hud.h"
+#include "Resource_Manager.h"
 #include "point.h"
 #include "Health_Drop.h"
 #include <vector>
 #include <memory>
 #include <random>
 #include <algorithm>
-#include <fstream>
 #include <iterator>
 
 // ==============================[ Getters ]==============================
@@ -27,7 +27,7 @@ std::shared_ptr<Player>& World::get_player()
 {
     return player;
 }
-
+/*
 sf::Texture& World::get_sprite(std::string const& category)
 {
     if(sprites[category].empty())
@@ -47,25 +47,11 @@ sf::Font& World::get_font()
 {
     return font;
 }
+ */
 
-int World::get_level() const
+std::vector<std::string>& World::get_available_pick_ups()
 {
-    return player_level;
-}
-
-float World::get_level_percent() const
-{
-    return level_percent;
-}
-
-float World::get_health_percent() const
-{
-    return health_percent;
-}
-
-std::shared_ptr<Weapon>& World::get_weapon_stats()
-{
-    return weapon_stats;
+    return available_pick_ups;
 }
 
 // TODO bestäm om det är bättre att functionen är const eller om det är att functionen ska returnera ref
@@ -79,78 +65,48 @@ float World::get_elapsed_time() const
     return elapsed_time;
 }
 
+std::shared_ptr<Hud>& World::get_hud()
+{
+    return hud;
+}
+
+Resource_Manager& World::get_resource_manager()
+{
+    return resource_manager;
+}
+
 // ==============================[ Setters ]==============================
 void World::kill(std::shared_ptr<Game_Object> const& obj_to_kill)
 {
     kill_queue.push_back(obj_to_kill);
 }
 
-void World::set_health_percent(int const health, int const max_health)
-{
-    health_percent = (float(health) / float(max_health));
-}
-void World::set_weapon_stats(std::shared_ptr<Weapon> const& weapon)
-{
-    weapon_stats = weapon;
-}
-
-void World::add_player_xp(int const xp)
-{
-    player_level_progression+=xp;
-    while(player_level_progression >= xp_to_level)
-    {
-        level_up_player();
-    }
-    level_percent = float(player_level_progression)/float(xp_to_level);
-}
-
 // ==============================[ Creation ]==============================
 void World::load()
 {
-    load_font();
-
-    fps_text.setFont(font);
+    fps_text.setFont(resource_manager.get_font());
     fps_text.setCharacterSize(24);
     fps_text.setOutlineColor(sf::Color (0x373737ff));
     fps_text.setOutlineThickness(4);
     fps_text.setPosition(10+33*4,10 + 4*4);
     fps_text.setString("FPS:0");
 
-    // ==============================[ Background ]==============================
-    load_background();
-
-    // ==============================[ Cursor ]==============================
-    load_cursor();
-
-    // ==============================[ Create World ]==============================
-    load_textures();
-
-    // ==============================[ Add audio ]==============================
-    load_audio();
-
-    load_pick_ups();
-
-
-    sf::Music music;
-    if (!music.openFromFile("audio/music.ogg"))
-    {
-        std::cerr << "Error: Could not find music with filename 'audio/music.ogg'." << std::endl;
-        return;
-    }
-    music.play();
-
     // ==============================[ HUD ]==============================
-    auto hud_obj = std::make_shared<Hud>(sf::Vector2f {0,0}, get_sprite("hud"), *this);
+    auto hud_obj = std::make_shared<Hud>(sf::Vector2f {0,0}, resource_manager.get_sprite("hud"), *this);
     hud = hud_obj;
-
-    load_level_file("level1.txt");
     spawn_monsters();
+
+    sf::Vector2f mouse_texture_size{resource_manager.get_mouse_cursor_texture().getSize()};
+    mouse_cursor.setSize(mouse_texture_size);
+    mouse_cursor.setTexture(&resource_manager.get_mouse_cursor_texture());
+    mouse_cursor.setOrigin(mouse_texture_size / 2.f);
+    mouse_cursor.setScale(2.0f,2.0f);
 }
 
 void World::add_explosion(sf::Vector2f const& position, float const explosive_radius, int const explosive_damage)
 {
     auto explosion = std::make_shared<Explosion>(position,
-                                                 get_sprite("explosion"), explosive_radius, explosive_damage);
+                                                 resource_manager.get_sprite("explosion"), explosive_radius, explosive_damage);
     add_queue.push_back(explosion);
 }
 
@@ -169,24 +125,52 @@ void World::add_pick_up(sf::Vector2f const& position, int const drop_chance)
 
         if(random_int == 0)
         {
-            auto health_drop = std::make_shared<Health_Drop>(position, get_sprite("health_drop"));
+            auto health_drop = std::make_shared<Health_Drop>(position, resource_manager.get_sprite("health_drop"));
             add_queue.push_back(health_drop);
         }
         else
         {
-            auto ammo = std::make_shared<Ammo>(position, get_sprite(available_pick_ups.at(random_int)),
+            auto ammo = std::make_shared<Ammo>(position, resource_manager.get_sprite(available_pick_ups.at(random_int)),
                                                available_pick_ups.at(random_int));
             add_queue.push_back(ammo);
         }
     }
 }
 
-void World::add_bullet(int const damage, sf::Vector2f const& direction, double const bullet_speed, std::string const& bullet_type, sf::Vector2f const& bullet_spawn, std::shared_ptr<Game_Object> const& source)
+void World::add_bullet(int const damage, sf::Vector2f const& direction, double const bullet_speed, std::string const& bullet_type, sf::Vector2f const& bullet_spawn, bool const is_friendly)
 {
-    auto bullet = std::make_shared<Bullet>(damage, direction, bullet_speed, get_sprite(bullet_type), bullet_spawn, source);
+    auto bullet = std::make_shared<Bullet>(damage, direction, bullet_speed, resource_manager.get_sprite(bullet_type), bullet_spawn, is_friendly);
     add_queue.push_back(bullet);
 }
 
+void World::add_wall(sf::Vector2f const& position)
+{
+    auto wall = std::make_shared<Wall>(grid_to_coord(position),
+                                       resource_manager.get_sprite("wall"));
+    game_objects.push_back(wall);
+}
+
+void World::add_explosive_barrel(sf::Vector2f const& position)
+{
+    auto explosive_barrel = std::make_shared<Explosive_Barrel>(grid_to_coord(position),
+                                                               resource_manager.get_sprite("explosive_barrel"), 10);
+    game_objects.push_back(explosive_barrel);
+}
+
+void World::add_crate(sf::Vector2f const& position)
+{
+    auto crate = std::make_shared<Crate>(grid_to_coord(position),
+                                         resource_manager.get_sprite("crate"), 50);
+    game_objects.push_back(crate);
+}
+
+void World::add_player(sf::Vector2f const& position)
+{
+    auto player_obj = std::make_shared<Player>(grid_to_coord(position),
+                                               resource_manager.get_sprite("player"), 1.0f, 100, *this);
+    game_objects.push_back(player_obj);
+    player = std::dynamic_pointer_cast<Player>(player_obj);
+}
 // ==============================[ Misc ]==============================
 bool World::can_see_player(std::shared_ptr<Game_Object> const& source, sf::Vector2f const& direction)
 {
@@ -220,7 +204,7 @@ bool World::can_see_player(std::shared_ptr<Game_Object> const& source, sf::Vecto
     }
 }
 
-void World::play_sound(std::string const& name)
+/*void World::play_sound(std::string const& name)
 {
     if(sounds[name].empty())
     {
@@ -233,7 +217,7 @@ void World::play_sound(std::string const& name)
     int track_index{(rd_uniform(rd)-1)};
 
     sounds[name].at(track_index)->play();
-}
+}*/
 
 // ==============================[ Game Loop ]==============================
 bool World::simulate(sf::Time const& delta_time, float const elapsed_time_in, sf::RenderWindow & window)
@@ -317,6 +301,7 @@ void World::render(sf::RenderWindow & window)
 // =====================================================================================================
 
 // ==============================[ Load ]==============================
+/*
 void World::load_level_file(std::string const& filename)
 {
     std::ifstream filestream{"res/"+filename, std::ifstream::in};
@@ -483,8 +468,10 @@ void World::load_audio()
     add_sound("bullet_impact", "audio/bullet_impact_2.wav");
     add_sound("bullet_impact", "audio/bullet_impact_3.wav");
 }
+ */
 
 // ==============================[ Creation ]==============================
+/*
 void World::add_texture(std::string const& category, std::string const& filename)
 {
     auto texture = std::make_shared<sf::Texture>();
@@ -513,33 +500,26 @@ void World::add_sound(std::string const& category,  std::string const& filename)
         sounds[category].push_back(sound);
     }
 }
-
-void World::add_player(sf::Vector2f const& position)
-{
-    auto player_obj = std::make_shared<Player>(grid_to_coord(position),
-                                               get_sprite("player"), 1.0f, 100, *this);
-    game_objects.push_back(player_obj);
-    player = std::dynamic_pointer_cast<Player>(player_obj);
-}
+*/
 
 void World::add_melee_enemy(std::string const& name, sf::Vector2f const& position)
 {
     if(name == "zombie")
     {
         auto enemy = std::make_shared<Melee>(grid_to_coord(position),
-                                             get_sprite("melee"), 0.3f, 20, 5, 10);
+                                             resource_manager.get_sprite("melee"), 0.3f, 20, 5, 10);
         game_objects.push_back(enemy);
     }
     if(name == "hulk")
     {
         auto enemy = std::make_shared<Melee>(grid_to_coord(position),
-                                             get_sprite("boss"), 0.15f, 100, 20, 30);
+                                             resource_manager.get_sprite("boss"), 0.15f, 100, 20, 30);
         game_objects.push_back(enemy);
     }
     if(name == "biter")
     {
         auto enemy = std::make_shared<Melee>(grid_to_coord(position),
-                                             get_sprite("biter"), 0.5f, 10, 10, 10);
+                                             resource_manager.get_sprite("biter"), 0.5f, 10, 10, 10);
         game_objects.push_back(enemy);
     }
 }
@@ -549,30 +529,9 @@ void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& positi
     if(name == "spitter")
     {
         auto enemy = std::make_shared<Ranged>(grid_to_coord(position),
-                                              get_sprite("spitter"), 0.15f, 20, 2, 12);
+                                              resource_manager.get_sprite("spitter"), 0.15f, 20, 2, 12);
         game_objects.push_back(enemy);
     }
-}
-
-void World::add_wall(sf::Vector2f const& position)
-{
-    auto wall = std::make_shared<Wall>(grid_to_coord(position),
-                                       get_sprite("wall"));
-    game_objects.push_back(wall);
-}
-
-void World::add_explosive_barrel(sf::Vector2f const& position)
-{
-    auto explosive_barrel = std::make_shared<Explosive_Barrel>(grid_to_coord(position),
-                                                               get_sprite("explosive_barrel"), 10);
-    game_objects.push_back(explosive_barrel);
-}
-
-void World::add_crate(sf::Vector2f const& position)
-{
-    auto crate = std::make_shared<Crate>(grid_to_coord(position),
-                                         get_sprite("crate"), 50);
-    game_objects.push_back(crate);
 }
 
 void World::spawn_monsters()
@@ -667,68 +626,7 @@ bool World::delete_game_objects()
 }
 
 // ==============================[ Game Loop ]==============================
-void World::add_player_weapon()
-{
-    switch (player_level)
-    {
-        case(2):
-            player->add_weapon("baretta", 15, 200, 2.5, 2);
-            player->add_ammo("baretta_ammo", 200);
-            available_pick_ups.push_back("baretta_ammo");
-            break;
-        case(4):
-            player->add_weapon("uzi", 10, 500, 2.5, 5);
-            player->add_ammo("uzi_ammo", 500);
-            available_pick_ups.push_back("uzi_ammo");
-            break;
-        case(6):
-            player->add_weapon("shotgun", 30, 50, 2, 0.75);
-            player->add_ammo("shotgun_ammo", 50);
-            available_pick_ups.push_back("shotgun_ammo");
-            break;
-        case(8):
-            player->add_weapon("assault_rifle", 35, 300, 2.5, 4);
-            player->add_ammo("assault_rifle_ammo", 300);
-            available_pick_ups.push_back("assault_rifle_ammo");
-            break;
-        case(10):
-            player->add_weapon("sniper_rifle", 70, 300, 3, 2);
-            player->add_ammo("sniper_rifle_ammo", 40);
-            available_pick_ups.push_back("sniper_rifle_ammo");
-            break;
-    }
-}
 
-void World::level_up_player()
-{
-    hud->pop_up("LEVEL UP");
-    player_level_progression -= xp_to_level;
-    xp_to_level+=5;
-    player_level+= 1;
-
-    switch (player_level%10) {
-        case 0:
-            player->increase_max_health(10);
-            hud->pop_up("MAX HEALTH +10");
-            add_player_weapon();
-            break;
-        case 2:
-            add_player_weapon();
-            break;
-        case 4:
-            add_player_weapon();
-            break;
-        case 6:
-            add_player_weapon();
-            break;
-        case 8:
-            add_player_weapon();
-            break;
-        default:
-            break;
-
-    }
-}
 
 void World::check_collision(std::shared_ptr<Game_Object> const& current_obj)
 {
@@ -771,7 +669,7 @@ void World::update_game_objects(sf::Time const& delta_time)
 void World::draw_game_objects(sf::RenderWindow & window)
 {
     window.clear();
-    window.draw(background_sprite);
+    window.draw(resource_manager.get_background_sprite());
     for(const std::shared_ptr<Game_Object>& obj : game_objects)
     {
         if(debug_mode)

@@ -24,14 +24,32 @@ Player::Player(sf::Vector2f const& position, sf::Texture const& sprite, float co
 {
     available_weapons.push_back(std::make_shared<Weapon>("glock", 5, -1, 2.0f, 2));
     current_weapon = available_weapons.at(0);
-    world.set_weapon_stats(current_weapon);
+}
+int Player::get_level() const
+{
+    return player_level;
+}
+
+float Player::get_level_percent() const
+{
+    return level_percent;
+}
+
+float Player::get_health_percent() const
+{
+    return health_percent;
+}
+
+std::shared_ptr<Weapon>& Player::get_weapon_stats()
+{
+    return current_weapon;
 }
 
 void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Game_Object> const& current_obj) {
     if(hit)
     {
         hit = false;
-        world.play_sound("player_hurt");
+        world.get_resource_manager().play_sound("player_hurt");
     }
     if (health <= 0) {
         world.kill(current_obj);
@@ -41,6 +59,7 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
     // Rotate the player towards the mouse cursor.
     sf::Vector2f rotate_direction = normalize(position - world.get_mouse_pos());
     set_rotation(rotate_direction);
+
     // ==============================[ INPUT ]==============================
     // Update the players position based on input.
     direction = -find_direction();
@@ -48,23 +67,19 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
 
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if(current_weapon->shoot(rotate_direction, world, position, current_obj))
-        {
-            world.set_weapon_stats(current_weapon);
-        }
+        current_weapon->shoot(rotate_direction, world, position, true);
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
     {
         current_weapon = available_weapons[0];
-        world.set_weapon_stats(current_weapon);
+
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
     {
         if(int(available_weapons.size()) >= 2)
         {
             current_weapon = available_weapons[1];
-            world.set_weapon_stats(current_weapon);
         }
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
@@ -72,7 +87,6 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
         if(int(available_weapons.size()) >= 3)
         {
             current_weapon = available_weapons[2];
-            world.set_weapon_stats(current_weapon);
         }
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
@@ -80,7 +94,7 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
         if(int(available_weapons.size()) >= 4)
         {
             current_weapon = available_weapons[3];
-            world.set_weapon_stats(current_weapon);
+
         }
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5))
@@ -88,7 +102,6 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
         if(int(available_weapons.size()) >= 5)
         {
             current_weapon = available_weapons[4];
-            world.set_weapon_stats(current_weapon);
         }
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num6))
@@ -96,11 +109,10 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
         if(int(available_weapons.size()) >= 6)
         {
             current_weapon = available_weapons[5];
-            world.set_weapon_stats(current_weapon);
         }
     }
 
-    world.set_health_percent(health, max_health);
+    health_percent = (float(health) / float(max_health));
 }
 
 
@@ -174,8 +186,64 @@ void Player::add_health(int const amount)
     }
 }
 
-void Player::increase_max_health(int const amount)
+void Player::add_player_xp(int const xp, World & world)
 {
-    max_health += amount;
+    player_level_progression+=xp;
+    while(player_level_progression >= xp_to_level)
+    {
+        level_up_player(world);
+    }
+    level_percent = float(player_level_progression)/float(xp_to_level);
+}
+
+void Player::level_up_player(World & world)
+{
+    world.get_hud()->pop_up("LEVEL UP");
+    player_level_progression -= xp_to_level;
+    xp_to_level+=5;
+    player_level+= 1;
+    // Give player max health every 10 levels
+    if (player_level % 10 == 0)
+    {
+        max_health+=10;
+        world.get_hud()->pop_up("MAX HEALTH +10");
+    }
+    // Give player a weapon every 5 levels
+    if (player_level % 5 == 0)
+    {
+        add_player_weapon(world);
+    }
+}
+
+void Player::add_player_weapon(World & world)
+{
+    switch (player_level)
+    {
+        case(5):
+            add_weapon("baretta", 15, 200, 2.5, 2);
+            add_ammo("baretta_ammo", 200);
+            world.get_available_pick_ups().push_back("baretta_ammo");
+            break;
+        case(10):
+            add_weapon("uzi", 10, 500, 2.5, 5);
+            add_ammo("uzi_ammo", 500);
+            world.get_available_pick_ups().push_back("uzi_ammo");
+            break;
+        case(15):
+            add_weapon("shotgun", 30, 50, 2, 0.75);
+            add_ammo("shotgun_ammo", 50);
+            world.get_available_pick_ups().push_back("shotgun_ammo");
+            break;
+        case(20):
+            add_weapon("assault_rifle", 35, 300, 2.5, 4);
+            add_ammo("assault_rifle_ammo", 300);
+            world.get_available_pick_ups().push_back("assault_rifle_ammo");
+            break;
+        case(25):
+            add_weapon("sniper_rifle", 70, 40, 3, 2);
+            add_ammo("sniper_rifle_ammo", 40);
+            world.get_available_pick_ups().push_back("sniper_rifle_ammo");
+            break;
+    }
 }
 

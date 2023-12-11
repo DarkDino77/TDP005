@@ -74,12 +74,12 @@ void Enemy::update(sf::Time const& delta_time, World &world, std::shared_ptr<Gam
     if(hit)
     {
         hit = false;
-        world.play_sound("enemy_hurt");
+        world.get_resource_manager().play_sound("enemy_hurt");
     }
     if(health <= 0)
     {
         world.kill(current_obj);
-        world.add_player_xp(xp);
+        world.get_player()->add_player_xp(xp, world);
         world.add_pick_up(position, 25);
         return;
     }

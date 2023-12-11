@@ -3,9 +3,10 @@
 #include "Destructible.h"
 #include "Explosion.h"
 #include "Pick_Up.h"
+#include "Enemy.h"
 
-Bullet::Bullet(int damage, sf::Vector2f const& aim_direction, double const speed, sf::Texture const& sprite, sf::Vector2f const& position, std::shared_ptr<Game_Object> const& source)
-: Movable(position, sprite, speed), damage{damage}, source{source}
+Bullet::Bullet(int damage, sf::Vector2f const& aim_direction, double const speed, sf::Texture const& sprite, sf::Vector2f const& position, bool const is_friendly)
+: Movable(position, sprite, speed), damage{damage}, is_friendly{is_friendly}
 {
     direction = aim_direction;
     set_rotation(direction);
@@ -18,7 +19,9 @@ void Bullet::update(sf::Time const& delta_time, World & , std::shared_ptr<Game_O
 
 void Bullet::handle_collision(World & world, std::shared_ptr<Game_Object> const& current_obj, std::shared_ptr<Game_Object> const& other_obj)
 {
-    if (other_obj == source || not is_alive || std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr
+    std::shared_ptr<Player> player_target{std::dynamic_pointer_cast<Player>(other_obj)};
+    std::shared_ptr<Enemy> enemy_target{std::dynamic_pointer_cast<Enemy>(other_obj)};
+    if (((player_target != nullptr && is_friendly) || (enemy_target != nullptr && not is_friendly)) || not is_alive || std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr
             || std::dynamic_pointer_cast<Explosion>(other_obj) != nullptr
             || std::dynamic_pointer_cast<Pick_Up>(other_obj) != nullptr)
     {
@@ -35,7 +38,7 @@ void Bullet::handle_collision(World & world, std::shared_ptr<Game_Object> const&
         }
     }
 
-    world.play_sound("bullet_impact");
+    world.get_resource_manager().play_sound("bullet_impact");
     world.kill(current_obj);
     is_alive = false;
 }

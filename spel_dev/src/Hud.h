@@ -5,6 +5,7 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include "Updatable.h"
+#include "Resource_Manager.h"
 
 class Weapon;
 class World;

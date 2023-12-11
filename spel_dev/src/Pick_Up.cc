@@ -10,7 +10,7 @@ void Pick_Up::update(sf::Time const&, World & world, std::shared_ptr<Game_Object
 {
     if(picked_up)
     {
-        world.play_sound("ammo_pick_up");
+        world.get_resource_manager().play_sound("ammo_pick_up");
         world.kill(current_obj);
     }
 }

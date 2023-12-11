@@ -2,3 +2,5 @@
 
 * Hur ska man göra när man vi ändra saker i kravspecifikationen (Siffror i tabeller)
 
+* Är det plagiat att koppiera sig själv
+

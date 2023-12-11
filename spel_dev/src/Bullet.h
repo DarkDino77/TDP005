@@ -22,9 +22,9 @@ public:
      * @param[in] speed The travel speed of the bullet.
      * @param[in] sprite The texture that is used to render the bullet object.
      * @param[in] position The initial position of the bullet object.
-     * @param[in] source A shared pointer to the Game_Object that instantiated the bullet object.
+     * @param[in] is_friendly A bool specifying if the bullet was fired from the player or an enemy.
      */
-    Bullet(int damage, sf::Vector2f const& direction, double const speed, sf::Texture const& sprite, sf::Vector2f const& position, std::shared_ptr<Game_Object> const& source);
+    Bullet(int damage, sf::Vector2f const& direction, double const speed, sf::Texture const& sprite, sf::Vector2f const& position, bool const is_friendly);
 
     /**
      * Specifies how the bullet object should move each update.
@@ -52,7 +52,7 @@ private:
     /**
      * A shared pointer to the source of the bullet.
      */
-    std::shared_ptr<Game_Object> const source;
+    bool const is_friendly;
 
     /**
      * Is the bullet alive?

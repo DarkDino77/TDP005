@@ -11,13 +11,13 @@ bool Weapon::can_shoot() const
     return time_since_shot.getElapsedTime().asSeconds() > 1/fire_rate;
 }
 
-bool Weapon::shoot(sf::Vector2f const& direction, World & world, sf::Vector2f const& position, std::shared_ptr<Game_Object> const& source)
+bool Weapon::shoot(sf::Vector2f const& direction, World & world, sf::Vector2f const& position, bool const is_friendly)
 {
     if(can_shoot() && (ammo_capacity == -1 || ammo_amount > 0 ))
     {
-        world.play_sound(name + "_shoot");
+        world.get_resource_manager().play_sound(name + "_shoot");
         sf::Vector2f bullet_spawn{position - direction*16.0f};
-        world.add_bullet(damage, direction, bullet_speed, name + "_bullet", bullet_spawn, source);
+        world.add_bullet(damage, direction, bullet_speed, name + "_bullet", bullet_spawn, is_friendly);
         time_since_shot.restart();
         ammo_amount--;
         return true;
