@@ -12,10 +12,11 @@
 #include "World.h"
 
 // ==============================[ State ]==============================
-class State : public std::enable_shared_from_this<State> {
+class State : public std::enable_shared_from_this<State>
+{
 public:
-    State();
-    virtual ~State();
+    State() = default;
+    virtual ~State() = default;
     virtual void on_key_press(sf::Keyboard::Key key);
     virtual void on_key_release(sf::Keyboard::Key key);
     virtual std::shared_ptr<State> tick(sf::Time time, sf::RenderWindow & window) = 0;
@@ -26,23 +27,27 @@ public:
 
 // ==============================[ Game State ]==============================
 
-class Game_State : public State {
+class Game_State : public State
+{
 public:
     Game_State();
+    ~Game_State() override = default;
     std::shared_ptr<State> tick(sf::Time delta, sf::RenderWindow & window) override;
     void render(sf::RenderWindow &to) override;
 
 private:
-    World world;
+    World world{};
     float elapsed_time{};
 };
 // ==============================[ Menu State ]==============================
 
-class Menu_State : public State {
+class Menu_State : public State
+{
 public:
     Menu_State(std::shared_ptr<State> resume = nullptr);
+    ~Menu_State() override = default;
     void on_key_press(sf::Keyboard::Key key) override;
-    std::shared_ptr<State> tick(sf::Time time, sf::RenderWindow & window) override;
+    std::shared_ptr<State> tick(sf::Time time, sf::RenderWindow &) override;
     void render(sf::RenderWindow &drawTo) override;
 
 private:
@@ -54,19 +59,20 @@ private:
         Action action;
     };
 
-    sf::Font font;
-    std::vector<Entry> entries;
+    sf::Font font{};
+    std::vector<Entry> entries{};
     size_t selected;
     bool enter_pressed;
     sf::Time delay;
-    std::shared_ptr<State> background;
+    std::shared_ptr<State> background{};
     void add(const std::string &text, Action action);
 };
 
 // ==============================[ Exit State ]==============================
-class Exit_State : public State {
+class Exit_State : public State
+{
 public:
-    std::shared_ptr<State> tick(sf::Time,sf::RenderWindow &window) { return nullptr; }
+    std::shared_ptr<State> tick(sf::Time,sf::RenderWindow &) { return nullptr; }
     void render(sf::RenderWindow &) {}
 };
 

@@ -8,7 +8,7 @@
 class Player : public Character
 {
 public:
-    Player(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health, World & world);
+    Player(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health);
     int get_level() const;
     float get_level_percent() const;
     float get_health_percent() const;

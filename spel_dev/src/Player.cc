@@ -19,7 +19,7 @@ sf::Vector2f find_direction() {
     return normalize(direction);
 }
 
-Player::Player(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health, World & world)
+Player::Player(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health)
 : Character(position, sprite, speed, health)
 {
     available_weapons.push_back(std::make_shared<Weapon>("glock", 5, -1, 2.0f, 2));

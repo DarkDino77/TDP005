@@ -16,7 +16,7 @@ int main() {
     window.setKeyRepeatEnabled(false);
     window.setVerticalSyncEnabled(false);
 
-    State::run(window, std::make_shared<Menu_State>(nullptr));
+    State::run(window, std::make_shared<Menu_State>());
 
     return 0;
 }

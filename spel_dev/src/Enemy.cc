@@ -2,6 +2,7 @@
 #include "point.h"
 #include "Explosion.h"
 #include "Pick_Up.h"
+#include "Explosive_Barrel.h"
 #include <cmath>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -46,17 +47,24 @@ void Enemy::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::
         }
     }
 
+    // If the other object has a collision shape, set otherbounds to that
     sf::FloatRect other_bounds = (other_obj->get_shape()).getGlobalBounds();
     std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
     if(other_movable_target != nullptr)
     {
         other_bounds = other_movable_target->get_collision_shape().getGlobalBounds();
+    }
 
+    std::shared_ptr<Damageable> damageable_target{std::dynamic_pointer_cast<Damageable>(other_obj)};
+    if( damageable_target != nullptr && life_time > melee_timer + 1 &&
+        std::dynamic_pointer_cast<Enemy>(other_obj) == nullptr &&
+                std::dynamic_pointer_cast<Explosive_Barrel>(other_obj) == nullptr)
+    {
+        melee_timer = life_time;
+        damageable_target->take_damage(melee_damage);
         std::shared_ptr<Player> player_target{std::dynamic_pointer_cast<Player>(other_obj)};
-        if( player_target != nullptr && life_time > melee_timer + 1)
+        if (player_target != nullptr)
         {
-            melee_timer = life_time;
-            player_target->take_damage(melee_damage);
             player_target->knock_back(direction, 10);
         }
     }

@@ -1,9 +1,6 @@
 #include "State.h"
 
 // ==============================[ State ]==============================
-State::State() {}
-
-State::~State() {}
 
 void State::on_key_press(sf::Keyboard::Key) {}
 
@@ -49,7 +46,7 @@ void State::run(sf::RenderWindow & window, std::shared_ptr<State> state) {
 
 Game_State::Game_State()
 {
-    world.load();
+    //world.load();
 }
 
 std::shared_ptr<State> Game_State::tick(sf::Time delta, sf::RenderWindow & window)

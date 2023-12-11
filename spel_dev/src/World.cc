@@ -1,7 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Audio/SoundBuffer.hpp>
-#include <iostream>
 #include "World.h"
 #include "Player.h"
 #include "Melee.h"
@@ -22,32 +19,27 @@
 #include <algorithm>
 #include <iterator>
 
+World::World()
+: resource_manager{*this}
+{
+
+    // ==============================[ HUD ]==============================
+    auto hud_obj = std::make_shared<Hud>(sf::Vector2f {0,0}, resource_manager.get_sprite("hud"), *this);
+    hud = hud_obj;
+    spawn_monsters();
+
+    sf::Vector2f mouse_texture_size{resource_manager.get_mouse_cursor_texture().getSize()};
+    mouse_cursor.setSize(mouse_texture_size);
+    mouse_cursor.setTexture(&resource_manager.get_mouse_cursor_texture());
+    mouse_cursor.setOrigin(mouse_texture_size / 2.f);
+    mouse_cursor.setScale(2.0f,2.0f);
+}
+
 // ==============================[ Getters ]==============================
 std::shared_ptr<Player>& World::get_player()
 {
     return player;
 }
-/*
-sf::Texture& World::get_sprite(std::string const& category)
-{
-    if(sprites[category].empty())
-    {
-        std::cerr << "Error: A sprite in the category '" << category << "' was never added to world." << std::endl;
-        return *sprites["error"].at(0);
-    }
-
-    std::random_device rd;
-    std::uniform_int_distribution<int> rd_uniform(1,int(sprites[category].size()));
-    int sprite_index{(rd_uniform(rd)-1)};
-
-    return *sprites[category].at(sprite_index);
-}
-
-sf::Font& World::get_font()
-{
-    return font;
-}
- */
 
 std::vector<std::string>& World::get_available_pick_ups()
 {
@@ -82,27 +74,6 @@ void World::kill(std::shared_ptr<Game_Object> const& obj_to_kill)
 }
 
 // ==============================[ Creation ]==============================
-void World::load()
-{
-    fps_text.setFont(resource_manager.get_font());
-    fps_text.setCharacterSize(24);
-    fps_text.setOutlineColor(sf::Color (0x373737ff));
-    fps_text.setOutlineThickness(4);
-    fps_text.setPosition(10+33*4,10 + 4*4);
-    fps_text.setString("FPS:0");
-
-    // ==============================[ HUD ]==============================
-    auto hud_obj = std::make_shared<Hud>(sf::Vector2f {0,0}, resource_manager.get_sprite("hud"), *this);
-    hud = hud_obj;
-    spawn_monsters();
-
-    sf::Vector2f mouse_texture_size{resource_manager.get_mouse_cursor_texture().getSize()};
-    mouse_cursor.setSize(mouse_texture_size);
-    mouse_cursor.setTexture(&resource_manager.get_mouse_cursor_texture());
-    mouse_cursor.setOrigin(mouse_texture_size / 2.f);
-    mouse_cursor.setScale(2.0f,2.0f);
-}
-
 void World::add_explosion(sf::Vector2f const& position, float const explosive_radius, int const explosive_damage)
 {
     auto explosion = std::make_shared<Explosion>(position,
@@ -167,7 +138,7 @@ void World::add_crate(sf::Vector2f const& position)
 void World::add_player(sf::Vector2f const& position)
 {
     auto player_obj = std::make_shared<Player>(grid_to_coord(position),
-                                               resource_manager.get_sprite("player"), 1.0f, 100, *this);
+                                               resource_manager.get_sprite("player"), 1.0f, 100);
     game_objects.push_back(player_obj);
     player = std::dynamic_pointer_cast<Player>(player_obj);
 }
@@ -204,21 +175,6 @@ bool World::can_see_player(std::shared_ptr<Game_Object> const& source, sf::Vecto
     }
 }
 
-/*void World::play_sound(std::string const& name)
-{
-    if(sounds[name].empty())
-    {
-        std::cerr << "Error: Sound with name '" << name << "' was never added to world." << std::endl;
-        return;
-    }
-
-    std::random_device rd;
-    std::uniform_int_distribution<int> rd_uniform(1,int(sound_buffers[name].size()));
-    int track_index{(rd_uniform(rd)-1)};
-
-    sounds[name].at(track_index)->play();
-}*/
-
 // ==============================[ Game Loop ]==============================
 bool World::simulate(sf::Time const& delta_time, float const elapsed_time_in, sf::RenderWindow & window)
 {
@@ -231,19 +187,6 @@ bool World::simulate(sf::Time const& delta_time, float const elapsed_time_in, sf
             case sf::Event::Closed:
                 quit = true;
                 break;
-            case sf::Event::KeyPressed:
-                if(event.key.code == sf::Keyboard::F5)
-                {
-                    if(debug_mode)
-                    {
-                        debug_mode = false;
-                    }
-                    else
-                    {
-                        std::cout << "Debug on" << std::endl;
-                        debug_mode = true;
-                    }
-                }
             default:
                 break;
         }
@@ -260,9 +203,6 @@ bool World::simulate(sf::Time const& delta_time, float const elapsed_time_in, sf
         spawn_monsters();
     }
 
-    float fps = 1.0f / (elapsed_time - last_time);
-    last_time = elapsed_time;
-
     mouse_pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
     mouse_cursor.setPosition(mouse_pos);
 
@@ -270,22 +210,15 @@ bool World::simulate(sf::Time const& delta_time, float const elapsed_time_in, sf
     update_game_objects(delta_time);
     hud->update(delta_time, *this, hud);
 
-    // 3. Add all game_objects in add queue
+    // 2. Add all game_objects in add queue
     add_game_objects();
 
-    // 4. Delete any game objects in the kill queue.
+    // 3. Delete any game objects in the kill queue.
     if(not delete_game_objects())
     {
         quit = true;
         return quit;
     }
-
-    if (debug_mode)
-    {
-        fps_text.setString("FPS: " + std::to_string(int(fps)));
-        window.draw(fps_text);
-    }
-
     return quit;
 }
 
@@ -300,208 +233,7 @@ void World::render(sf::RenderWindow & window)
 // =============================================[ Private ]=============================================
 // =====================================================================================================
 
-// ==============================[ Load ]==============================
-/*
-void World::load_level_file(std::string const& filename)
-{
-    std::ifstream filestream{"res/"+filename, std::ifstream::in};
-
-    if(!filestream.is_open())
-    {
-        std::cerr << "Error: Could not open level with filename '" << filename << "'." << std::endl;
-    }
-
-    std::string row;
-    for(int y{0}; std::getline(filestream, row); y++)
-    {
-        for (int x = 0; x < int(row.size()); x++)
-        {
-            char symbol = row[x];
-            switch (symbol) {
-                case '#':
-                    add_wall({float(x-1),float(y-1)});
-                    break;
-
-                case '@':
-                    add_player({float(x-1),float(y-1)});
-                    break;
-
-                case 'b':
-                    add_explosive_barrel({float(x-1),float(y-1)});
-                    break;
-
-                case 'c':
-                    add_crate({float(x-1),float(y-1)});
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
-}
-
-void World::load_font()
-{
-    if(!font.loadFromFile("res/font3.ttf"))
-    {
-        std::cerr << "Could not load font" << std::endl;
-    }
-}
-
-void World::load_background()
-{
-    background_texture.loadFromFile("textures/background.png");
-    background_sprite.setTexture(background_texture);
-}
-
-void World::load_cursor()
-{
-    mouse_cursor_texture.loadFromFile("textures/crosshair.png");
-    sf::Vector2f mouse_texture_size{mouse_cursor_texture.getSize()};
-    mouse_cursor.setSize(mouse_texture_size);
-    mouse_cursor.setTexture(&mouse_cursor_texture);
-    mouse_cursor.setOrigin(mouse_texture_size / 2.f);
-    mouse_cursor.setScale(2.0f,2.0f);
-}
-
-void World::load_pick_ups()
-{
-    available_pick_ups.push_back("health_drop");
-}
-
-void World::load_textures()
-{
-    // Map objects
-    add_texture("error", "textures/error.png");
-    add_texture("wall", "textures/wall_1.png");
-    add_texture("wall", "textures/wall_2.png");
-    add_texture("crate", "textures/crate.png");
-    add_texture("explosive_barrel", "textures/explosive_barrel.png");
-
-    // Characters
-    add_texture("player", "textures/player.png");
-    add_texture("melee", "textures/zombie1.png");
-    add_texture("melee", "textures/zombie2.png");
-    add_texture("melee", "textures/zombie3.png");
-    add_texture("melee4", "textures/zombie4.png");
-    add_texture("melee5", "textures/zombie5.png");
-    add_texture("melee6", "textures/zombie6.png");
-    add_texture("melee7", "textures/zombie7.png");
-    add_texture("spitter", "textures/spitter1.png");
-    add_texture("spitter", "textures/spitter2.png");
-    add_texture("biter", "textures/biter1.png");
-    add_texture("biter", "textures/biter2.png");
-    add_texture("boss", "textures/zombie_boss1.png");
-    add_texture("boss", "textures/zombie_boss2.png");
-
-    // Weapons
-    add_texture("spitter_bullet", "textures/spitter_bullet.png");
-    add_texture("explosion", "textures/explosion.png");
-    add_texture("glock_bullet", "textures/glock_bullet.png");
-    add_texture("baretta_bullet", "textures/baretta_bullet.png");
-    add_texture("uzi_bullet", "textures/uzi_bullet.png");
-    add_texture("shotgun_bullet", "textures/shotgun_bullet.png");
-    add_texture("assault_rifle_bullet", "textures/assault_rifle_bullet.png");
-    add_texture("sniper_rifle_bullet", "textures/sniper_rifle_bullet.png");
-    add_texture("baretta_ammo", "textures/baretta_ammo.png");
-    add_texture("uzi_ammo", "textures/uzi_ammo.png");
-    add_texture("shotgun_ammo", "textures/shotgun_ammo.png");
-    add_texture("assault_rifle_ammo", "textures/assault_rifle_ammo.png");
-    add_texture("sniper_rifle_ammo", "textures/sniper_rifle_ammo.png");
-
-    add_texture("health_drop", "textures/health_pick_up.png");
-
-    // HUD
-    add_texture("hud", "textures/hud.png");
-    add_texture("hud_level", "textures/hud_level.png");
-    add_texture("hud_health", "textures/hud_health.png");
-    add_texture("hud_health_fill", "textures/hud_health_fill.png");
-    add_texture("hud_level_fill", "textures/hud_level_fill.png");
-    add_texture("hud_weapon_background", "textures/hud_weapon_background.png");
-    add_texture("glock_hud", "textures/glock_hud.png");
-    add_texture("baretta_hud", "textures/baretta_hud.png");
-    add_texture("uzi_hud", "textures/uzi_hud.png");
-    add_texture("shotgun_hud", "textures/shotgun_hud.png");
-    add_texture("assault_rifle_hud", "textures/assault_rifle_hud.png");
-    add_texture("sniper_rifle_hud", "textures/sniper_rifle_hud.png");
-}
-
-void World::load_audio()
-{
-    // Weapons
-    add_sound("glock_shoot", "audio/glock_shoot_1.wav");
-    add_sound("glock_shoot", "audio/glock_shoot_2.wav");
-    add_sound("baretta_shoot", "audio/baretta_shoot_1.wav");
-    add_sound("baretta_shoot", "audio/baretta_shoot_2.wav");
-    add_sound("uzi_shoot", "audio/uzi_shoot_1.wav");
-    add_sound("uzi_shoot", "audio/uzi_shoot_2.wav");
-    add_sound("uzi_shoot", "audio/uzi_shoot_3.wav");
-    add_sound("shotgun_shoot", "audio/shotgun_shoot_1.wav");
-    add_sound("shotgun_shoot", "audio/shotgun_shoot_2.wav");
-    add_sound("shotgun_shoot", "audio/shotgun_shoot_3.wav");
-    add_sound("assault_rifle_shoot", "audio/assault_rifle_shoot_1.wav");
-    add_sound("assault_rifle_shoot", "audio/assault_rifle_shoot_2.wav");
-    add_sound("assault_rifle_shoot", "audio/assault_rifle_shoot_3.wav");
-    add_sound("sniper_rifle_shoot", "audio/sniper_rifle_shoot_1.wav");
-    add_sound("sniper_rifle_shoot", "audio/sniper_rifle_shoot_2.wav");
-    add_sound("sniper_rifle_shoot", "audio/sniper_rifle_shoot_3.wav");
-    add_sound("spitter_shoot", "audio/spitter_shoot.wav");
-    add_sound("ammo_pick_up", "audio/ammo_pick_up.wav");
-
-    // Player
-    add_sound("player_hurt", "audio/player_hurt_1.wav");
-    add_sound("player_hurt", "audio/player_hurt_2.wav");
-    add_sound("player_hurt", "audio/player_hurt_3.wav");
-    add_sound("player_hurt", "audio/player_hurt_4.wav");
-
-    // Enemy
-    add_sound("enemy_hurt", "audio/enemy_hurt_1.wav");
-    add_sound("enemy_hurt", "audio/enemy_hurt_2.wav");
-    add_sound("enemy_hurt", "audio/enemy_hurt_3.wav");
-    add_sound("enemy_hurt", "audio/enemy_hurt_4.wav");
-
-    // Other
-    add_sound("explosion", "audio/explosion.wav");
-    add_sound("crate_destroy", "audio/crate_destroy.wav");
-    add_sound("bullet_impact", "audio/bullet_impact_1.wav");
-    add_sound("bullet_impact", "audio/bullet_impact_2.wav");
-    add_sound("bullet_impact", "audio/bullet_impact_3.wav");
-}
- */
-
 // ==============================[ Creation ]==============================
-/*
-void World::add_texture(std::string const& category, std::string const& filename)
-{
-    auto texture = std::make_shared<sf::Texture>();
-    if(!texture->loadFromFile(filename))
-    {
-        std::cerr << "Error: Could not find image with name '" << filename << "'." << std::endl;
-    }
-    else
-    {
-        sprites[category].push_back(texture);
-    }
-}
-
-void World::add_sound(std::string const& category,  std::string const& filename)
-{
-    auto sound_buffer = std::make_shared<sf::SoundBuffer>();
-    if (!sound_buffer->loadFromFile(filename))
-    {
-        std::cerr << "Error: Could not find file with name '" << filename << "'." << std::endl;
-    }
-    else
-    {
-        sound_buffers[category].push_back(sound_buffer);
-        std::shared_ptr<sf::Sound> sound{std::make_shared<sf::Sound>()};
-        sound->setBuffer(*sound_buffers[category].back());
-        sounds[category].push_back(sound);
-    }
-}
-*/
-
 void World::add_melee_enemy(std::string const& name, sf::Vector2f const& position)
 {
     if(name == "zombie")
@@ -626,8 +358,6 @@ bool World::delete_game_objects()
 }
 
 // ==============================[ Game Loop ]==============================
-
-
 void World::check_collision(std::shared_ptr<Game_Object> const& current_obj)
 {
 // Handle collision
@@ -648,7 +378,6 @@ void World::check_collision(std::shared_ptr<Game_Object> const& current_obj)
         }
 
         collidable_target->handle_collision(*this, current_obj, other_obj);
-
     }
 }
 
@@ -672,15 +401,6 @@ void World::draw_game_objects(sf::RenderWindow & window)
     window.draw(resource_manager.get_background_sprite());
     for(const std::shared_ptr<Game_Object>& obj : game_objects)
     {
-        if(debug_mode)
-        {
-            std::shared_ptr<Collidable> collidable_target{std::dynamic_pointer_cast<Collidable>(obj)};
-
-            if(collidable_target != nullptr)
-            {
-                window.draw(collidable_target->get_collision_shape());
-            }
-        }
         obj -> render(window);
     }
 }

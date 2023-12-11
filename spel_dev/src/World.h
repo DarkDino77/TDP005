@@ -18,6 +18,7 @@ class World
 {
 public:
     // ==============================[ Getters ]==============================
+    World();
     std::shared_ptr<Player>& get_player();
     sf::Vector2f& get_mouse_pos();
     float get_elapsed_time() const;
@@ -29,7 +30,6 @@ public:
     void kill(std::shared_ptr<Game_Object> const& obj_to_kill);
 
     // ==============================[ Creation ]==============================
-    void load();
     void add_explosion(sf::Vector2f const& position, float const explosive_radius, int const explosive_damage);
     void add_pick_up(sf::Vector2f const& position, int const drop_chance);
     void add_bullet(int const damage, sf::Vector2f const& direction, double const bullet_speed, std::string const& bullet_type,
@@ -60,7 +60,6 @@ private:
     // ===[ Waves ]===
     int current_wave{1};
     float time_since_spawn{0};
-    float last_time{0};
 
     // ===[ Graphics ]===
     sf::RectangleShape mouse_cursor{};
@@ -68,19 +67,16 @@ private:
 
     // ===[ Hud ]===
     std::shared_ptr<Hud> hud{};
-    sf::Text fps_text;
 
     // ===[ Debug ]===
-    bool debug_mode{false};
     float elapsed_time{0};
 
     // ===[ Resources ]===
-    Resource_Manager resource_manager{*this};
+    Resource_Manager resource_manager;
 
     // ==============================[ Creation ]==============================
     void add_melee_enemy(std::string const& name, sf::Vector2f const& position);
     void add_ranged_enemy(std::string const& name, sf::Vector2f const& position);
-
     void spawn_monsters();
     void add_game_objects();
     bool delete_game_objects();
