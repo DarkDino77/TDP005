@@ -91,6 +91,14 @@ void Player::update(sf::Time const& delta_time, World &world, std::shared_ptr<Ga
             world.set_weapon_stats(current_weapon);
         }
     }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num6))
+    {
+        if(int(available_weapons.size()) >= 6)
+        {
+            current_weapon = available_weapons[5];
+            world.set_weapon_stats(current_weapon);
+        }
+    }
 
     world.set_health_percent(health, max_health);
 }

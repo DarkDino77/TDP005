@@ -403,20 +403,27 @@ void World::load_textures()
     add_texture("melee5", "textures/zombie5.png");
     add_texture("melee6", "textures/zombie6.png");
     add_texture("melee7", "textures/zombie7.png");
+    add_texture("spitter", "textures/spitter1.png");
+    add_texture("spitter", "textures/spitter2.png");
+    add_texture("biter", "textures/biter1.png");
+    add_texture("biter", "textures/biter2.png");
+    add_texture("boss", "textures/zombie_boss1.png");
+    add_texture("boss", "textures/zombie_boss2.png");
 
     // Weapons
     add_texture("spitter_bullet", "textures/spitter_bullet.png");
-    add_texture("spitter1", "textures/spitter1.png");
     add_texture("explosion", "textures/explosion.png");
     add_texture("glock_bullet", "textures/glock_bullet.png");
     add_texture("baretta_bullet", "textures/baretta_bullet.png");
     add_texture("uzi_bullet", "textures/uzi_bullet.png");
     add_texture("shotgun_bullet", "textures/shotgun_bullet.png");
     add_texture("assault_rifle_bullet", "textures/assault_rifle_bullet.png");
+    add_texture("sniper_rifle_bullet", "textures/sniper_rifle_bullet.png");
     add_texture("baretta_ammo", "textures/baretta_ammo.png");
     add_texture("uzi_ammo", "textures/uzi_ammo.png");
     add_texture("shotgun_ammo", "textures/shotgun_ammo.png");
     add_texture("assault_rifle_ammo", "textures/assault_rifle_ammo.png");
+    add_texture("sniper_rifle_ammo", "textures/sniper_rifle_ammo.png");
 
     add_texture("health_drop", "textures/health_pick_up.png");
 
@@ -432,6 +439,7 @@ void World::load_textures()
     add_texture("uzi_hud", "textures/uzi_hud.png");
     add_texture("shotgun_hud", "textures/shotgun_hud.png");
     add_texture("assault_rifle_hud", "textures/assault_rifle_hud.png");
+    add_texture("sniper_rifle_hud", "textures/sniper_rifle_hud.png");
 }
 
 void World::load_audio()
@@ -450,6 +458,9 @@ void World::load_audio()
     add_sound("assault_rifle_shoot", "audio/assault_rifle_shoot_1.wav");
     add_sound("assault_rifle_shoot", "audio/assault_rifle_shoot_2.wav");
     add_sound("assault_rifle_shoot", "audio/assault_rifle_shoot_3.wav");
+    add_sound("sniper_rifle_shoot", "audio/sniper_rifle_shoot_1.wav");
+    add_sound("sniper_rifle_shoot", "audio/sniper_rifle_shoot_2.wav");
+    add_sound("sniper_rifle_shoot", "audio/sniper_rifle_shoot_3.wav");
     add_sound("spitter_shoot", "audio/spitter_shoot.wav");
     add_sound("ammo_pick_up", "audio/ammo_pick_up.wav");
 
@@ -519,6 +530,18 @@ void World::add_melee_enemy(std::string const& name, sf::Vector2f const& positio
                                              get_sprite("melee"), 0.3f, 20, 5, 10);
         game_objects.push_back(enemy);
     }
+    if(name == "hulk")
+    {
+        auto enemy = std::make_shared<Melee>(grid_to_coord(position),
+                                             get_sprite("boss"), 0.15f, 100, 20, 30);
+        game_objects.push_back(enemy);
+    }
+    if(name == "biter")
+    {
+        auto enemy = std::make_shared<Melee>(grid_to_coord(position),
+                                             get_sprite("biter"), 0.5f, 10, 10, 10);
+        game_objects.push_back(enemy);
+    }
 }
 
 void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& position)
@@ -526,7 +549,7 @@ void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& positi
     if(name == "spitter")
     {
         auto enemy = std::make_shared<Ranged>(grid_to_coord(position),
-                                              get_sprite("spitter1"), 0.15f, 20, 2, 12);
+                                              get_sprite("spitter"), 0.15f, 20, 2, 12);
         game_objects.push_back(enemy);
     }
 }
@@ -552,12 +575,11 @@ void World::add_crate(sf::Vector2f const& position)
     game_objects.push_back(crate);
 }
 
-
-
 void World::spawn_monsters()
 {
     int num_enemies{5 + ((current_wave - 1) * 2)};
     int num_ranged{int(std::floor(float(current_wave) * 0.5f))};
+    int num_biter{current_wave};
 
     std::vector<sf::Vector2f> spawn_positions{};
 
@@ -566,7 +588,7 @@ void World::spawn_monsters()
     std::uniform_int_distribution<int> for_y_uniform(1,31);
 
     int num_melee_spawned{0};
-    while ( num_melee_spawned < (num_enemies-num_ranged))
+    while ( num_melee_spawned < (num_enemies-num_ranged-num_biter))
     {
         int pos_x{(for_x_uniform(rd)-1)*59};
         int pos_y{(for_y_uniform(rd)-1)};
@@ -593,6 +615,26 @@ void World::spawn_monsters()
             num_ranged_spawned++;
             spawn_positions.push_back(pos);
         }
+    }
+
+    int num_biter_spawned{0};
+    while(num_biter_spawned < num_biter)
+    {
+        int pos_x{(for_x_uniform(rd)-1)*59};
+        int pos_y{(for_y_uniform(rd)-1)};
+        sf::Vector2f pos{float(pos_x), float(pos_y)};
+        auto it = std::find(spawn_positions.begin(), spawn_positions.end(), pos);
+        if(it == spawn_positions.end())
+        {
+            add_melee_enemy("biter", pos);
+            num_biter_spawned++;
+            spawn_positions.push_back(pos);
+        }
+    }
+
+    if(current_wave % 5 == 0)
+    {
+        add_melee_enemy("hulk", {10,10});
     }
     current_wave++;
 }
@@ -649,6 +691,11 @@ void World::add_player_weapon()
             player->add_ammo("assault_rifle_ammo", 300);
             available_pick_ups.push_back("assault_rifle_ammo");
             break;
+        case(10):
+            player->add_weapon("sniper_rifle", 70, 300, 3, 2);
+            player->add_ammo("sniper_rifle_ammo", 40);
+            available_pick_ups.push_back("sniper_rifle_ammo");
+            break;
     }
 }
 
@@ -663,6 +710,7 @@ void World::level_up_player()
         case 0:
             player->increase_max_health(10);
             hud->pop_up("MAX HEALTH +10");
+            add_player_weapon();
             break;
         case 2:
             add_player_weapon();
