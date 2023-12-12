@@ -15,8 +15,8 @@ public:
     /**
      * Constructor for the Collidable class.
      *
-     * @param[in] position The initial position of the Collidable object.
-     * @param[in] sprite The texture that is used to render the Collidable object.
+     * @param position The initial position of the Collidable object.
+     * @param sprite The texture that is used to render the Collidable object.
      */
     Collidable(sf::Vector2f const& position, sf::Texture const& sprite);
 
@@ -28,16 +28,16 @@ public:
     /**
      * Gets the collision shape of the Collidable object.
      *
-     * @return[out] A shared pointer to the collision shape.
+     * @return A shared pointer to the collision shape.
      */
     sf::CircleShape& get_collision_shape();
 
     /**
      * Specifies what happens when the collidable object collides with another object.
      *
-     * @param[in] delta_time The time since the update function was last called.
-     * @param[in] world A reference to the World object that the Collidable object exists in.
-     * @param[in] current_obj A shared pointer to the instance of the current Collidable, as stored in World.
+     * @param delta_time The time since the update function was last called.
+     * @param world A reference to the World object that the Collidable object exists in.
+     * @param current_obj A shared pointer to the instance of the current Collidable, as stored in World.
      */
     virtual void handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const&) = 0;
 protected:

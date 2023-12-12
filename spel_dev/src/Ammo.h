@@ -14,9 +14,9 @@ public:
     /**
      * Constructor for the Ammo class.
      *
-     * @param[in] position The initial position of the Ammo object.
-     * @param[in] sprite The texture that is used to render the Ammo object.
-     * @param[in] ammo_type The type of ammo.
+     * @param position The initial position of the Ammo object.
+     * @param sprite The texture that is used to render the Ammo object.
+     * @param ammo_type The type of ammo.
      */
     Ammo(sf::Vector2f const& position, sf::Texture const& sprite, std::string const& ammo_type);
 
@@ -24,7 +24,7 @@ protected:
     /**
      * Specifies what happens when the ammo object is picked up by the player.
      *
-     * @param[in] other_obj A shared pointer to the Game_Object that collided with the Pick Up.
+     * @param other_obj A shared pointer to the Game_Object that collided with the Pick Up.
      */
     void pick_up(std::shared_ptr<Game_Object> const& other_obj) const override;
 

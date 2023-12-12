@@ -5,7 +5,7 @@
 #include "Pick_Up.h"
 #include "Enemy.h"
 
-Bullet::Bullet(int damage, sf::Vector2f const& aim_direction, double const speed, sf::Texture const& sprite, sf::Vector2f const& position, bool const is_friendly)
+Bullet::Bullet(int const damage, sf::Vector2f const& aim_direction, double const speed, sf::Texture const& sprite, sf::Vector2f const& position, bool const is_friendly)
 : Movable(position, sprite, speed), damage{damage}, is_friendly{is_friendly}
 {
     direction = aim_direction;

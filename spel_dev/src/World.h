@@ -14,12 +14,33 @@ class Player;
 class Hud;
 class Resource_Manager;
 
+/**
+ * Represents the game-world.
+ *
+ * The World class is responsible for storing all game_objects that are on the map.
+ * It provides the functionality to add new game objects and remove existing.
+ * The class also allows the game world to be simulated via ticks, using delta_time
+ */
 class World
 {
 public:
-    // ==============================[ Getters ]==============================
+    /**
+     * Constructor for the World class.
+     */
     World();
+
+    /**
+     * Used to access the player
+     *
+     * @return A shared pointer to player instance in the world.
+     */
     std::shared_ptr<Player>& get_player();
+
+    /**
+     * Gets the mouse position
+     *
+     * @return The coordinate of the mouse position relative to the render window.
+     */
     sf::Vector2f& get_mouse_pos();
     float get_elapsed_time() const;
     std::shared_ptr<Hud>& get_hud();
@@ -47,7 +68,6 @@ public:
     void render(sf::RenderWindow & window);
 
 private:
-
     // ===[ Containers ]===
     std::vector<std::shared_ptr<Game_Object>> game_objects{}; //TODO: Determine if public and if unique_ptr
     std::vector<std::string> available_pick_ups{"health_drop"};

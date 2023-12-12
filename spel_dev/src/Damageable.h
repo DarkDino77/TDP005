@@ -12,7 +12,7 @@ public:
     /**
      * Constructor for the Damageable class.
      *
-     * @param[in] health The amount of health points that the damageable object has.
+     * @param health The amount of health points that the damageable object has.
      */
     Damageable(int const health);
 
@@ -24,7 +24,7 @@ public:
     /**
      * Function to take damage to the objects health.
      *
-     * @param[in] damage The amount of health points that is to be deducted from health.
+     * @param damage The amount of health points that is to be deducted from health.
      */
     void take_damage(int damage);
 
