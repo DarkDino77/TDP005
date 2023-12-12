@@ -31,15 +31,31 @@ public:
      * Instantiates a bullet in the world
      *
      * @param direction The direction which the bullet should travel in.
-     * @param world A reference to the world instance that the bulle should exist in.
-     * @param position
-     * @param is_friendly
-     * @return
+     * @param world A reference to the world instance that the bullet exists in.
+     * @param position The initial position of the bullet.
+     * @param is_friendly If the bullet is fired by the player, true elese false.
+     * @return If the weapon can shoot, return true, else false.
      */
     bool shoot(sf::Vector2f const& direction, World & world,
                sf::Vector2f const& position, bool const is_friendly);
+
+    /**
+     * Used to determine if the weapon can shoot based on the time since the last shot.
+     */
     bool can_shoot() const;
+
+    /**
+     * Gets the name of the weapon.
+     *
+     * @return The name variable of the weapon.
+     */
     std::string& get_name();
+
+    /**
+     * Add ammo to the weapon, untill the max ammo e
+     *
+     * @param amount
+     */
     void add_ammo(int const amount);
     int get_ammo_amount() const;
     int get_ammo_capacity() const;

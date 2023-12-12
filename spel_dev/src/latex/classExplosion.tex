@@ -1,0 +1,123 @@
+\hypertarget{classExplosion}{}\doxysection{Explosion Class Reference}
+\label{classExplosion}\index{Explosion@{Explosion}}
+
+
+Represents an explosion that inherits from the \mbox{\hyperlink{classCollidable}{Collidable}} class.  
+
+
+
+
+{\ttfamily \#include $<$Explosion.\+h$>$}
+
+
+
+Inheritance diagram for Explosion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=157pt]{classExplosion__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Explosion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=157pt]{classExplosion__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classExplosion_a43698513109c5f3bafbcbf1d78b41486}{Explosion}} (sf\+::\+Vector2f const \&\mbox{\hyperlink{classGame__Object_a200b030bb6c3dce284366859be4a4328}{position}}, sf\+::\+Texture const \&sprite, float const explosive\+\_\+radius, int const explosive\+\_\+damage)
+\begin{DoxyCompactList}\small\item\em Constructor for the \mbox{\hyperlink{classExplosion}{Explosion}} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classExplosion_a7943d7928a6b1de754078d9d4064b4aa}{update}} (sf\+::\+Time const \&delta\+\_\+time, \mbox{\hyperlink{classWorld}{World}} \&world, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&current\+\_\+obj) override
+\begin{DoxyCompactList}\small\item\em Updates the state of the explosion over time. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classExplosion_a92ef1196a943da6254dece11290a7a05}{handle\+\_\+collision}} (\mbox{\hyperlink{classWorld}{World}} \&world, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&current\+\_\+obj, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&other\+\_\+obj) override
+\begin{DoxyCompactList}\small\item\em Handles collision events involving the explosion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Represents an explosion that inherits from the \mbox{\hyperlink{classCollidable}{Collidable}} class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classExplosion_a43698513109c5f3bafbcbf1d78b41486}\label{classExplosion_a43698513109c5f3bafbcbf1d78b41486}} 
+\index{Explosion@{Explosion}!Explosion@{Explosion}}
+\index{Explosion@{Explosion}!Explosion@{Explosion}}
+\doxysubsubsection{\texorpdfstring{Explosion()}{Explosion()}}
+{\footnotesize\ttfamily Explosion\+::\+Explosion (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position,  }\item[{sf\+::\+Texture const \&}]{sprite,  }\item[{float const}]{explosive\+\_\+radius,  }\item[{int const}]{explosive\+\_\+damage }\end{DoxyParamCaption})}
+
+
+
+Constructor for the \mbox{\hyperlink{classExplosion}{Explosion}} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the explosion. \\
+\hline
+{\em sprite} & The texture for the explosion\textquotesingle{}s sprite. \\
+\hline
+{\em explosive\+\_\+radius} & The radius of the explosive area. \\
+\hline
+{\em explosive\+\_\+damage} & The damage inflicted by the explosion. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classExplosion_a92ef1196a943da6254dece11290a7a05}\label{classExplosion_a92ef1196a943da6254dece11290a7a05}} 
+\index{Explosion@{Explosion}!handle\_collision@{handle\_collision}}
+\index{handle\_collision@{handle\_collision}!Explosion@{Explosion}}
+\doxysubsubsection{\texorpdfstring{handle\_collision()}{handle\_collision()}}
+{\footnotesize\ttfamily void Explosion\+::handle\+\_\+collision (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{current\+\_\+obj,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{other\+\_\+obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Handles collision events involving the explosion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em world} & Reference to the game world. \\
+\hline
+{\em current\+\_\+obj} & Shared pointer to the current game object. \\
+\hline
+{\em other\+\_\+obj} & Shared pointer to the other game object involved in the collision. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classCollidable_af1cb64909e331f7e9da02271d26655d1}{Collidable}}.
+
+\mbox{\Hypertarget{classExplosion_a7943d7928a6b1de754078d9d4064b4aa}\label{classExplosion_a7943d7928a6b1de754078d9d4064b4aa}} 
+\index{Explosion@{Explosion}!update@{update}}
+\index{update@{update}!Explosion@{Explosion}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Explosion\+::update (\begin{DoxyParamCaption}\item[{sf\+::\+Time const \&}]{delta\+\_\+time,  }\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{current\+\_\+obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Updates the state of the explosion over time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time elapsed since the last update. \\
+\hline
+{\em world} & Reference to the game world. \\
+\hline
+{\em current\+\_\+obj} & Shared pointer to the current game object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classUpdatable}{Updatable}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Explosion.\+h\item 
+Explosion.\+cc\end{DoxyCompactItemize}

@@ -1,0 +1,75 @@
+\hypertarget{classPick__Up}{}\doxysection{Pick\+\_\+\+Up Class Reference}
+\label{classPick__Up}\index{Pick\_Up@{Pick\_Up}}
+
+
+Inheritance diagram for Pick\+\_\+\+Up\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classPick__Up__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Pick\+\_\+\+Up\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=157pt]{classPick__Up__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPick__Up_a233e8fe9cc9869bd400c2c884e6d0211}\label{classPick__Up_a233e8fe9cc9869bd400c2c884e6d0211}} 
+{\bfseries Pick\+\_\+\+Up} (sf\+::\+Vector2f const \&\mbox{\hyperlink{classGame__Object_a200b030bb6c3dce284366859be4a4328}{position}}, sf\+::\+Texture const \&sprite)
+\item 
+\mbox{\Hypertarget{classPick__Up_a5b64a3e1138fc309ad67819f8a932513}\label{classPick__Up_a5b64a3e1138fc309ad67819f8a932513}} 
+void {\bfseries update} (sf\+::\+Time const \&, \mbox{\hyperlink{classWorld}{World}} \&, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&) override
+\item 
+void \mbox{\hyperlink{classPick__Up_adc8c7374196cb61d5132624e1e6d7ae3}{handle\+\_\+collision}} (\mbox{\hyperlink{classWorld}{World}} \&, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPick__Up_af86b0e70c26504d7d3ff586a12dd0d96}\label{classPick__Up_af86b0e70c26504d7d3ff586a12dd0d96}} 
+virtual void {\bfseries pick\+\_\+up} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&other\+\_\+obj) const =0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPick__Up_abcb05e13ac4ca75be35119de35871b39}\label{classPick__Up_abcb05e13ac4ca75be35119de35871b39}} 
+bool {\bfseries picked\+\_\+up} \{false\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classPick__Up_adc8c7374196cb61d5132624e1e6d7ae3}\label{classPick__Up_adc8c7374196cb61d5132624e1e6d7ae3}} 
+\index{Pick\_Up@{Pick\_Up}!handle\_collision@{handle\_collision}}
+\index{handle\_collision@{handle\_collision}!Pick\_Up@{Pick\_Up}}
+\doxysubsubsection{\texorpdfstring{handle\_collision()}{handle\_collision()}}
+{\footnotesize\ttfamily void Pick\+\_\+\+Up\+::handle\+\_\+collision (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Specifies what happens when the collidable object collides with another object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time since the update function was last called. \\
+\hline
+{\em world} & A reference to the \mbox{\hyperlink{classWorld}{World}} object that the \mbox{\hyperlink{classCollidable}{Collidable}} object exists in. \\
+\hline
+{\em current\+\_\+obj} & A shared pointer to the instance of the current \mbox{\hyperlink{classCollidable}{Collidable}}, as stored in \mbox{\hyperlink{classWorld}{World}}. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classCollidable_af1cb64909e331f7e9da02271d26655d1}{Collidable}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Pick\+\_\+\+Up.\+h\item 
+Pick\+\_\+\+Up.\+cc\end{DoxyCompactItemize}

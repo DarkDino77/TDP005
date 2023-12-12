@@ -1,0 +1,127 @@
+\hypertarget{classHud}{}\doxysection{Hud Class Reference}
+\label{classHud}\index{Hud@{Hud}}
+
+
+This class represent the heads up display that provieds the player with relevent information. Inherents from \mbox{\hyperlink{classUpdatable}{Updatable}}.  
+
+
+
+
+{\ttfamily \#include $<$Hud.\+h$>$}
+
+
+
+Inheritance diagram for Hud\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=157pt]{classHud__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Hud\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=157pt]{classHud__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classHud_a43d80a50a6438b3708c46f495eeabf98}{Hud}} (sf\+::\+Texture const \&sprite, \mbox{\hyperlink{classWorld}{World}} \&world)
+\begin{DoxyCompactList}\small\item\em This is the constructor for the HUD. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classHud_a7bbffe207027325b5038e969cd4994bb}\label{classHud_a7bbffe207027325b5038e969cd4994bb}} 
+void \mbox{\hyperlink{classHud_a7bbffe207027325b5038e969cd4994bb}{update}} (sf\+::\+Time const \&, \mbox{\hyperlink{classWorld}{World}} \&, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&) override
+\begin{DoxyCompactList}\small\item\em This is the update function for the hud it updates the different information that the hud is displaying to be keep up with the reality of the game as it currently is. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHud_a5d46417df9da883a848968eeccffbe97}{load\+\_\+hud}} (\mbox{\hyperlink{classWorld}{World}} \&world)
+\begin{DoxyCompactList}\small\item\em This loads the hud based on the starting world information as well as the font for the relevant text hud features. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHud_afa7b6dc3f3c0daa62369848dbf762b45}{render}} (sf\+::\+Render\+Window \&window) override
+\begin{DoxyCompactList}\small\item\em This Function draws its relevant information to the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHud_a4072c436bdb043092f2f74ff00c5b5ef}{pop\+\_\+up}} (std\+::string const \&message)
+\begin{DoxyCompactList}\small\item\em This Function adds a message to be displayed on the screen on a temporary time frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+This class represent the heads up display that provieds the player with relevent information. Inherents from \mbox{\hyperlink{classUpdatable}{Updatable}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classHud_a43d80a50a6438b3708c46f495eeabf98}\label{classHud_a43d80a50a6438b3708c46f495eeabf98}} 
+\index{Hud@{Hud}!Hud@{Hud}}
+\index{Hud@{Hud}!Hud@{Hud}}
+\doxysubsubsection{\texorpdfstring{Hud()}{Hud()}}
+{\footnotesize\ttfamily Hud\+::\+Hud (\begin{DoxyParamCaption}\item[{sf\+::\+Texture const \&}]{sprite,  }\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world }\end{DoxyParamCaption})}
+
+
+
+This is the constructor for the HUD. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sprite} & A texture representing the sprite for the HUD \\
+\hline
+{\em world} & A copy of world \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHud_a5d46417df9da883a848968eeccffbe97}\label{classHud_a5d46417df9da883a848968eeccffbe97}} 
+\index{Hud@{Hud}!load\_hud@{load\_hud}}
+\index{load\_hud@{load\_hud}!Hud@{Hud}}
+\doxysubsubsection{\texorpdfstring{load\_hud()}{load\_hud()}}
+{\footnotesize\ttfamily void Hud\+::load\+\_\+hud (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world }\end{DoxyParamCaption})}
+
+
+
+This loads the hud based on the starting world information as well as the font for the relevant text hud features. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em world} & A copy of world \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classHud_a4072c436bdb043092f2f74ff00c5b5ef}\label{classHud_a4072c436bdb043092f2f74ff00c5b5ef}} 
+\index{Hud@{Hud}!pop\_up@{pop\_up}}
+\index{pop\_up@{pop\_up}!Hud@{Hud}}
+\doxysubsubsection{\texorpdfstring{pop\_up()}{pop\_up()}}
+{\footnotesize\ttfamily void Hud\+::pop\+\_\+up (\begin{DoxyParamCaption}\item[{std\+::string const \&}]{message }\end{DoxyParamCaption})}
+
+
+
+This Function adds a message to be displayed on the screen on a temporary time frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & This is the relevant massage to be displayed on the screen. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classHud_afa7b6dc3f3c0daa62369848dbf762b45}\label{classHud_afa7b6dc3f3c0daa62369848dbf762b45}} 
+\index{Hud@{Hud}!render@{render}}
+\index{render@{render}!Hud@{Hud}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Hud\+::render (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window \&}]{window }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+This Function draws its relevant information to the window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & a reference copy of the window that the game run in \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classGame__Object_a936fde2f7ee2f107c230773720f67752}{Game\+\_\+\+Object}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Hud.\+h\item 
+Hud.\+cc\end{DoxyCompactItemize}

@@ -1,0 +1,92 @@
+\hypertarget{classCrate}{}\doxysection{Crate Class Reference}
+\label{classCrate}\index{Crate@{Crate}}
+
+
+A crate object in the game that inherits from the \mbox{\hyperlink{classDestructible}{Destructible}} class.  
+
+
+
+
+{\ttfamily \#include $<$Crate.\+h$>$}
+
+
+
+Inheritance diagram for Crate\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{classCrate__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Crate\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{classCrate__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCrate_a84eb3dc2b6f86c18799c4f4ea5351b6a}{Crate}} (sf\+::\+Vector2f const \&\mbox{\hyperlink{classGame__Object_a200b030bb6c3dce284366859be4a4328}{position}}, sf\+::\+Texture const \&sprite, int const \mbox{\hyperlink{classDamageable_ae573ae5fe38ba0a168280ef017db91f6}{health}})
+\item 
+void \mbox{\hyperlink{classCrate_aa668d5e60228de43296490737c8b6deb}{destroy}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&destructible\+\_\+target, \mbox{\hyperlink{classWorld}{World}} \&world) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+A crate object in the game that inherits from the \mbox{\hyperlink{classDestructible}{Destructible}} class. 
+
+The \mbox{\hyperlink{classCrate}{Crate}} class inherits from the \mbox{\hyperlink{classDestructible}{Destructible}} class and specifies what happens when a crate is destroyed. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classCrate_a84eb3dc2b6f86c18799c4f4ea5351b6a}\label{classCrate_a84eb3dc2b6f86c18799c4f4ea5351b6a}} 
+\index{Crate@{Crate}!Crate@{Crate}}
+\index{Crate@{Crate}!Crate@{Crate}}
+\doxysubsubsection{\texorpdfstring{Crate()}{Crate()}}
+{\footnotesize\ttfamily Crate\+::\+Crate (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position,  }\item[{sf\+::\+Texture const \&}]{sprite,  }\item[{int const}]{health }\end{DoxyParamCaption})}
+
+Constructor for the \mbox{\hyperlink{classCrate}{Crate}} class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the \mbox{\hyperlink{classCrate}{Crate}} object. \\
+\hline
+{\em sprite} & The texture that is used to render the \mbox{\hyperlink{classCrate}{Crate}} object. \\
+\hline
+{\em health} & The amount of health points that the crate has. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classCrate_aa668d5e60228de43296490737c8b6deb}\label{classCrate_aa668d5e60228de43296490737c8b6deb}} 
+\index{Crate@{Crate}!destroy@{destroy}}
+\index{destroy@{destroy}!Crate@{Crate}}
+\doxysubsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily void Crate\+::destroy (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{destructible\+\_\+target,  }\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+When a create is destroyed it initiates a instance of a sub class of Pick\+\_\+up.
+
+
+\begin{DoxyParams}{Parameters}
+{\em destructible\+\_\+target} & A shared pointer to the instance of the current \mbox{\hyperlink{classCrate}{Crate}}, as stored in \mbox{\hyperlink{classWorld}{World}}. \\
+\hline
+{\em world} & A reference to the \mbox{\hyperlink{classWorld}{World}} object that the \mbox{\hyperlink{classCrate}{Crate}} object exists in. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classDestructible_a5beef878cf250de8fa59933d3db3904c}{Destructible}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Crate.\+h\item 
+Crate.\+cc\end{DoxyCompactItemize}

@@ -1,0 +1,12 @@
+<map id="Character" name="Character">
+<area shape="rect" id="node1" title="A character in the game that inherits from the Damageable class." alt="" coords="80,304,159,331"/>
+<area shape="rect" id="node7" href="$classEnemy.html" title="Represents an enemy character that inherits from the Character class." alt="" coords="45,379,108,405"/>
+<area shape="rect" id="node10" href="$classPlayer.html" title=" " alt="" coords="133,379,191,405"/>
+<area shape="rect" id="node2" href="$classMovable.html" title="This class represents the ability for objects to move around." alt="" coords="31,229,101,256"/>
+<area shape="rect" id="node3" href="$classCollidable.html" title="A collidable object in the game that inherits from the Updatable class." alt="" coords="27,155,105,181"/>
+<area shape="rect" id="node4" href="$classUpdatable.html" title=" " alt="" coords="25,80,107,107"/>
+<area shape="rect" id="node5" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="15,5,117,32"/>
+<area shape="rect" id="node6" href="$classDamageable.html" title="Gives an object the ability to take damage." alt="" coords="125,229,220,256"/>
+<area shape="rect" id="node8" href="$classMelee.html" title="This class represents all Melee enemy&#39;s that inherits form Enemy." alt="" coords="5,453,63,480"/>
+<area shape="rect" id="node9" href="$classRanged.html" title=" " alt="" coords="87,453,154,480"/>
+</map>

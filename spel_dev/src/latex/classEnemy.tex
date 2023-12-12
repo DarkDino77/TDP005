@@ -1,0 +1,172 @@
+\hypertarget{classEnemy}{}\doxysection{Enemy Class Reference}
+\label{classEnemy}\index{Enemy@{Enemy}}
+
+
+Represents an enemy character that inherits from the \mbox{\hyperlink{classCharacter}{Character}} class.  
+
+
+
+
+{\ttfamily \#include $<$Enemy.\+h$>$}
+
+
+
+Inheritance diagram for Enemy\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classEnemy__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Enemy\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classEnemy__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classEnemy_ace64212daebfa8f89a2af0dd7cd89da0}{Enemy}} (sf\+::\+Vector2f const \&\mbox{\hyperlink{classGame__Object_a200b030bb6c3dce284366859be4a4328}{position}}, sf\+::\+Texture const \&sprite, float const speed, int const \mbox{\hyperlink{classDamageable_ae573ae5fe38ba0a168280ef017db91f6}{health}}, int const \mbox{\hyperlink{classEnemy_a68370cb2ae7b97319e670636053bea61}{melee\+\_\+damage}}, int const \mbox{\hyperlink{classEnemy_a6c93c0e43d21c5198797b386b6140848}{xp}})
+\begin{DoxyCompactList}\small\item\em Constructor for the \mbox{\hyperlink{classEnemy}{Enemy}} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEnemy_af2b1df715d5bdfc10010558090652832}\label{classEnemy_af2b1df715d5bdfc10010558090652832}} 
+virtual \mbox{\hyperlink{classEnemy_af2b1df715d5bdfc10010558090652832}{$\sim$\+Enemy}} ()=0
+\begin{DoxyCompactList}\small\item\em Pure virtual destructor for the \mbox{\hyperlink{classEnemy}{Enemy}} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEnemy_a644e973fdc311145c6ec49a7e537303a}{handle\+\_\+collision}} (\mbox{\hyperlink{classWorld}{World}} \&world, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&current\+\_\+obj, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&other\+\_\+obj) override
+\begin{DoxyCompactList}\small\item\em Handles collision events involving the enemy. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEnemy_a89a9b96ec4de8d6fd69878e6c48352a1}{update}} (sf\+::\+Time const \&delta\+\_\+time, \mbox{\hyperlink{classWorld}{World}} \&world, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&current\+\_\+obj) override
+\begin{DoxyCompactList}\small\item\em Updates the state of the enemy over time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{classEnemy_a4966e308c3f844d1e19ab011e0fcb892}{life\+\_\+time}} \{0\}
+\item 
+float \mbox{\hyperlink{classEnemy_a738b6949c885b7b513c8e8979b873b14}{melee\+\_\+timer}} \{0\}
+\item 
+int \mbox{\hyperlink{classEnemy_a68370cb2ae7b97319e670636053bea61}{melee\+\_\+damage}} \{\}
+\item 
+int \mbox{\hyperlink{classEnemy_a6c93c0e43d21c5198797b386b6140848}{xp}} \{\}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Represents an enemy character that inherits from the \mbox{\hyperlink{classCharacter}{Character}} class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classEnemy_ace64212daebfa8f89a2af0dd7cd89da0}\label{classEnemy_ace64212daebfa8f89a2af0dd7cd89da0}} 
+\index{Enemy@{Enemy}!Enemy@{Enemy}}
+\index{Enemy@{Enemy}!Enemy@{Enemy}}
+\doxysubsubsection{\texorpdfstring{Enemy()}{Enemy()}}
+{\footnotesize\ttfamily Enemy\+::\+Enemy (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position,  }\item[{sf\+::\+Texture const \&}]{sprite,  }\item[{float const}]{speed,  }\item[{int const}]{health,  }\item[{int const}]{melee\+\_\+damage,  }\item[{int const}]{xp }\end{DoxyParamCaption})}
+
+
+
+Constructor for the \mbox{\hyperlink{classEnemy}{Enemy}} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the enemy. \\
+\hline
+{\em sprite} & The texture for the enemy\textquotesingle{}s sprite. \\
+\hline
+{\em speed} & The speed of the enemy. \\
+\hline
+{\em health} & The initial health of the enemy. \\
+\hline
+{\em melee\+\_\+damage} & The damage inflicted by the enemy in melee attacks. \\
+\hline
+{\em xp} & The experience points awarded when the enemy is defeated. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classEnemy_a644e973fdc311145c6ec49a7e537303a}\label{classEnemy_a644e973fdc311145c6ec49a7e537303a}} 
+\index{Enemy@{Enemy}!handle\_collision@{handle\_collision}}
+\index{handle\_collision@{handle\_collision}!Enemy@{Enemy}}
+\doxysubsubsection{\texorpdfstring{handle\_collision()}{handle\_collision()}}
+{\footnotesize\ttfamily void Enemy\+::handle\+\_\+collision (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{current\+\_\+obj,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{other\+\_\+obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Handles collision events involving the enemy. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em world} & Reference to the game world. \\
+\hline
+{\em current\+\_\+obj} & Shared pointer to the current game object. \\
+\hline
+{\em other\+\_\+obj} & Shared pointer to the other game object involved in the collision. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classCollidable_af1cb64909e331f7e9da02271d26655d1}{Collidable}}.
+
+\mbox{\Hypertarget{classEnemy_a89a9b96ec4de8d6fd69878e6c48352a1}\label{classEnemy_a89a9b96ec4de8d6fd69878e6c48352a1}} 
+\index{Enemy@{Enemy}!update@{update}}
+\index{update@{update}!Enemy@{Enemy}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Enemy\+::update (\begin{DoxyParamCaption}\item[{sf\+::\+Time const \&}]{delta\+\_\+time,  }\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{current\+\_\+obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Updates the state of the enemy over time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time elapsed since the last update. \\
+\hline
+{\em world} & Reference to the game world. \\
+\hline
+{\em current\+\_\+obj} & Shared pointer to the current game object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classUpdatable}{Updatable}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classRanged_aae6fd1a7dc5c12e0a4dd10259b6b61c9}{Ranged}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classEnemy_a4966e308c3f844d1e19ab011e0fcb892}\label{classEnemy_a4966e308c3f844d1e19ab011e0fcb892}} 
+\index{Enemy@{Enemy}!life\_time@{life\_time}}
+\index{life\_time@{life\_time}!Enemy@{Enemy}}
+\doxysubsubsection{\texorpdfstring{life\_time}{life\_time}}
+{\footnotesize\ttfamily float Enemy\+::life\+\_\+time \{0\}\hspace{0.3cm}{\ttfamily [protected]}}
+
+The total lifetime of the enemy. \mbox{\Hypertarget{classEnemy_a68370cb2ae7b97319e670636053bea61}\label{classEnemy_a68370cb2ae7b97319e670636053bea61}} 
+\index{Enemy@{Enemy}!melee\_damage@{melee\_damage}}
+\index{melee\_damage@{melee\_damage}!Enemy@{Enemy}}
+\doxysubsubsection{\texorpdfstring{melee\_damage}{melee\_damage}}
+{\footnotesize\ttfamily int Enemy\+::melee\+\_\+damage \{\}\hspace{0.3cm}{\ttfamily [protected]}}
+
+he damage inflicted by melee attacks. \mbox{\Hypertarget{classEnemy_a738b6949c885b7b513c8e8979b873b14}\label{classEnemy_a738b6949c885b7b513c8e8979b873b14}} 
+\index{Enemy@{Enemy}!melee\_timer@{melee\_timer}}
+\index{melee\_timer@{melee\_timer}!Enemy@{Enemy}}
+\doxysubsubsection{\texorpdfstring{melee\_timer}{melee\_timer}}
+{\footnotesize\ttfamily float Enemy\+::melee\+\_\+timer \{0\}\hspace{0.3cm}{\ttfamily [protected]}}
+
+Timer for controlling the melee attack rate. \mbox{\Hypertarget{classEnemy_a6c93c0e43d21c5198797b386b6140848}\label{classEnemy_a6c93c0e43d21c5198797b386b6140848}} 
+\index{Enemy@{Enemy}!xp@{xp}}
+\index{xp@{xp}!Enemy@{Enemy}}
+\doxysubsubsection{\texorpdfstring{xp}{xp}}
+{\footnotesize\ttfamily int Enemy\+::xp \{\}\hspace{0.3cm}{\ttfamily [protected]}}
+
+The experience points awarded when the enemy is defeated. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Enemy.\+h\item 
+Enemy.\+cc\end{DoxyCompactItemize}

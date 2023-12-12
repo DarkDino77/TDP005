@@ -1,0 +1,336 @@
+\hypertarget{classWorld}{}\doxysection{World Class Reference}
+\label{classWorld}\index{World@{World}}
+
+
+Represents the game-\/world.  
+
+
+
+
+{\ttfamily \#include $<$World.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classWorld_afa39d4e6f714a7a3691ac0c656f5e8a8}\label{classWorld_afa39d4e6f714a7a3691ac0c656f5e8a8}} 
+\mbox{\hyperlink{classWorld_afa39d4e6f714a7a3691ac0c656f5e8a8}{World}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the \mbox{\hyperlink{classWorld}{World}} class. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classPlayer}{Player}} $>$ \& \mbox{\hyperlink{classWorld_aebfaace7c220f1090bf2cad14c0678c9}{get\+\_\+player}} ()
+\begin{DoxyCompactList}\small\item\em Used to access the player. \end{DoxyCompactList}\item 
+sf\+::\+Vector2f \& \mbox{\hyperlink{classWorld_ad965429a46e40f5453924a84d98a505e}{get\+\_\+mouse\+\_\+pos}} ()
+\begin{DoxyCompactList}\small\item\em Gets the mouse position. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classWorld_a9827ebd00d3e42eb7c933479504251e5}{get\+\_\+elapsed\+\_\+time}} () const
+\begin{DoxyCompactList}\small\item\em Gets the elapsed time in seconds. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classHud}{Hud}} $>$ \& \mbox{\hyperlink{classWorld_a3353384d367df5de5d87dc7f818e16a8}{get\+\_\+hud}} ()
+\begin{DoxyCompactList}\small\item\em Used to access the HUD. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::string $>$ \& \mbox{\hyperlink{classWorld_a83ae30683c6b250c38508c9c214afa67}{get\+\_\+available\+\_\+pick\+\_\+ups}} ()
+\begin{DoxyCompactList}\small\item\em Used to access the available pick-\/ups in the game world. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classResource__Manager}{Resource\+\_\+\+Manager}} \& \mbox{\hyperlink{classWorld_a89b8f0a691dcda8bf0e842667975a117}{get\+\_\+resource\+\_\+manager}} ()
+\begin{DoxyCompactList}\small\item\em Used to access the resource manager. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWorld_afe80ab3edabb213b43f1ca1471cc91f9}{kill}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&obj\+\_\+to\+\_\+kill)
+\begin{DoxyCompactList}\small\item\em Adds a game\+\_\+object to the kill queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWorld_ac4c6828883830d6ec7c3a976b7d84fa5}{add\+\_\+explosion}} (sf\+::\+Vector2f const \&position, float const explosive\+\_\+radius, int const explosive\+\_\+damage)
+\begin{DoxyCompactList}\small\item\em Adds an explosion to the world. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWorld_af696e0a9ca51363665911ade2623e630}{add\+\_\+pick\+\_\+up}} (sf\+::\+Vector2f const \&position, int const drop\+\_\+chance)
+\begin{DoxyCompactList}\small\item\em Adds a pickup to the world. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWorld_a87232ea1a20d0a4f4da9e960ce1bce1d}{add\+\_\+bullet}} (int const damage, sf\+::\+Vector2f const \&direction, double const bullet\+\_\+speed, std\+::string const \&bullet\+\_\+type, sf\+::\+Vector2f const \&bullet\+\_\+spawn, bool const is\+\_\+friendly)
+\begin{DoxyCompactList}\small\item\em Adds a bullet object to the world. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWorld_a8df675e8b1496e92130deb5602b7e75b}{add\+\_\+wall}} (sf\+::\+Vector2f const \&position)
+\begin{DoxyCompactList}\small\item\em Adds a wall object to the world. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWorld_ad8cc11e614f698a97af4d7163b545e3a}{add\+\_\+explosive\+\_\+barrel}} (sf\+::\+Vector2f const \&position)
+\begin{DoxyCompactList}\small\item\em Adds an explosive barrel object to the world. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWorld_a526894b50a85bc999bc12e1ba0f48239}{add\+\_\+crate}} (sf\+::\+Vector2f const \&position)
+\begin{DoxyCompactList}\small\item\em Adds a crate object to the world. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWorld_a9416260a2cb8badc6615c974aea66404}{add\+\_\+player}} (sf\+::\+Vector2f const \&position)
+\begin{DoxyCompactList}\small\item\em Adds the player object to the world. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classWorld_a916014d083729a565e5a29c0a6380869}{can\+\_\+see\+\_\+player}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&source, sf\+::\+Vector2f const \&direction)
+\begin{DoxyCompactList}\small\item\em Used to determine if there is a straight path from a game object to the player that is not obstructed by another game object. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classWorld_a03d104dafdf55e8e491707f089b1e8be}{simulate}} (sf\+::\+Time const \&delta\+\_\+time, float const elapsed\+\_\+time, sf\+::\+Render\+Window \&window)
+\begin{DoxyCompactList}\small\item\em Used to simulate the movement and collision handling for all game objects each time the function is called. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWorld_a6be69ff54f7f29713c0954cabe34aecc}{render}} (sf\+::\+Render\+Window \&window)
+\begin{DoxyCompactList}\small\item\em Renders the background, all game objects and then the HUD in the given order. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents the game-\/world. 
+
+The \mbox{\hyperlink{classWorld}{World}} class is responsible for storing all game\+\_\+objects that are on the map. It provides the functionality to add new game objects and remove existing. The class also allows the game world to be simulated via ticks, using delta\+\_\+time 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classWorld_a87232ea1a20d0a4f4da9e960ce1bce1d}\label{classWorld_a87232ea1a20d0a4f4da9e960ce1bce1d}} 
+\index{World@{World}!add\_bullet@{add\_bullet}}
+\index{add\_bullet@{add\_bullet}!World@{World}}
+\doxysubsubsection{\texorpdfstring{add\_bullet()}{add\_bullet()}}
+{\footnotesize\ttfamily void World\+::add\+\_\+bullet (\begin{DoxyParamCaption}\item[{int const}]{damage,  }\item[{sf\+::\+Vector2f const \&}]{direction,  }\item[{double const}]{bullet\+\_\+speed,  }\item[{std\+::string const \&}]{bullet\+\_\+type,  }\item[{sf\+::\+Vector2f const \&}]{bullet\+\_\+spawn,  }\item[{bool const}]{is\+\_\+friendly }\end{DoxyParamCaption})}
+
+
+
+Adds a bullet object to the world. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em damage} & The amount of damage that should be dealt upon collision if the target is a damageable target. \\
+\hline
+{\em direction} & The direction of which the bullet is fired in. \\
+\hline
+{\em bullet\+\_\+speed} & The speed multiplier of the bullets travel speed. \\
+\hline
+{\em bullet\+\_\+type} & The type of bullet, used to get the correct texture (Should be \char`\"{}weapon name\char`\"{}\+\_\+bullet) \\
+\hline
+{\em bullet\+\_\+spawn} & The initial position of the bullet. \\
+\hline
+{\em is\+\_\+friendly} & Specifies if the bullet was shot by the player (true) or an enemy (false). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWorld_a526894b50a85bc999bc12e1ba0f48239}\label{classWorld_a526894b50a85bc999bc12e1ba0f48239}} 
+\index{World@{World}!add\_crate@{add\_crate}}
+\index{add\_crate@{add\_crate}!World@{World}}
+\doxysubsubsection{\texorpdfstring{add\_crate()}{add\_crate()}}
+{\footnotesize\ttfamily void World\+::add\+\_\+crate (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position }\end{DoxyParamCaption})}
+
+
+
+Adds a crate object to the world. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the crate. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWorld_ac4c6828883830d6ec7c3a976b7d84fa5}\label{classWorld_ac4c6828883830d6ec7c3a976b7d84fa5}} 
+\index{World@{World}!add\_explosion@{add\_explosion}}
+\index{add\_explosion@{add\_explosion}!World@{World}}
+\doxysubsubsection{\texorpdfstring{add\_explosion()}{add\_explosion()}}
+{\footnotesize\ttfamily void World\+::add\+\_\+explosion (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position,  }\item[{float const}]{explosive\+\_\+radius,  }\item[{int const}]{explosive\+\_\+damage }\end{DoxyParamCaption})}
+
+
+
+Adds an explosion to the world. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the explosion. \\
+\hline
+{\em explosive\+\_\+radius} & The explosive radius in pixels from the center of the explosion. \\
+\hline
+{\em explosive\+\_\+damage} & The amount of health point to be deducted from all \mbox{\hyperlink{classDamageable}{Damageable}} targets in the radius. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWorld_ad8cc11e614f698a97af4d7163b545e3a}\label{classWorld_ad8cc11e614f698a97af4d7163b545e3a}} 
+\index{World@{World}!add\_explosive\_barrel@{add\_explosive\_barrel}}
+\index{add\_explosive\_barrel@{add\_explosive\_barrel}!World@{World}}
+\doxysubsubsection{\texorpdfstring{add\_explosive\_barrel()}{add\_explosive\_barrel()}}
+{\footnotesize\ttfamily void World\+::add\+\_\+explosive\+\_\+barrel (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position }\end{DoxyParamCaption})}
+
+
+
+Adds an explosive barrel object to the world. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the explosive barrel. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWorld_af696e0a9ca51363665911ade2623e630}\label{classWorld_af696e0a9ca51363665911ade2623e630}} 
+\index{World@{World}!add\_pick\_up@{add\_pick\_up}}
+\index{add\_pick\_up@{add\_pick\_up}!World@{World}}
+\doxysubsubsection{\texorpdfstring{add\_pick\_up()}{add\_pick\_up()}}
+{\footnotesize\ttfamily void World\+::add\+\_\+pick\+\_\+up (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position,  }\item[{int const}]{drop\+\_\+chance }\end{DoxyParamCaption})}
+
+
+
+Adds a pickup to the world. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the pick-\/up. \\
+\hline
+{\em drop\+\_\+chance} & The chance of a pick\+\_\+up actually appearing once the add\+\_\+pick\+\_\+up function has been called (0-\/100). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWorld_a9416260a2cb8badc6615c974aea66404}\label{classWorld_a9416260a2cb8badc6615c974aea66404}} 
+\index{World@{World}!add\_player@{add\_player}}
+\index{add\_player@{add\_player}!World@{World}}
+\doxysubsubsection{\texorpdfstring{add\_player()}{add\_player()}}
+{\footnotesize\ttfamily void World\+::add\+\_\+player (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position }\end{DoxyParamCaption})}
+
+
+
+Adds the player object to the world. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the player. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWorld_a8df675e8b1496e92130deb5602b7e75b}\label{classWorld_a8df675e8b1496e92130deb5602b7e75b}} 
+\index{World@{World}!add\_wall@{add\_wall}}
+\index{add\_wall@{add\_wall}!World@{World}}
+\doxysubsubsection{\texorpdfstring{add\_wall()}{add\_wall()}}
+{\footnotesize\ttfamily void World\+::add\+\_\+wall (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position }\end{DoxyParamCaption})}
+
+
+
+Adds a wall object to the world. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the wall. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWorld_a916014d083729a565e5a29c0a6380869}\label{classWorld_a916014d083729a565e5a29c0a6380869}} 
+\index{World@{World}!can\_see\_player@{can\_see\_player}}
+\index{can\_see\_player@{can\_see\_player}!World@{World}}
+\doxysubsubsection{\texorpdfstring{can\_see\_player()}{can\_see\_player()}}
+{\footnotesize\ttfamily bool World\+::can\+\_\+see\+\_\+player (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{source,  }\item[{sf\+::\+Vector2f const \&}]{direction }\end{DoxyParamCaption})}
+
+
+
+Used to determine if there is a straight path from a game object to the player that is not obstructed by another game object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & A shared pointer to the source game object. \\
+\hline
+{\em direction} & The direction that the source game object is facing. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If the source game\+\_\+object can see the player. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classWorld_a83ae30683c6b250c38508c9c214afa67}\label{classWorld_a83ae30683c6b250c38508c9c214afa67}} 
+\index{World@{World}!get\_available\_pick\_ups@{get\_available\_pick\_ups}}
+\index{get\_available\_pick\_ups@{get\_available\_pick\_ups}!World@{World}}
+\doxysubsubsection{\texorpdfstring{get\_available\_pick\_ups()}{get\_available\_pick\_ups()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::string $>$ \& World\+::get\+\_\+available\+\_\+pick\+\_\+ups (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Used to access the available pick-\/ups in the game world. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the available pick-\/up lists in the world. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classWorld_a9827ebd00d3e42eb7c933479504251e5}\label{classWorld_a9827ebd00d3e42eb7c933479504251e5}} 
+\index{World@{World}!get\_elapsed\_time@{get\_elapsed\_time}}
+\index{get\_elapsed\_time@{get\_elapsed\_time}!World@{World}}
+\doxysubsubsection{\texorpdfstring{get\_elapsed\_time()}{get\_elapsed\_time()}}
+{\footnotesize\ttfamily float World\+::get\+\_\+elapsed\+\_\+time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Gets the elapsed time in seconds. 
+
+\begin{DoxyReturn}{Returns}
+The elapsed time in seconds as a float. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classWorld_a3353384d367df5de5d87dc7f818e16a8}\label{classWorld_a3353384d367df5de5d87dc7f818e16a8}} 
+\index{World@{World}!get\_hud@{get\_hud}}
+\index{get\_hud@{get\_hud}!World@{World}}
+\doxysubsubsection{\texorpdfstring{get\_hud()}{get\_hud()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classHud}{Hud}} $>$ \& World\+::get\+\_\+hud (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Used to access the HUD. 
+
+\begin{DoxyReturn}{Returns}
+A shared pointer to the HUD instance in the world. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classWorld_ad965429a46e40f5453924a84d98a505e}\label{classWorld_ad965429a46e40f5453924a84d98a505e}} 
+\index{World@{World}!get\_mouse\_pos@{get\_mouse\_pos}}
+\index{get\_mouse\_pos@{get\_mouse\_pos}!World@{World}}
+\doxysubsubsection{\texorpdfstring{get\_mouse\_pos()}{get\_mouse\_pos()}}
+{\footnotesize\ttfamily sf\+::\+Vector2f \& World\+::get\+\_\+mouse\+\_\+pos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the mouse position. 
+
+\begin{DoxyReturn}{Returns}
+The coordinate of the mouse position relative to the render window. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classWorld_aebfaace7c220f1090bf2cad14c0678c9}\label{classWorld_aebfaace7c220f1090bf2cad14c0678c9}} 
+\index{World@{World}!get\_player@{get\_player}}
+\index{get\_player@{get\_player}!World@{World}}
+\doxysubsubsection{\texorpdfstring{get\_player()}{get\_player()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classPlayer}{Player}} $>$ \& World\+::get\+\_\+player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Used to access the player. 
+
+\begin{DoxyReturn}{Returns}
+A shared pointer to player instance in the world. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classWorld_a89b8f0a691dcda8bf0e842667975a117}\label{classWorld_a89b8f0a691dcda8bf0e842667975a117}} 
+\index{World@{World}!get\_resource\_manager@{get\_resource\_manager}}
+\index{get\_resource\_manager@{get\_resource\_manager}!World@{World}}
+\doxysubsubsection{\texorpdfstring{get\_resource\_manager()}{get\_resource\_manager()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classResource__Manager}{Resource\+\_\+\+Manager}} \& World\+::get\+\_\+resource\+\_\+manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Used to access the resource manager. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the resource manager handling all the resources in the world. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classWorld_afe80ab3edabb213b43f1ca1471cc91f9}\label{classWorld_afe80ab3edabb213b43f1ca1471cc91f9}} 
+\index{World@{World}!kill@{kill}}
+\index{kill@{kill}!World@{World}}
+\doxysubsubsection{\texorpdfstring{kill()}{kill()}}
+{\footnotesize\ttfamily void World\+::kill (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{obj\+\_\+to\+\_\+kill }\end{DoxyParamCaption})}
+
+
+
+Adds a game\+\_\+object to the kill queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj\+\_\+to\+\_\+kill} & A shared pointer to the game object that is to be deleted. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWorld_a6be69ff54f7f29713c0954cabe34aecc}\label{classWorld_a6be69ff54f7f29713c0954cabe34aecc}} 
+\index{World@{World}!render@{render}}
+\index{render@{render}!World@{World}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void World\+::render (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window \&}]{window }\end{DoxyParamCaption})}
+
+
+
+Renders the background, all game objects and then the HUD in the given order. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & A reference to the render window that the gam is to be drawn upon. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWorld_a03d104dafdf55e8e491707f089b1e8be}\label{classWorld_a03d104dafdf55e8e491707f089b1e8be}} 
+\index{World@{World}!simulate@{simulate}}
+\index{simulate@{simulate}!World@{World}}
+\doxysubsubsection{\texorpdfstring{simulate()}{simulate()}}
+{\footnotesize\ttfamily bool World\+::simulate (\begin{DoxyParamCaption}\item[{sf\+::\+Time const \&}]{delta\+\_\+time,  }\item[{float const}]{elapsed\+\_\+time,  }\item[{sf\+::\+Render\+Window \&}]{window }\end{DoxyParamCaption})}
+
+
+
+Used to simulate the movement and collision handling for all game objects each time the function is called. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time since the simulate function was last called. \\
+\hline
+{\em elapsed\+\_\+time} & The total amount of time that has passed since the world was initialized. \\
+\hline
+{\em window} & A reference to the render window that the world is to be drawn upon. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If the game was exited during the simulation tick or not, where true means not exited. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+World.\+h\item 
+World.\+cc\end{DoxyCompactItemize}

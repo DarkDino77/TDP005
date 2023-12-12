@@ -1,0 +1,63 @@
+\hypertarget{classRanged}{}\doxysection{Ranged Class Reference}
+\label{classRanged}\index{Ranged@{Ranged}}
+
+
+Inheritance diagram for Ranged\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classRanged__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Ranged\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classRanged__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classRanged_ab55df2dadbba53d27c7ccd4c7628742f}\label{classRanged_ab55df2dadbba53d27c7ccd4c7628742f}} 
+{\bfseries Ranged} (sf\+::\+Vector2f const \&\mbox{\hyperlink{classGame__Object_a200b030bb6c3dce284366859be4a4328}{position}}, sf\+::\+Texture const \&sprite, float const speed, int const \mbox{\hyperlink{classDamageable_ae573ae5fe38ba0a168280ef017db91f6}{health}}, int const \mbox{\hyperlink{classEnemy_a68370cb2ae7b97319e670636053bea61}{melee\+\_\+damage}}, int const \mbox{\hyperlink{classEnemy_a6c93c0e43d21c5198797b386b6140848}{xp}})
+\item 
+void \mbox{\hyperlink{classRanged_aae6fd1a7dc5c12e0a4dd10259b6b61c9}{update}} (sf\+::\+Time const \&delta\+\_\+time, \mbox{\hyperlink{classWorld}{World}} \&world, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&current\+\_\+obj) override
+\begin{DoxyCompactList}\small\item\em Updates the state of the enemy over time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classRanged_aae6fd1a7dc5c12e0a4dd10259b6b61c9}\label{classRanged_aae6fd1a7dc5c12e0a4dd10259b6b61c9}} 
+\index{Ranged@{Ranged}!update@{update}}
+\index{update@{update}!Ranged@{Ranged}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Ranged\+::update (\begin{DoxyParamCaption}\item[{sf\+::\+Time const \&}]{delta\+\_\+time,  }\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{current\+\_\+obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Updates the state of the enemy over time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time elapsed since the last update. \\
+\hline
+{\em world} & Reference to the game world. \\
+\hline
+{\em current\+\_\+obj} & Shared pointer to the current game object. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classEnemy_a89a9b96ec4de8d6fd69878e6c48352a1}{Enemy}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Ranged.\+h\item 
+Ranged.\+cc\end{DoxyCompactItemize}

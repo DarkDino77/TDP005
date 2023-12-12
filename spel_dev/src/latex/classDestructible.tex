@@ -1,0 +1,123 @@
+\hypertarget{classDestructible}{}\doxysection{Destructible Class Reference}
+\label{classDestructible}\index{Destructible@{Destructible}}
+
+
+A destructible map object in the game that inherits from \mbox{\hyperlink{classUpdatable}{Updatable}} and \mbox{\hyperlink{classDamageable}{Damageable}} .  
+
+
+
+
+{\ttfamily \#include $<$Destructible.\+h$>$}
+
+
+
+Inheritance diagram for Destructible\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{classDestructible__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Destructible\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{classDestructible__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classDestructible_a1250f2c161af5be6488186fb47f9d3b0}{Destructible}} (sf\+::\+Vector2f const \&\mbox{\hyperlink{classGame__Object_a200b030bb6c3dce284366859be4a4328}{position}}, sf\+::\+Texture const \&sprite, int \mbox{\hyperlink{classDamageable_ae573ae5fe38ba0a168280ef017db91f6}{health}})
+\item 
+\mbox{\hyperlink{classDestructible_a5206379049eddc9a91ff58eed536379b}{$\sim$\+Destructible}} () override=default
+\item 
+void \mbox{\hyperlink{classDestructible_a936734ae7971ecf4e6b2026a89206113}{update}} (sf\+::\+Time const \&delta\+\_\+time, \mbox{\hyperlink{classWorld}{World}} \&world, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&current\+\_\+obj) override
+\item 
+virtual void \mbox{\hyperlink{classDestructible_a5beef878cf250de8fa59933d3db3904c}{destroy}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&destructible\+\_\+target, \mbox{\hyperlink{classWorld}{World}} \&world) const =0
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+A destructible map object in the game that inherits from \mbox{\hyperlink{classUpdatable}{Updatable}} and \mbox{\hyperlink{classDamageable}{Damageable}} . 
+
+The \mbox{\hyperlink{classDestructible}{Destructible}} class gives all destructible Game\+\_\+\+Objects that belong to the map the functionality needed. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classDestructible_a1250f2c161af5be6488186fb47f9d3b0}\label{classDestructible_a1250f2c161af5be6488186fb47f9d3b0}} 
+\index{Destructible@{Destructible}!Destructible@{Destructible}}
+\index{Destructible@{Destructible}!Destructible@{Destructible}}
+\doxysubsubsection{\texorpdfstring{Destructible()}{Destructible()}}
+{\footnotesize\ttfamily Destructible\+::\+Destructible (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f const \&}]{position,  }\item[{sf\+::\+Texture const \&}]{sprite,  }\item[{int}]{health }\end{DoxyParamCaption})}
+
+Constructor for the \mbox{\hyperlink{classDestructible}{Destructible}} class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the \mbox{\hyperlink{classDestructible}{Destructible}} object. \\
+\hline
+{\em sprite} & The texture that is used to render the \mbox{\hyperlink{classDestructible}{Destructible}} object. \\
+\hline
+{\em health} & The amount of health points that the destructible object has. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDestructible_a5206379049eddc9a91ff58eed536379b}\label{classDestructible_a5206379049eddc9a91ff58eed536379b}} 
+\index{Destructible@{Destructible}!````~Destructible@{$\sim$Destructible}}
+\index{````~Destructible@{$\sim$Destructible}!Destructible@{Destructible}}
+\doxysubsubsection{\texorpdfstring{$\sim$Destructible()}{~Destructible()}}
+{\footnotesize\ttfamily Destructible\+::$\sim$\+Destructible (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+Destructor for \mbox{\hyperlink{classDestructible}{Destructible}} class. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classDestructible_a5beef878cf250de8fa59933d3db3904c}\label{classDestructible_a5beef878cf250de8fa59933d3db3904c}} 
+\index{Destructible@{Destructible}!destroy@{destroy}}
+\index{destroy@{destroy}!Destructible@{Destructible}}
+\doxysubsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily virtual void Destructible\+::destroy (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{destructible\+\_\+target,  }\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Specifies what happens when the destructible is destroyed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em destructible\+\_\+target} & A shared pointer to the instance of the current \mbox{\hyperlink{classDestructible}{Destructible}}, as stored in \mbox{\hyperlink{classWorld}{World}}. \\
+\hline
+{\em world} & A reference to the \mbox{\hyperlink{classWorld}{World}} object that the \mbox{\hyperlink{classDestructible}{Destructible}} object exists in. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classExplosive__Barrel_ac4d31c00d8fac17a6d959784276f0250}{Explosive\+\_\+\+Barrel}}, and \mbox{\hyperlink{classCrate_aa668d5e60228de43296490737c8b6deb}{Crate}}.
+
+\mbox{\Hypertarget{classDestructible_a936734ae7971ecf4e6b2026a89206113}\label{classDestructible_a936734ae7971ecf4e6b2026a89206113}} 
+\index{Destructible@{Destructible}!update@{update}}
+\index{update@{update}!Destructible@{Destructible}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Destructible\+::update (\begin{DoxyParamCaption}\item[{sf\+::\+Time const \&}]{delta\+\_\+time,  }\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{current\+\_\+obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Checks that the health is above 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time since the update function was last called. \\
+\hline
+{\em world} & A reference to the \mbox{\hyperlink{classWorld}{World}} object that the \mbox{\hyperlink{classDestructible}{Destructible}} object exists in. \\
+\hline
+{\em current\+\_\+obj} & A shared pointer to the instance of the current \mbox{\hyperlink{classDestructible}{Destructible}}, as stored in \mbox{\hyperlink{classWorld}{World}}. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classUpdatable}{Updatable}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Destructible.\+h\item 
+Destructible.\+cc\end{DoxyCompactItemize}

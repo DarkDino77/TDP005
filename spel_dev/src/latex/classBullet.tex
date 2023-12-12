@@ -1,0 +1,123 @@
+\hypertarget{classBullet}{}\doxysection{Bullet Class Reference}
+\label{classBullet}\index{Bullet@{Bullet}}
+
+
+A bullet in the game that inherits from the \mbox{\hyperlink{classMovable}{Movable}} class.  
+
+
+
+
+{\ttfamily \#include $<$Bullet.\+h$>$}
+
+
+
+Inheritance diagram for Bullet\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=157pt]{classBullet__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Bullet\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=157pt]{classBullet__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classBullet_ae9eeeed7eb0ba0958d8408497f56672c}{Bullet}} (int const damage, sf\+::\+Vector2f const \&direction, double const speed, sf\+::\+Texture const \&sprite, sf\+::\+Vector2f const \&\mbox{\hyperlink{classGame__Object_a200b030bb6c3dce284366859be4a4328}{position}}, bool const is\+\_\+friendly)
+\item 
+void \mbox{\hyperlink{classBullet_a76a827c444c3241561eb2652df233708}{update}} (sf\+::\+Time const \&delta\+\_\+time, \mbox{\hyperlink{classWorld}{World}} \&world, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&current\+\_\+obj) override
+\item 
+void \mbox{\hyperlink{classBullet_ac8018c5c14e5bec5d57644f20890666c}{handle\+\_\+collision}} (\mbox{\hyperlink{classWorld}{World}} \&world, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&current\+\_\+obj, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&other\+\_\+obj) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+A bullet in the game that inherits from the \mbox{\hyperlink{classMovable}{Movable}} class. 
+
+The \mbox{\hyperlink{classBullet}{Bullet}} class inherits from the \mbox{\hyperlink{classMovable}{Movable}} class and overrides the update and handle\+\_\+collisions functions. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classBullet_ae9eeeed7eb0ba0958d8408497f56672c}\label{classBullet_ae9eeeed7eb0ba0958d8408497f56672c}} 
+\index{Bullet@{Bullet}!Bullet@{Bullet}}
+\index{Bullet@{Bullet}!Bullet@{Bullet}}
+\doxysubsubsection{\texorpdfstring{Bullet()}{Bullet()}}
+{\footnotesize\ttfamily Bullet\+::\+Bullet (\begin{DoxyParamCaption}\item[{int const}]{damage,  }\item[{sf\+::\+Vector2f const \&}]{direction,  }\item[{double const}]{speed,  }\item[{sf\+::\+Texture const \&}]{sprite,  }\item[{sf\+::\+Vector2f const \&}]{position,  }\item[{bool const}]{is\+\_\+friendly }\end{DoxyParamCaption})}
+
+Constructor for the \mbox{\hyperlink{classBullet}{Bullet}} class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em damage} & The damage that the bullet should deal upon impact with a valid target. \\
+\hline
+{\em direction} & The initial direction that the bullet is to be fired in. \\
+\hline
+{\em speed} & The travel speed of the bullet. \\
+\hline
+{\em sprite} & The texture that is used to render the bullet object. \\
+\hline
+{\em position} & The initial position of the bullet object. \\
+\hline
+{\em is\+\_\+friendly} & A bool specifying if the bullet was fired from the player or an enemy. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classBullet_ac8018c5c14e5bec5d57644f20890666c}\label{classBullet_ac8018c5c14e5bec5d57644f20890666c}} 
+\index{Bullet@{Bullet}!handle\_collision@{handle\_collision}}
+\index{handle\_collision@{handle\_collision}!Bullet@{Bullet}}
+\doxysubsubsection{\texorpdfstring{handle\_collision()}{handle\_collision()}}
+{\footnotesize\ttfamily void Bullet\+::handle\+\_\+collision (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{current\+\_\+obj,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{other\+\_\+obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Specifies what happens when the bullet collides with another object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time since the update function was last called. \\
+\hline
+{\em world} & A reference to the \mbox{\hyperlink{classWorld}{World}} object that the \mbox{\hyperlink{classBullet}{Bullet}} object exists in. \\
+\hline
+{\em current\+\_\+obj} & A shared pointer to the instance of the current bullet, as stored in \mbox{\hyperlink{classWorld}{World}}. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classCollidable_af1cb64909e331f7e9da02271d26655d1}{Collidable}}.
+
+\mbox{\Hypertarget{classBullet_a76a827c444c3241561eb2652df233708}\label{classBullet_a76a827c444c3241561eb2652df233708}} 
+\index{Bullet@{Bullet}!update@{update}}
+\index{update@{update}!Bullet@{Bullet}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Bullet\+::update (\begin{DoxyParamCaption}\item[{sf\+::\+Time const \&}]{delta\+\_\+time,  }\item[{\mbox{\hyperlink{classWorld}{World}} \&}]{world,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGame__Object}{Game\+\_\+\+Object}} $>$ const \&}]{current\+\_\+obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Specifies how the bullet object should move each update.
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time since the update function was last called. \\
+\hline
+{\em world} & A reference to the \mbox{\hyperlink{classWorld}{World}} object that the \mbox{\hyperlink{classBullet}{Bullet}} object exists in. \\
+\hline
+{\em current\+\_\+obj} & A shared pointer to the instance of the current bullet as stored in \mbox{\hyperlink{classWorld}{World}}. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classUpdatable}{Updatable}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Bullet.\+h\item 
+Bullet.\+cc\end{DoxyCompactItemize}
