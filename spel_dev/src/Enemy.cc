@@ -10,7 +10,7 @@
 Enemy::Enemy(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health, int const melee_damage, int const xp)
         : Character(position, sprite, speed, health), melee_damage{melee_damage}, xp{xp}
 {}
-
+Enemy::~Enemy() {}
 void Enemy::handle_collision(World &, std::shared_ptr<Game_Object> const&, std::shared_ptr<Game_Object> const& other_obj)
 {
     if(std::dynamic_pointer_cast<Bullet>(other_obj) != nullptr

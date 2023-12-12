@@ -10,7 +10,7 @@ class Game_Object
 {
 public:
     Game_Object(sf::Vector2f const& position, sf::Texture const& sprite);
-    virtual ~Game_Object() = default;
+    virtual ~Game_Object() = 0;
     Game_Object(Game_Object const& other_obj) = delete;
     Game_Object(Game_Object && other_obj) = delete;
     Game_Object& operator=(Game_Object const& other_obj) = delete;

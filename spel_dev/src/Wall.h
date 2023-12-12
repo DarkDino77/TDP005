@@ -6,6 +6,8 @@ class Wall : public Game_Object
 {
 public:
     Wall(sf::Vector2f const& position, sf::Texture const& sprite);
+    ~Wall() override = default;
+
 };
 
 #endif
