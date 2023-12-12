@@ -4,7 +4,8 @@
 #include "Damageable.h"
 
 /**
- * A destructible object in the game.
+ * @class Destructible
+ * @brief A destructible map object in the game that inherits from Updatable and Damageable .
  *
  * The Destructible class gives all destructible Game_Objects that belong to the map
  * the functionality needed.

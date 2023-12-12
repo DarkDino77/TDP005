@@ -4,7 +4,8 @@
 #include "Updatable.h"
 
 /**
- * A collidable object in the game.
+ * @class Collidable
+ * @brief A collidable object in the game that inherits from the Updatable class.
  *
  * The Collidable class inherits from the Updatable class and bundles all updatable objects
  * that are to handle collisions. These objects have a circular collision shape.

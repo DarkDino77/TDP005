@@ -22,9 +22,8 @@
 World::World()
 : resource_manager{*this}
 {
-
     // ==============================[ HUD ]==============================
-    auto hud_obj = std::make_shared<Hud>(sf::Vector2f {0,0}, resource_manager.get_sprite("hud"), *this);
+    auto hud_obj = std::make_shared<Hud>(resource_manager.get_sprite("hud"), *this);
     hud = hud_obj;
     spawn_monsters();
 
@@ -137,6 +136,10 @@ void World::add_crate(sf::Vector2f const& position)
 
 void World::add_player(sf::Vector2f const& position)
 {
+    if(player != nullptr)
+    {
+        return;
+    }
     auto player_obj = std::make_shared<Player>(grid_to_coord(position),
                                                resource_manager.get_sprite("player"), 1.0f, 100);
     game_objects.push_back(player_obj);

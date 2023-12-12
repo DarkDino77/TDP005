@@ -2,7 +2,8 @@
 #define DAMAGEABLE_H
 
 /**
- * A damageable object in the game.
+ * @class Damageable
+ * @brief Gives an object the ability to take damage.
  *
  * The Damageable class provides alla objects that should be able to take damage with
  * the necessary function. A damageable target has health.

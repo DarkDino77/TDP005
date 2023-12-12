@@ -9,6 +9,8 @@ class World;
 /**
  * @class Game_Object
  * @brief Represents a generic game object.
+ *
+ * @details This class is associated with the World class for rendering and positioning.
  */
 class Game_Object {
 public:

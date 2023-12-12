@@ -4,8 +4,8 @@
 #include "Hud.h"
 #include "World.h"
 
-Hud::Hud(sf::Vector2f const& position, sf::Texture const& sprite, World & world)
-: Updatable(position, sprite)
+Hud::Hud(sf::Texture const& sprite, World & world)
+: Updatable({0,0}, sprite)
 {
     shape.setOrigin(0,0);
     shape.setScale(1,1);

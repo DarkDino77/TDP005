@@ -4,7 +4,8 @@
 #include "Pick_Up.h"
 
 /**
- * An ammo pickup in the game.
+ * @class Ammo
+ * @brief An ammo pickup in the game that inherits from the Pick_Up class.
  *
  * The Ammo class inherits from the Pick-Up class and specifies
  * what happens when the player picks it up. Also manages ammo-type.

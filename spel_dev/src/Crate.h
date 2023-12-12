@@ -3,7 +3,8 @@
 #include "Destructible.h"
 
 /**
- * A crate object in the game.
+ * @class Crate
+ * @brief A crate object in the game that inherits from the Destructible class.
  *
  * The Crate class inherits from the Destructible class and specifies what happens
  * when a crate is destroyed.
@@ -21,7 +22,7 @@ public:
     Crate(sf::Vector2f const& position, sf::Texture const& sprite, int const health);
 
     /**
-     * Specifies what happens when the crate is destroyed (health below 0).
+     * When a create is destroyed it initiates a instance of a sub class of Pick_up.
      *
      * @param destructible_target A shared pointer to the instance of the current Crate, as stored in World.
      * @param world A reference to the World object that the Crate object exists in.

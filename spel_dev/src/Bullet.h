@@ -7,7 +7,8 @@
 class Movable;
 
 /**
- * A bullet in the game.
+ * @class Bullet
+ * @brief A bullet in the game that inherits from the Movable class.
  *
  * The Bullet class inherits from the Movable class
  * and overrides the update and handle_collisions functions.

@@ -1,2 +1,5 @@
 *.o
 the_grand_arena
+html
+latex
+Doxyfile
