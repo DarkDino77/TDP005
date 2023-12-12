@@ -15,7 +15,7 @@ public:
      * @brief Constructor for the Enemy class.
      * @param position The initial position of the enemy.
      * @param sprite The texture for the enemy's sprite.
-     * @param speed The speed of the enemy.
+     * @param speed The speed of that an enemy can move with.
      * @param health The initial health of the enemy.
      * @param melee_damage The damage inflicted by the enemy in melee attacks.
      * @param xp The experience points awarded when the enemy is defeated.

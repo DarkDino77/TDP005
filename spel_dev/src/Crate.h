@@ -15,7 +15,7 @@ public:
     /**
      * Constructor for the Crate class.
      *
-     * @param position The initial position of the Crate object.
+     * @param position The position of the Crate object.
      * @param sprite The texture that is used to render the Crate object.
      * @param health The amount of health points that the crate has.
      */

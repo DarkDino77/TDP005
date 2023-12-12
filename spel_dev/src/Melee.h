@@ -19,6 +19,7 @@ public:
      * @param xp This is the amount of xp the player will receive upon killing the enemy.
      */
     Melee(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health, int const melee_damage, int const xp);
+
     /**
      * @brief this is the default destructor for a melee enemy.
      */

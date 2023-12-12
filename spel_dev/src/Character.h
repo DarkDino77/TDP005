@@ -8,7 +8,7 @@ class Weapon;
 
 /**
  * @class Character
- * @brief A character in the game that inherits from the Damageable class.
+ * @brief A character in the game that inherits from the Damageable class and Movable class.
  *
  * This is used to bundle together all functionality that the characters, such as the player and the enemies,
  * have in common. Does nothing on its own.
