@@ -111,34 +111,6 @@ public:
     void add_bullet(int const damage, sf::Vector2f const& direction, double const bullet_speed, std::string const& bullet_type,
                 sf::Vector2f const& bullet_spawn, bool const is_friendly);
 
-    /**
-     * @brief Adds a wall object to the world.
-     *
-     * @param position The initial position of the wall.
-     */
-    void add_wall(sf::Vector2f const& position);
-
-    /**
-     * @brief Adds an explosive barrel object to the world.
-     *
-     * @param position The initial position of the explosive barrel.
-     */
-    void add_explosive_barrel(sf::Vector2f const& position);
-
-    /**
-     * @brief Adds a crate object to the world.
-     *
-     * @param position The initial position of the crate.
-     */
-    void add_crate(sf::Vector2f const& position);
-
-    /**
-     * @brief Adds the player object to the world.
-     *
-     * @param position The initial position of the player.
-     */
-    void add_player(sf::Vector2f const& position);
-
     // ==============================[ Misc ]==============================
     /**
      * @brief Used to determine if there is a straight path from a game object to
@@ -234,9 +206,37 @@ private:
     /**
      * A resource manager managing all images and sounds.
      */
-    Resource_Manager resource_manager;
+    Resource_Manager resource_manager{};
 
     // ==============================[ Creation ]==============================
+    /**
+ * @brief Adds a wall object to the world.
+ *
+ * @param position The initial position of the wall.
+ */
+    void add_wall(sf::Vector2f const& position);
+
+    /**
+     * @brief Adds an explosive barrel object to the world.
+     *
+     * @param position The initial position of the explosive barrel.
+     */
+    void add_explosive_barrel(sf::Vector2f const& position);
+
+    /**
+     * @brief Adds a crate object to the world.
+     *
+     * @param position The initial position of the crate.
+     */
+    void add_crate(sf::Vector2f const& position);
+
+    /**
+     * @brief Adds the player object to the world.
+     *
+     * @param position The initial position of the player.
+     */
+    void add_player(sf::Vector2f const& position);
+
     /**
      * @brief Adds a melee enemy object to the world.
      *
@@ -252,6 +252,12 @@ private:
      * @param position The initial position of the ranged enemy.
      */
     void add_ranged_enemy(std::string const& name, sf::Vector2f const& position);
+
+    /**
+    * Opens a file and loads the level via the add-functions in the World class.
+    * @param filename The name of the file to load the level from.
+    */
+    void load_level_file(std::string const& filename);
 
     /**
      * Spawns a wave of enemies based on the current_wave variable.

@@ -132,38 +132,10 @@ void Player::handle_collision(World &, std::shared_ptr<Game_Object> const&, std:
         return;
     }
 
-    sf::Vector2f push_direction{};
-    push_direction = normalize(position - other_obj->get_position());
     float temp_increment{0.005f};
+    sf::Vector2f push_direction{calculate_push_direction(other_obj)};
 
-    std::shared_ptr<Movable> movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
-    // If other object is not a movable object, make the push-direction perpendicular to the collided surface.
-    if (movable_target == nullptr) {
-        if (std::abs(push_direction.x) >= std::abs(push_direction.y))
-        {
-            push_direction.y = 0.0f;
-            push_direction.x = (push_direction.x > 0) ? 1.0f : -1.0f;
-        }
-        else
-        {
-            push_direction.x = 0.0f;
-            push_direction.y = (push_direction.y > 0) ? 1.0f : -1.0f;
-        }
-    }
-
-    sf::FloatRect other_bounds = (other_obj->get_shape()).getGlobalBounds();
-    std::shared_ptr<Movable> other_movable_target{std::dynamic_pointer_cast<Movable>(other_obj)};
-    if(other_movable_target != nullptr)
-    {
-        other_bounds = other_movable_target->get_collision_shape().getGlobalBounds();
-    }
-
-    // Push the player in the push-direction until it no longer collides with the other object
-    while (collision_shape.getGlobalBounds().intersects(other_bounds)) {
-        position += push_direction * temp_increment;
-        shape.setPosition(position);
-        collision_shape.setPosition(position);
-    }
+    push_out(push_direction, temp_increment, other_obj);
 }
 
 void Player::add_ammo(std::string const& ammo_type, int const amount)

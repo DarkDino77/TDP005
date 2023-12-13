@@ -13,19 +13,17 @@ Game_Object::Game_Object(sf::Vector2f const& position, sf::Texture const& sprite
     shape.setScale(sprite_scale, sprite_scale);
     shape.setPosition(position);
 }
-Game_Object::~Game_Object()
-{
-
-}
 
 void Game_Object::render(sf::RenderWindow &window)
 {
     window.draw(shape);
 }
+
 sf::RectangleShape& Game_Object::get_shape()
 {
     return shape;
 }
+
 sf::Vector2f& Game_Object::get_position()
 {
     return position;

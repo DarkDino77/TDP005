@@ -96,7 +96,7 @@ public:
 
 private:
     /**
-     * This parameter represents the percentage of player health remaining for the player.
+     * @brief This parameter represents the percentage of player health remaining for the player.
      */
     int max_health{100};
 

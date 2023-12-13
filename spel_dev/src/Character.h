@@ -60,6 +60,21 @@ protected:
      * A shared pointer to the current weapon that the character wields.
      */
     std::shared_ptr<Weapon> current_weapon{};
+
+    /**
+     * @brief Moves back the character object away form the collided with object until it no longer collides
+     * @param push_directions The directions the character object should be push in
+     * @param temp_increment The amount the player should be pushed out.
+     * @param other_obj The object it should be pressed from.
+     */
+     void push_out(sf::Vector2f const& push_directions, float temp_increment, std::shared_ptr<Game_Object> const& other_obj);
+
+    /**
+     * @brief Calculates the direction the character object should be push in.
+     * @param other_obj The object it should be pushed from.
+     * @return The vector direction that the character object should be pushed in.
+     */
+     sf::Vector2f calculate_push_direction(std::shared_ptr<Game_Object> const& other_obj);
 };
 
 #endif

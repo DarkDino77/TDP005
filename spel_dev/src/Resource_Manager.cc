@@ -4,8 +4,7 @@
 #include "Resource_Manager.h"
 #include "World.h"
 
-Resource_Manager::Resource_Manager(World & world)
-:world{world}
+Resource_Manager::Resource_Manager()
 {
     load();
 }
@@ -71,8 +70,6 @@ void Resource_Manager::load()
     // ==============================[ Add audio ]==============================
     load_audio();
 
-    load_level_file("level1.txt");
-
     sf::Music music;
     if (!music.openFromFile("audio/music.ogg"))
     {
@@ -80,45 +77,6 @@ void Resource_Manager::load()
         return;
     }
     music.play();
-}
-
-void Resource_Manager::load_level_file(std::string const& filename)
-{
-    std::ifstream filestream{"res/"+filename, std::ifstream::in};
-
-    if(!filestream.is_open())
-    {
-        std::cerr << "Error: Could not open level with filename 'res/" << filename << "'." << std::endl;
-    }
-
-    std::string row;
-    for(int y{0}; std::getline(filestream, row); y++)
-    {
-        for (int x = 0; x < int(row.size()); x++)
-        {
-            char symbol = row[x];
-            switch (symbol) {
-                case '#':
-                    world.add_wall({float(x-1),float(y-1)});
-                    break;
-
-                case '@':
-                    world.add_player({float(x-1),float(y-1)});
-                    break;
-
-                case 'b':
-                    world.add_explosive_barrel({float(x-1),float(y-1)});
-                    break;
-
-                case 'c':
-                    world.add_crate({float(x-1),float(y-1)});
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
 }
 
 void Resource_Manager::load_font()

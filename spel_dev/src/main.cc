@@ -1,12 +1,3 @@
-/*#include "World.h"
-
-int main()
-{
-    World world{};
-    world.simulate();
-
-    return 0;
-}*/
 #include <SFML/Graphics.hpp>
 #include "State.h"
 

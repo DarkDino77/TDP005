@@ -18,9 +18,8 @@ class Resource_Manager {
 public:
     /**
      * @brief The constructor for the Resource_Manager object.
-     * @param world A reference to the instance of the world that the resource manager should manage.
      */
-    Resource_Manager(World & world);
+    Resource_Manager();
 
     /**
      * @brief Used to get a sprite from the resource manager.
@@ -55,11 +54,6 @@ public:
     void play_sound(std::string const& sound_name);
 
 private:
-    /**
-     * A reference to the instance of the world that the resource manager should manage.
-     */
-    World& world;
-
     /**
      * A map of shared pointers to all loaded sprites along with the category they belong to.
      */
@@ -100,11 +94,6 @@ private:
      */
     void load();
 
-    /**
-     * Opens a file and loads the level via the add-functions in the World class.
-     * @param filename The name of the file to load the level from.
-     */
-    void load_level_file(std::string const& filename);
 
     /**
      * Loads the font used in the game.

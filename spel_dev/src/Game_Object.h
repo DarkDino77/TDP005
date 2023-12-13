@@ -24,7 +24,7 @@ public:
     /**
      * @brief Pure virtual destructor for the Game_Object class.
      */
-    virtual ~Game_Object() = 0;
+    virtual ~Game_Object() = default;
 
     // Copy and move constructors and assignment operators are deleted to prevent unintended usage.
     Game_Object(Game_Object const& other_obj) = delete;

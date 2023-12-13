@@ -26,7 +26,7 @@ public:
     State() = default;
 
     /**
-     * @brief The destructor of the state obejct.
+     * @brief The destructor of the state object.
      */
     virtual ~State() = default;
 

@@ -1,12 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "World.h"
 #include "Player.h"
-#include "Melee.h"
 #include "Ranged.h"
 #include "Crate.h"
 #include "Explosion.h"
 #include "Explosive_Barrel.h"
-#include "Wall.h"
 #include "Updatable.h"
 #include "Ammo.h"
 #include "Hud.h"
@@ -18,11 +16,14 @@
 #include <random>
 #include <algorithm>
 #include <iterator>
+#include <iostream>
+#include <fstream>
 
 World::World()
-: resource_manager{*this}
 {
-    // ==============================[ HUD ]==============================
+    load_level_file("level1.txt");
+
+    // ==============================[ HUD ]============================
     auto hud_obj = std::make_shared<Hud>(resource_manager.get_sprite("hud"), *this);
     hud = hud_obj;
     spawn_monsters();
@@ -113,38 +114,6 @@ void World::add_bullet(int const damage, sf::Vector2f const& direction, double c
     add_queue.push_back(bullet);
 }
 
-void World::add_wall(sf::Vector2f const& position)
-{
-    auto wall = std::make_shared<Wall>(grid_to_coord(position),
-                                       resource_manager.get_sprite("wall"));
-    game_objects.push_back(wall);
-}
-
-void World::add_explosive_barrel(sf::Vector2f const& position)
-{
-    auto explosive_barrel = std::make_shared<Explosive_Barrel>(grid_to_coord(position),
-                                                               resource_manager.get_sprite("explosive_barrel"), 10);
-    game_objects.push_back(explosive_barrel);
-}
-
-void World::add_crate(sf::Vector2f const& position)
-{
-    auto crate = std::make_shared<Crate>(grid_to_coord(position),
-                                         resource_manager.get_sprite("crate"), 50);
-    game_objects.push_back(crate);
-}
-
-void World::add_player(sf::Vector2f const& position)
-{
-    if(player != nullptr)
-    {
-        return;
-    }
-    auto player_obj = std::make_shared<Player>(grid_to_coord(position),
-                                               resource_manager.get_sprite("player"), 1.0f, 100);
-    game_objects.push_back(player_obj);
-    player = std::dynamic_pointer_cast<Player>(player_obj);
-}
 // ==============================[ Misc ]==============================
 bool World::can_see_player(std::shared_ptr<Game_Object> const& source, sf::Vector2f const& direction)
 {
@@ -237,23 +206,56 @@ void World::render(sf::RenderWindow & window)
 // =====================================================================================================
 
 // ==============================[ Creation ]==============================
+void World::add_wall(sf::Vector2f const& position)
+{
+    auto wall = std::make_shared<Game_Object>(grid_to_coord(position),
+                                       resource_manager.get_sprite("wall"));
+    game_objects.push_back(wall);
+}
+
+void World::add_explosive_barrel(sf::Vector2f const& position)
+{
+    auto explosive_barrel = std::make_shared<Explosive_Barrel>(grid_to_coord(position),
+                                                               resource_manager.get_sprite("explosive_barrel"), 10);
+    game_objects.push_back(explosive_barrel);
+}
+
+void World::add_crate(sf::Vector2f const& position)
+{
+    auto crate = std::make_shared<Crate>(grid_to_coord(position),
+                                         resource_manager.get_sprite("crate"), 50);
+    game_objects.push_back(crate);
+}
+
+void World::add_player(sf::Vector2f const& position)
+{
+    if(player != nullptr)
+    {
+        return;
+    }
+    auto player_obj = std::make_shared<Player>(grid_to_coord(position),
+                                               resource_manager.get_sprite("player"), 1.0f, 100);
+    game_objects.push_back(player_obj);
+    player = std::dynamic_pointer_cast<Player>(player_obj);
+}
+
 void World::add_melee_enemy(std::string const& name, sf::Vector2f const& position)
 {
     if(name == "zombie")
     {
-        auto enemy = std::make_shared<Melee>(grid_to_coord(position),
+        auto enemy = std::make_shared<Enemy>(grid_to_coord(position),
                                              resource_manager.get_sprite("melee"), 0.3f, 20, 5, 10);
         game_objects.push_back(enemy);
     }
     if(name == "hulk")
     {
-        auto enemy = std::make_shared<Melee>(grid_to_coord(position),
+        auto enemy = std::make_shared<Enemy>(grid_to_coord(position),
                                              resource_manager.get_sprite("boss"), 0.15f, 100, 20, 30);
         game_objects.push_back(enemy);
     }
     if(name == "biter")
     {
-        auto enemy = std::make_shared<Melee>(grid_to_coord(position),
+        auto enemy = std::make_shared<Enemy>(grid_to_coord(position),
                                              resource_manager.get_sprite("biter"), 0.5f, 10, 10, 10);
         game_objects.push_back(enemy);
     }
@@ -266,6 +268,45 @@ void World::add_ranged_enemy(std::string const& name, sf::Vector2f const& positi
         auto enemy = std::make_shared<Ranged>(grid_to_coord(position),
                                               resource_manager.get_sprite("spitter"), 0.15f, 20, 2, 12);
         game_objects.push_back(enemy);
+    }
+}
+
+void World::load_level_file(std::string const& filename) // flytta till world
+{
+    std::ifstream filestream{"res/"+filename, std::ifstream::in};
+
+    if(!filestream.is_open())
+    {
+        std::cerr << "Error: Could not open level with filename 'res/" << filename << "'." << std::endl;
+    }
+
+    std::string row;
+    for(int y{0}; std::getline(filestream, row); y++)
+    {
+        for (int x = 0; x < int(row.size()); x++)
+        {
+            char symbol = row[x];
+            switch (symbol) {
+                case '#':
+                    add_wall({float(x-1),float(y-1)});
+                    break;
+
+                case '@':
+                    add_player({float(x-1),float(y-1)});
+                    break;
+
+                case 'b':
+                    add_explosive_barrel({float(x-1),float(y-1)});
+                    break;
+
+                case 'c':
+                    add_crate({float(x-1),float(y-1)});
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }
 

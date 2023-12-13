@@ -25,7 +25,7 @@ public:
     /**
      * @brief Pure virtual destructor for the Enemy class.
      */
-    virtual ~Enemy() = 0;
+    virtual ~Enemy() = default;
 
     /**
      * @brief Handles collision events involving the enemy.
