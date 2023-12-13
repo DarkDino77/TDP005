@@ -1,9 +1,10 @@
 /*! \mainpage The Grand Arena
  *
- * This project helps user to draw shapes.
- * Currently two types of shapes can be drawn:
- * - \subpage drawingRectanglePage "How to draw rectangle?"
+ * This is the documentation for the game The Grand Arena.
  *
- * - \subpage drawingCirclePage "How to draw circle?"
+ *
+ * This documentation is meant to serve as a thorough description of all classes and there respective member functions as well as describing there member variable.
+ *
+ * In each class description you will find the a uml diagram defining each class inheritance structure.
  *
  */
