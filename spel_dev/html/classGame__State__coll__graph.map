@@ -1,0 +1,7 @@
+<map id="Game_State" name="Game_State">
+<area shape="rect" id="node1" title="A state representing the game simulation, inherits from the State class." alt="" coords="115,1107,253,1228"/>
+<area shape="rect" id="node2" href="$classState.html" title="A state that represents a state of the program. This could for example be a menu state or the main ga..." alt="" coords="13,651,161,817"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,137,160,229"/>
+<area shape="rect" id="node4" href="$classWorld.html" title="Represents the game&#45;world." alt="" coords="193,424,389,1044"/>
+<area shape="rect" id="node5" href="$classResource__Manager.html" title="Manages all textures and sounds." alt="" coords="185,5,405,361"/>
+</map>

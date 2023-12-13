@@ -1,0 +1,8 @@
+<map id="Pick_Up" name="Pick_Up">
+<area shape="rect" id="node1" title="This class represents an item that the player should be able to acquire on the ground." alt="" coords="55,601,207,737"/>
+<area shape="rect" id="node5" href="$classAmmo.html" title="An ammo pickup in the game that inherits from the Pick_Up class." alt="" coords="5,785,115,877"/>
+<area shape="rect" id="node6" href="$classHealth__Drop.html" title="Represents a available pick up that should heal the target that picks it up." alt="" coords="139,785,267,877"/>
+<area shape="rect" id="node2" href="$classCollidable.html" title="A collidable object in the game that inherits from the Updatable class." alt="" coords="43,432,218,553"/>
+<area shape="rect" id="node3" href="$classUpdatable.html" title="Represents all game objects that should update each tick. Inherits from the Game_Object class." alt="" coords="68,277,193,384"/>
+<area shape="rect" id="node4" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="57,5,204,229"/>
+</map>

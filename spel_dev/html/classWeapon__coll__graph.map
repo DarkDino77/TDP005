@@ -1,0 +1,3 @@
+<map id="Weapon" name="Weapon">
+<area shape="rect" id="node1" title="Represents a weapon that a character can wield." alt="" coords="5,5,184,259"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="Explosive_Barrel" name="Explosive_Barrel">
+<area shape="rect" id="node1" title="Represents an explosive barrel that inherits from the Destructible class." alt="" coords="79,616,235,708"/>
+<area shape="rect" id="node2" href="$classDestructible.html" title="A destructible map object in the game that inherits from Updatable and Damageable ." alt="" coords="89,447,226,568"/>
+<area shape="rect" id="node3" href="$classUpdatable.html" title="Represents all game objects that should update each tick. Inherits from the Game_Object class." alt="" coords="16,285,141,391"/>
+<area shape="rect" id="node4" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="5,5,152,229"/>
+<area shape="rect" id="node5" href="$classDamageable.html" title="Gives an object the ability to take damage." alt="" coords="165,277,307,399"/>
+</map>

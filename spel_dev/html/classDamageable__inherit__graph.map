@@ -1,0 +1,10 @@
+<map id="Damageable" name="Damageable">
+<area shape="rect" id="node1" title="Gives an object the ability to take damage." alt="" coords="299,5,440,127"/>
+<area shape="rect" id="node2" href="$classCharacter.html" title="A character in the game that inherits from the Damageable class and Movable class." alt="" coords="167,175,375,340"/>
+<area shape="rect" id="node6" href="$classDestructible.html" title="A destructible map object in the game that inherits from Updatable and Damageable ." alt="" coords="399,197,537,318"/>
+<area shape="rect" id="node3" href="$classEnemy.html" title="Represents an enemy character that inherits from the Character class." alt="" coords="5,461,157,627"/>
+<area shape="rect" id="node5" href="$classPlayer.html" title="This class represents a Player object and inherits from the Character class." alt="" coords="181,388,376,700"/>
+<area shape="rect" id="node4" href="$classRanged.html" title="Represents a ranged enemy in the game that inherits from the Enemy class." alt="" coords="28,748,135,855"/>
+<area shape="rect" id="node7" href="$classCrate.html" title="A crate object in the game that inherits from the Destructible class." alt="" coords="413,498,509,590"/>
+<area shape="rect" id="node8" href="$classExplosive__Barrel.html" title="Represents an explosive barrel that inherits from the Destructible class." alt="" coords="534,498,690,590"/>
+</map>

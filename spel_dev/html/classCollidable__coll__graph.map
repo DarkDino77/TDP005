@@ -1,0 +1,5 @@
+<map id="Collidable" name="Collidable">
+<area shape="rect" id="node1" title="A collidable object in the game that inherits from the Updatable class." alt="" coords="5,432,180,553"/>
+<area shape="rect" id="node2" href="$classUpdatable.html" title="Represents all game objects that should update each tick. Inherits from the Game_Object class." alt="" coords="30,277,155,384"/>
+<area shape="rect" id="node3" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="19,5,166,229"/>
+</map>

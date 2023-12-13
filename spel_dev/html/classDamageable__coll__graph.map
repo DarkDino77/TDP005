@@ -1,0 +1,3 @@
+<map id="Damageable" name="Damageable">
+<area shape="rect" id="node1" title="Gives an object the ability to take damage." alt="" coords="5,5,147,127"/>
+</map>

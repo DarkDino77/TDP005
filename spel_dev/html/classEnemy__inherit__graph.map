@@ -1,0 +1,10 @@
+<map id="Enemy" name="Enemy">
+<area shape="rect" id="node1" title="Represents an enemy character that inherits from the Character class." alt="" coords="102,984,254,1149"/>
+<area shape="rect" id="node8" href="$classRanged.html" title="Represents a ranged enemy in the game that inherits from the Enemy class." alt="" coords="125,1197,231,1304"/>
+<area shape="rect" id="node2" href="$classCharacter.html" title="A character in the game that inherits from the Damageable class and Movable class." alt="" coords="74,771,282,936"/>
+<area shape="rect" id="node3" href="$classMovable.html" title="This class represents the ability for objects to move around and inherits from the Collidable class." alt="" coords="17,601,168,723"/>
+<area shape="rect" id="node4" href="$classCollidable.html" title="A collidable object in the game that inherits from the Updatable class." alt="" coords="5,432,180,553"/>
+<area shape="rect" id="node5" href="$classUpdatable.html" title="Represents all game objects that should update each tick. Inherits from the Game_Object class." alt="" coords="30,277,155,384"/>
+<area shape="rect" id="node6" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="19,5,166,229"/>
+<area shape="rect" id="node7" href="$classDamageable.html" title="Gives an object the ability to take damage." alt="" coords="193,601,334,723"/>
+</map>

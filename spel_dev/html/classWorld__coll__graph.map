@@ -1,0 +1,4 @@
+<map id="World" name="World">
+<area shape="rect" id="node1" title="Represents the game&#45;world." alt="" coords="17,424,213,1044"/>
+<area shape="rect" id="node2" href="$classResource__Manager.html" title="Manages all textures and sounds." alt="" coords="5,5,225,361"/>
+</map>

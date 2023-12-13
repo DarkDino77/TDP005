@@ -1,0 +1,5 @@
+<map id="Exit_State" name="Exit_State">
+<area shape="rect" id="node1" title="Represents the state which is called when the game is to be exited, inherits from the State class." alt="" coords="38,359,127,451"/>
+<area shape="rect" id="node2" href="$classState.html" title="A state that represents a state of the program. This could for example be a menu state or the main ga..." alt="" coords="9,145,157,311"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,160,97"/>
+</map>
