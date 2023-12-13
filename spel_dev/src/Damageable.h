@@ -36,7 +36,7 @@ protected:
     int health{};
 
     /**
-     * Was the object hit?
+     * Was the object hit.
      */
     bool hit{false};
 };

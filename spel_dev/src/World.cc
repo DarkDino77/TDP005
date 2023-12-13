@@ -315,7 +315,12 @@ void World::spawn_monsters()
     int num_enemies{5 + ((current_wave - 1) * 2)};
     int num_ranged{int(std::floor(float(current_wave) * 0.5f))};
     int num_biter{current_wave};
-
+    // When the amount of enemies exceeds the amount of spawn points the game goes into an
+    // infinite loop trying to spawn enemies
+    if(num_enemies > 60)
+    {
+        num_enemies = 60;
+    }
     std::vector<sf::Vector2f> spawn_positions{};
 
     std::random_device rd;
