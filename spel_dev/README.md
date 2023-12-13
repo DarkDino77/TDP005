@@ -14,6 +14,10 @@ As the player kills the enemies the player is reworded with increasing powerful 
 
 ## Documentation
 
-In the HTML folder you will find the doxygen generated documentation.
+In the ```html folder ``` you will find the doxygen generated documentation.
 To read it go into the folder and open the index.html file with your personal favorite web-browser.
+
+## External resources
+All files that are loaded into the game that are not pictures lay under the ```res folder ``` otherwise 
+pictures lay under the ```textures folder```
 
