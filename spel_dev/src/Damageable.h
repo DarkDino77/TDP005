@@ -11,13 +11,6 @@
 class Damageable {
 public:
     /**
-     * Constructor for the Damageable class.
-     *
-     * @param health The amount of health points that the damageable object has.
-     */
-    Damageable(int const health);
-
-    /**
      * Destructor for Damageable class.
      */
     virtual ~Damageable() = default;
@@ -30,6 +23,13 @@ public:
     void take_damage(int damage);
 
 protected:
+    /**
+     * Constructor for the Damageable class.
+     *
+     * @param health The amount of health points that the damageable object has.
+     */
+    Damageable(int const health);
+
     /**
      * Amount of health points.
      */
