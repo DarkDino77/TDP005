@@ -39,16 +39,7 @@ public:
      */
     void knock_back(sf::Vector2f const& direction, float force);
 
-    /**
-     * Function to add a weapon to the Character.
-     *
-     * @param name The name of the weapon.
-     * @param damage The damage that is passed into each bullet it instantiates.
-     * @param ammo_capacity The maximum amount of ammo that the weapon can hold. -1 means no limit.
-     * @param bullet_speed The speed multiplier specifying how fast the bullets should travel.
-     */
-    void add_weapon(std::string const& name, int damage,
-                    int ammo_capacity, double bullet_speed,double fire_rate);
+
 
 protected:
     /**
@@ -60,6 +51,17 @@ protected:
      * A shared pointer to the current weapon that the character wields.
      */
     std::shared_ptr<Weapon> current_weapon{};
+
+    /**
+    * Function to add a weapon to the Character.
+    *
+    * @param name The name of the weapon.
+    * @param damage The damage that is passed into each bullet it instantiates.
+    * @param ammo_capacity The maximum amount of ammo that the weapon can hold. -1 means no limit.
+    * @param bullet_speed The speed multiplier specifying how fast the bullets should travel.
+    */
+    void add_weapon(std::string const& name, int damage,
+                    int ammo_capacity, double bullet_speed,double fire_rate);
 
     /**
      * @brief Moves back the character object away form the collided with object until it no longer collides
