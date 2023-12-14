@@ -5,7 +5,8 @@ As the player kills the enemies the player is reworded with increasing powerful 
 
 ## To run the game
 
-- In the current folder make a bin folder if one does not currently exists.
+- In the current folder make a bin folder if one does not currently exists to keep all the binary files in.
+- All source code you want compiled should be in the src folder.
 - Open a terminal in this folder.
 - Type in ```$ make clean``` to make sure you don't have any conflicting files (not necessary)
 - Type in ```$ make``` this will compile the game properly and put all binary files in the bin folder.
