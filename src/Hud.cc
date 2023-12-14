@@ -1,6 +1,5 @@
 #include <memory>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <iostream>
 #include "Hud.h"
 #include "World.h"
 

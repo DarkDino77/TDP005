@@ -9,6 +9,7 @@
 
 class Weapon;
 class World;
+
 /**
  * @class Hud
  * @brief This class represent the heads up display that provieds the player with relevent information. Inherents from

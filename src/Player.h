@@ -1,9 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+
 #include "Character.h"
 #include "World.h"
 #include "Weapon.h"
-#include "Hud.h"
+
 /**
  * @class Player
  * @brief This class represents a Player object and inherits from the Character class.
@@ -126,7 +127,14 @@ private:
     float level_percent{0};
 
     /**
-     * Levels up the player to the next level
+     * @brief Finds the normalized vector direction that the player should move in
+     *
+     * @return Returns the normalized vector direction that the player should move in
+     */
+    sf::Vector2f find_direction();
+
+    /**
+     * @brief Levels up the player to the next level
      *
      * @param world A reference to the world instance of which the player exists in.
      */

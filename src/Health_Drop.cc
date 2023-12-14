@@ -1,4 +1,5 @@
 #include "Health_Drop.h"
+#include "Player.h"
 
 Health_Drop::Health_Drop(sf::Vector2f const& position, sf::Texture const& sprite)
         : Pick_Up(position, sprite)

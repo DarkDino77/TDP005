@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Crate.h"
 #include "World.h"
 

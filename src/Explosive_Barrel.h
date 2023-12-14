@@ -1,5 +1,6 @@
 #ifndef EXPLOSIVE_BARREL_H
 #define EXPLOSIVE_BARREL_H
+
 #include "Destructible.h"
 
 /**

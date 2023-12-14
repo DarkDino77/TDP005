@@ -2,7 +2,6 @@
 #define PICK_UP_H
 
 #include "Collidable.h"
-#include "Player.h"
 
 /**
  * @class Pick_Up

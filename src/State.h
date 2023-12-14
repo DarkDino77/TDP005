@@ -1,14 +1,10 @@
-
 #ifndef STATE_H
 #define STATE_H
 
-#include <iostream>
 #include <string>
 #include <vector>
 #include <memory>
-#include <cmath>
 #include <SFML/Graphics.hpp>
-#include <functional>
 #include "World.h"
 
 // ==============================[ State ]==============================

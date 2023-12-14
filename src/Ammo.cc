@@ -1,5 +1,5 @@
-#include <iostream>
 #include "Ammo.h"
+#include "Player.h"
 
 Ammo::Ammo(sf::Vector2f const& position, sf::Texture const& sprite, std::string const& ammo_type)
 : Pick_Up(position, sprite), ammo_type{ammo_type}

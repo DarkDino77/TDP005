@@ -1,6 +1,4 @@
-#include <iostream>
 #include "Game_Object.h"
-#include "World.h"
 
 Game_Object::Game_Object(sf::Vector2f const& position, sf::Texture const& sprite)
 : position{position}, sprite{sprite}

@@ -1,7 +1,5 @@
-#include "Ranged.h"
-#include "point.h"
-#include <cmath>
 #include <SFML/Graphics.hpp>
+#include "Ranged.h"
 
 Ranged::Ranged(sf::Vector2f const& position, sf::Texture const& sprite,
                float const speed, int const health, int const melee_damage, int const xp)

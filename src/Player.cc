@@ -1,23 +1,11 @@
-#include <iostream>
-#include "Player.h"
 #include "point.h"
+#include "Player.h"
 #include "Enemy.h"
 #include "Explosion.h"
 #include "Pick_Up.h"
+#include "Hud.h"
+#include "Bullet.h"
 
-sf::Vector2f find_direction() {
-    sf::Vector2f direction;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        direction.y -= 1;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        direction.y += 1;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        direction.x -= 1;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        direction.x += 1;
-
-    return normalize(direction);
-}
 
 Player::Player(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health)
 : Character(position, sprite, speed, health)
@@ -168,6 +156,20 @@ void Player::add_player_xp(int const xp, World & world)
     level_percent = float(player_level_progression)/float(xp_to_level);
 }
 
+sf::Vector2f Player::find_direction() {
+    sf::Vector2f direction;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        direction.y -= 1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        direction.y += 1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        direction.x -= 1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        direction.x += 1;
+
+    return normalize(direction);
+}
+
 void Player::level_up_player(World & world)
 {
     world.get_hud()->pop_up("LEVEL UP");
@@ -184,6 +186,7 @@ void Player::level_up_player(World & world)
     if (player_level % 5 == 0)
     {
         add_player_weapon(world);
+        world.get_hud()->pop_up("NEW WEAPON UNLOCKED");
     }
 }
 

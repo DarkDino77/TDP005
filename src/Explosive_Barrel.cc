@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Explosive_Barrel.h"
 #include "World.h"
 

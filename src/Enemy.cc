@@ -1,11 +1,12 @@
+#include <cmath>
+#include <SFML/Graphics.hpp>
 #include "Enemy.h"
 #include "point.h"
 #include "Explosion.h"
 #include "Pick_Up.h"
 #include "Explosive_Barrel.h"
-#include <cmath>
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "Bullet.h"
+
 
 Enemy::Enemy(sf::Vector2f const& position, sf::Texture const& sprite, float const speed, int const health, int const melee_damage, int const xp)
         : Character(position, sprite, speed, health), melee_damage{melee_damage}, xp{xp}

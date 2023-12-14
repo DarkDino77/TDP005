@@ -1,6 +1,6 @@
-
 #include "Weapon.h"
-#include <iostream>
+#include "Bullet.h"
+
 Weapon::Weapon(std::string const& name, int const damage, int const ammo_capacity,
                double const bullet_speed, double const fire_rate)
 : name{name}, damage{damage}, ammo_capacity{ammo_capacity}, bullet_speed{bullet_speed}, fire_rate{fire_rate}

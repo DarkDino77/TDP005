@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Pick_Up.h"
 #include "Player.h"
 

@@ -2,7 +2,6 @@
 #include "World.h"
 #include "Destructible.h"
 #include "point.h"
-#include <iostream>
 
 Explosion::Explosion(sf::Vector2f const& position, sf::Texture const& sprite, float const explosive_radius, int const explosive_damage)
 : Collidable(position, sprite), explosive_damage(explosive_damage)

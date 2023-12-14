@@ -1,11 +1,11 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include <memory>
 #include <string>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include "Player.h"
 #include "Resource_Manager.h"
 

@@ -1,4 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include <random>
+#include <iostream>
+#include <fstream>
+#include "point.h"
 #include "World.h"
 #include "Player.h"
 #include "Ranged.h"
@@ -9,15 +13,9 @@
 #include "Ammo.h"
 #include "Hud.h"
 #include "Resource_Manager.h"
-#include "point.h"
 #include "Health_Drop.h"
-#include <vector>
-#include <memory>
-#include <random>
-#include <algorithm>
-#include <iterator>
-#include <iostream>
-#include <fstream>
+#include "Bullet.h"
+
 
 World::World()
 {
