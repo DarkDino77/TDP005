@@ -1,9 +1,0 @@
-* Behöver man kommentera main
-
-Hur man gör saker abstrata på ett fint sätt
-
-Ska load_level_from_file vara i world eller resource manger
-
-variabel namn och type som funktions in prameter
-
-Ska vi sicka in nya kravspecfikationen
