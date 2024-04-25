@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="spel_dev" targetName="leak_run" />
+      <config projectName="spel_dev" targetName="game" />
+      <config projectName="spel_dev" targetName="clearscreen" />
+      <config projectName="spel_dev" targetName="all" />
+      <config projectName="spel_dev" targetName="run" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ba355fbd-fedf-490b-90da-14c995b66762" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ammo_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Bullet_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Character_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Collidable_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Crate_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Damageable_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Damageable_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Damageable_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Damageable_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Damageable_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Damageable_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Damageable_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Damageable_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Destructible_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Enemy_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosion_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Explosive__Barrel_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Game__Object_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Health__Drop_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Hud_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Melee_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Movable_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Pick__Up_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Player_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Ranged_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Resource__Manager_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/State_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Updatable_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Wall_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/Weapon_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/World_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classDamageable__coll__graph.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classDamageable__coll__graph.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classDamageable__coll__graph.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classGame__Object__coll__graph.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classGame__Object__coll__graph.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classGame__Object__coll__graph.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classResource__Manager__coll__graph.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classResource__Manager__coll__graph.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classResource__Manager__coll__graph.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classWeapon__coll__graph.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classWeapon__coll__graph.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classWeapon__coll__graph.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classWorld__coll__graph.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classWorld__coll__graph.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/classWorld__coll__graph.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_b.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_c.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_d.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_e.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_f.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_g.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_i.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_k.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_l.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_m.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_n.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_o.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_p.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_r.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_s.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_t.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_type.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_u.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_w.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_x.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/functions_~.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/globals.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/globals_func.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/inherit_graph_5.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/inherit_graph_5.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/inherit_graph_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/main_8cc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/main_8cc__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/main_8cc__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/main_8cc__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/point_8h.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/point_8h__dep__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/point_8h__dep__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/point_8h__dep__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/point_8h__incl.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/point_8h__incl.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/point_8h__incl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/all_12.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/all_12.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/all_13.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/all_13.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/all_14.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/all_14.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/all_15.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/all_15.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_0.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_3.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_4.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_4.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_5.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_5.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_6.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_6.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_7.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_7.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_8.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_8.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_9.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_9.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_a.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_a.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_b.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_b.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_c.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/files_c.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/functions_11.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/functions_11.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/functions_12.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/functions_12.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/functions_13.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/functions_13.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/typedefs_0.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/typedefs_0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_10.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_10.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_11.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_11.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_12.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_12.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_8.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_8.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_9.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_9.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_a.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_a.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_b.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_b.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_c.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_c.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_d.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_d.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_e.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_e.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_f.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/search/variables_f.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/structMenu__State_1_1Entry-members.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/structMenu__State_1_1Entry.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/structMenu__State_1_1Entry__coll__graph.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/structMenu__State_1_1Entry__coll__graph.md5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/html/structMenu__State_1_1Entry__coll__graph.png" afterDir="false" />
+    </list>
+    <list id="1e58d94c-bd2f-4e1f-871d-cec9652c9cd1" name="Changes by denab905" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MakefileLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="spel_dev" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="spel_dev" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="OCResolveContextSettings">
+    <option name="configuration" value="$PROJECT_DIR$/src/World.cc" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2Z5QeYFicFxqYY1mwXdO3uYCeSQ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/henrik/Documents/liu/tdp005",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "dynamic.analysis.tools.clion.profiler",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Makefile Application.all">
+    <configuration name="all" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="all" CONFIG_NAME="all" version="1" RUN_PATH="$PROJECT_DIR$/the_grand_arena">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="all" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="all" CONFIG_NAME="all" version="1" RUN_PATH="$PROJECT_DIR$/the_grand_arena">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="clearscreen" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="clearscreen" CONFIG_NAME="clearscreen" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="clearscreen" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="clearscreen" CONFIG_NAME="clearscreen" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="game" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="game" CONFIG_NAME="game" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="game" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="game" CONFIG_NAME="game" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="leak_run" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="leak_run" CONFIG_NAME="leak_run" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="leak_run" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="leak_run" CONFIG_NAME="leak_run" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="run" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="run" CONFIG_NAME="run" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="run" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="spel_dev" TARGET_NAME="run" CONFIG_NAME="run" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Makefile Application.all" />
+      <item itemvalue="Makefile Application.clearscreen" />
+      <item itemvalue="Makefile Application.game" />
+      <item itemvalue="Makefile Application.leak_run" />
+      <item itemvalue="Makefile Application.run" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ba355fbd-fedf-490b-90da-14c995b66762" name="Changes" comment="" />
+      <created>1701709556618</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1701709556618</updated>
+      <workItem from="1701709558931" duration="20656000" />
+      <workItem from="1701776261245" duration="14107000" />
+      <workItem from="1701796920545" duration="7643000" />
+      <workItem from="1701848301616" duration="26000" />
+      <workItem from="1701866226993" duration="18000" />
+      <workItem from="1701884864978" duration="19504000" />
+      <workItem from="1701934332163" duration="8988000" />
+      <workItem from="1701951282614" duration="13593000" />
+      <workItem from="1701968061448" duration="541000" />
+      <workItem from="1701978269422" duration="2314000" />
+      <workItem from="1702021912573" duration="186000" />
+      <workItem from="1702022157332" duration="169000" />
+      <workItem from="1702022497312" duration="1778000" />
+      <workItem from="1702036864135" duration="26000" />
+      <workItem from="1702061659294" duration="16376000" />
+      <workItem from="1702280109508" duration="5722000" />
+      <workItem from="1702311838793" duration="550000" />
+      <workItem from="1702367372069" duration="34000" />
+      <workItem from="1702372766774" duration="892000" />
+      <workItem from="1702377267610" duration="22000" />
+      <workItem from="1702383866477" duration="222000" />
+      <workItem from="1702384622751" duration="599000" />
+      <workItem from="1702386454302" duration="22000" />
+      <workItem from="1702391761020" duration="74000" />
+      <workItem from="1702729170274" duration="25000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

@@ -1,0 +1,17 @@
+<map id="Character" name="Character">
+<area shape="rect" id="node1" title="A character in the game that inherits from the Damageable class and Movable class." alt="" coords="375,912,559,1063"/>
+<area shape="rect" id="node2" href="$classMovable.html" title="This class represents the ability for objects to move around and inherits from the Collidable class." alt="" coords="83,743,215,849"/>
+<area shape="rect" id="node3" href="$classCollidable.html" title="A collidable object in the game that inherits from the Updatable class." alt="" coords="149,559,305,680"/>
+<area shape="rect" id="node4" href="$classUpdatable.html" title="Represents all game objects that should update each tick. Inherits from the Game_Object class." alt="" coords="306,389,415,496"/>
+<area shape="rect" id="node5" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="257,145,387,340"/>
+<area shape="rect" id="node6" title=" " alt="" coords="367,5,485,83"/>
+<area shape="rect" id="node7" title=" " alt="" coords="277,5,343,83"/>
+<area shape="rect" id="node8" title=" " alt="" coords="163,5,233,83"/>
+<area shape="rect" id="node9" title=" " alt="" coords="189,404,282,481"/>
+<area shape="rect" id="node10" title=" " alt="" coords="5,581,65,658"/>
+<area shape="rect" id="node11" href="$classDamageable.html" title="Gives an object the ability to take damage." alt="" coords="291,743,414,849"/>
+<area shape="rect" id="node12" title=" " alt="" coords="400,581,439,658"/>
+<area shape="rect" id="node13" title=" " alt="" coords="329,581,376,658"/>
+<area shape="rect" id="node14" title=" " alt="" coords="439,750,573,842"/>
+<area shape="rect" id="node15" title=" " alt="" coords="598,757,753,835"/>
+</map>

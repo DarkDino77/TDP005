@@ -1,0 +1,15 @@
+<map id="Collidable" name="Collidable">
+<area shape="rect" id="node1" title="A collidable object in the game that inherits from the Updatable class." alt="" coords="179,432,335,553"/>
+<area shape="rect" id="node4" href="$classExplosion.html" title="Represents an explosion that inherits from the Collidable class." alt="" coords="27,601,166,752"/>
+<area shape="rect" id="node5" href="$classMovable.html" title="This class represents the ability for objects to move around and inherits from the Collidable class." alt="" coords="191,616,323,737"/>
+<area shape="rect" id="node11" href="$classPick__Up.html" title="This class represents an item that the player should be able to acquire on the ground." alt="" coords="355,609,489,745"/>
+<area shape="rect" id="node2" href="$classUpdatable.html" title="Represents all game objects that should update each tick. Inherits from the Game_Object class." alt="" coords="202,277,311,384"/>
+<area shape="rect" id="node3" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="191,5,322,229"/>
+<area shape="rect" id="node6" href="$classBullet.html" title="A bullet in the game that inherits from the Movable class." alt="" coords="5,815,140,951"/>
+<area shape="rect" id="node7" href="$classCharacter.html" title="A character in the game that inherits from the Damageable class and Movable class." alt="" coords="165,800,349,965"/>
+<area shape="rect" id="node8" href="$classEnemy.html" title="Represents an enemy character that inherits from the Character class." alt="" coords="100,1087,235,1252"/>
+<area shape="rect" id="node10" href="$classPlayer.html" title="This class represents a Player object and inherits from the Character class." alt="" coords="259,1013,433,1325"/>
+<area shape="rect" id="node9" href="$classRanged.html" title="Represents a ranged enemy in the game that inherits from the Enemy class." alt="" coords="120,1373,215,1480"/>
+<area shape="rect" id="node12" href="$classAmmo.html" title="An ammo pickup in the game that inherits from the Pick_Up class." alt="" coords="373,837,471,929"/>
+<area shape="rect" id="node13" href="$classHealth__Drop.html" title="Represents a available pick up that should heal the target that picks it up." alt="" coords="495,837,610,929"/>
+</map>

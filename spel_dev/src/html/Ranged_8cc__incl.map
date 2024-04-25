@@ -1,0 +1,24 @@
+<map id="Ranged.cc" name="Ranged.cc">
+<area shape="rect" id="node1" title=" " alt="" coords="64,5,149,32"/>
+<area shape="rect" id="node2" href="$Ranged_8h.html" title=" " alt="" coords="297,80,375,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="124,827,263,853"/>
+<area shape="rect" id="node21" href="$point_8h.html" title=" " alt="" coords="43,80,104,107"/>
+<area shape="rect" id="node22" title=" " alt="" coords="103,155,161,181"/>
+<area shape="rect" id="node3" href="$Enemy_8h.html" title=" " alt="" coords="415,155,489,181"/>
+<area shape="rect" id="node4" href="$World_8h.html" title=" " alt="" coords="419,229,485,256"/>
+<area shape="rect" id="node11" href="$Character_8h.html" title=" " alt="" coords="519,379,609,405"/>
+<area shape="rect" id="node5" title=" " alt="" coords="256,677,315,704"/>
+<area shape="rect" id="node6" title=" " alt="" coords="536,827,605,853"/>
+<area shape="rect" id="node7" title=" " alt="" coords="145,453,199,480"/>
+<area shape="rect" id="node9" title=" " alt="" coords="659,752,778,779"/>
+<area shape="rect" id="node10" href="$Player_8h.html" title=" " alt="" coords="417,304,487,331"/>
+<area shape="rect" id="node20" href="$Resource__Manager_8h.html" title=" " alt="" coords="557,677,704,704"/>
+<area shape="rect" id="node17" href="$Weapon_8h.html" title=" " alt="" coords="261,379,341,405"/>
+<area shape="rect" id="node19" href="$Hud_8h.html" title=" " alt="" coords="447,603,505,629"/>
+<area shape="rect" id="node12" href="$Movable_8h.html" title=" " alt="" coords="332,528,415,555"/>
+<area shape="rect" id="node16" href="$Damageable_8h.html" title=" " alt="" coords="540,453,647,480"/>
+<area shape="rect" id="node13" href="$Collidable_8h.html" title=" " alt="" coords="332,603,423,629"/>
+<area shape="rect" id="node14" href="$Updatable_8h.html" title=" " alt="" coords="339,677,431,704"/>
+<area shape="rect" id="node15" href="$Game__Object_8h.html" title=" " alt="" coords="369,752,482,779"/>
+<area shape="rect" id="node18" href="$Bullet_8h.html" title=" " alt="" coords="275,453,341,480"/>
+</map>

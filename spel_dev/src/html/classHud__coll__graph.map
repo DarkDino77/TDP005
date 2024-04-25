@@ -1,0 +1,14 @@
+<map id="Hud" name="Hud">
+<area shape="rect" id="node1" title="This class represent the heads up display that provieds the player with relevent information...." alt="" coords="555,588,649,724"/>
+<area shape="rect" id="node2" href="$classUpdatable.html" title="Represents all game objects that should update each tick. Inherits from the Game_Object class." alt="" coords="126,389,235,496"/>
+<area shape="rect" id="node3" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="115,145,246,340"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,5,124,83"/>
+<area shape="rect" id="node5" title=" " alt="" coords="148,5,213,83"/>
+<area shape="rect" id="node6" title=" " alt="" coords="237,5,308,83"/>
+<area shape="rect" id="node7" title=" " alt="" coords="260,404,400,481"/>
+<area shape="rect" id="node8" title=" " alt="" coords="431,404,477,481"/>
+<area shape="rect" id="node9" title=" " alt="" coords="583,404,621,481"/>
+<area shape="rect" id="node10" title=" " alt="" coords="685,404,732,481"/>
+<area shape="rect" id="node11" title=" " alt="" coords="757,397,951,489"/>
+<area shape="rect" id="node12" title=" " alt="" coords="976,397,1111,489"/>
+</map>

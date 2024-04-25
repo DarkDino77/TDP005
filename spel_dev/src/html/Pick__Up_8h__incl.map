@@ -1,0 +1,20 @@
+<map id="Pick_Up.h" name="Pick_Up.h">
+<area shape="rect" id="node1" title=" " alt="" coords="217,5,300,32"/>
+<area shape="rect" id="node2" href="$Collidable_8h.html" title=" " alt="" coords="88,379,178,405"/>
+<area shape="rect" id="node7" href="$Player_8h.html" title=" " alt="" coords="387,80,458,107"/>
+<area shape="rect" id="node3" href="$Updatable_8h.html" title=" " alt="" coords="40,453,132,480"/>
+<area shape="rect" id="node4" href="$Game__Object_8h.html" title=" " alt="" coords="35,528,148,555"/>
+<area shape="rect" id="node5" title=" " alt="" coords="384,603,522,629"/>
+<area shape="rect" id="node6" title=" " alt="" coords="105,603,174,629"/>
+<area shape="rect" id="node8" href="$Character_8h.html" title=" " alt="" coords="256,155,346,181"/>
+<area shape="rect" id="node11" href="$World_8h.html" title=" " alt="" coords="441,379,508,405"/>
+<area shape="rect" id="node16" href="$Weapon_8h.html" title=" " alt="" coords="568,155,648,181"/>
+<area shape="rect" id="node18" href="$Hud_8h.html" title=" " alt="" coords="207,379,264,405"/>
+<area shape="rect" id="node9" href="$Movable_8h.html" title=" " alt="" coords="170,304,253,331"/>
+<area shape="rect" id="node10" href="$Damageable_8h.html" title=" " alt="" coords="248,229,354,256"/>
+<area shape="rect" id="node12" title=" " alt="" coords="208,453,266,480"/>
+<area shape="rect" id="node13" title=" " alt="" coords="614,453,668,480"/>
+<area shape="rect" id="node14" title=" " alt="" coords="368,528,487,555"/>
+<area shape="rect" id="node15" href="$Resource__Manager_8h.html" title=" " alt="" coords="290,453,437,480"/>
+<area shape="rect" id="node17" href="$Bullet_8h.html" title=" " alt="" coords="504,229,570,256"/>
+</map>

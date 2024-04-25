@@ -1,0 +1,7 @@
+<map id="Wall" name="Wall">
+<area shape="rect" id="node1" title="Represents a static wall in the world and inherits from the Game_Object class." alt="" coords="143,389,218,481"/>
+<area shape="rect" id="node2" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="115,145,246,340"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,124,83"/>
+<area shape="rect" id="node4" title=" " alt="" coords="148,5,213,83"/>
+<area shape="rect" id="node5" title=" " alt="" coords="237,5,308,83"/>
+</map>

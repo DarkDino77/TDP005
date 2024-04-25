@@ -1,0 +1,9 @@
+<map id="Player" name="Player">
+<area shape="rect" id="node1" title="This class represents a Player object and inherits from the Character class." alt="" coords="73,984,246,1296"/>
+<area shape="rect" id="node2" href="$classCharacter.html" title="A character in the game that inherits from the Damageable class and Movable class." alt="" coords="67,771,251,936"/>
+<area shape="rect" id="node3" href="$classMovable.html" title="This class represents the ability for objects to move around and inherits from the Collidable class." alt="" coords="17,601,149,723"/>
+<area shape="rect" id="node4" href="$classCollidable.html" title="A collidable object in the game that inherits from the Updatable class." alt="" coords="5,432,161,553"/>
+<area shape="rect" id="node5" href="$classUpdatable.html" title="Represents all game objects that should update each tick. Inherits from the Game_Object class." alt="" coords="29,277,138,384"/>
+<area shape="rect" id="node6" href="$classGame__Object.html" title="Represents a generic game object." alt="" coords="18,5,149,229"/>
+<area shape="rect" id="node7" href="$classDamageable.html" title="Gives an object the ability to take damage." alt="" coords="174,601,297,723"/>
+</map>

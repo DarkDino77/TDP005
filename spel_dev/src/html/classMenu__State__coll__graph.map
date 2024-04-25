@@ -1,0 +1,11 @@
+<map id="Menu_State" name="Menu_State">
+<area shape="rect" id="node1" title="A state representing the main menu or the pause menu, inherits from the State class." alt="" coords="363,375,485,525"/>
+<area shape="rect" id="node2" href="$classState.html" title="A state that represents a state of the program. This could for example be a menu state or the main ga..." alt="" coords="8,147,141,312"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,144,97"/>
+<area shape="rect" id="node4" title=" " alt="" coords="165,191,304,268"/>
+<area shape="rect" id="node5" title=" " alt="" coords="328,191,379,268"/>
+<area shape="rect" id="node6" title=" " alt="" coords="403,191,461,268"/>
+<area shape="rect" id="node7" title=" " alt="" coords="487,191,535,268"/>
+<area shape="rect" id="node8" title=" " alt="" coords="559,191,606,268"/>
+<area shape="rect" id="node9" title=" " alt="" coords="631,183,771,275"/>
+</map>
